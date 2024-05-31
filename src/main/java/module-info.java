@@ -8,4 +8,8 @@ module app.fx {
 
     opens app.fx to javafx.fxml;
     exports app.fx;
+    exports app.fx.HY;
+
+    opens app.fx.HY to javafx.fxml;
 }
+
