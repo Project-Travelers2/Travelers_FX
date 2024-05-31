@@ -9,7 +9,9 @@ module app.fx {
     opens app.fx to javafx.fxml;
     exports app.fx;
     exports app.fx.HY;
+    exports app.fx.HA;
 
     opens app.fx.HY to javafx.fxml;
+    opens app.fx.HA to javafx.fxml;
 }
 
