@@ -103,6 +103,13 @@
                         </Label>
                      </children>
                   </Pane>
+                  <Pane layoutX="1170.0" prefHeight="50.0" prefWidth="380.0">
+                     <children>
+                        <Button layoutX="280.0" layoutY="7.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="로그인" />
+                        <Button layoutX="170.0" layoutY="7.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="즐겨찾기" />
+                        <Button layoutX="60.0" layoutY="7.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="언어" />
+                     </children>
+                  </Pane>
                </children>
             </Pane>
          </children>
