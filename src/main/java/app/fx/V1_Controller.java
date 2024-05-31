@@ -12,7 +12,7 @@ public class V1_Controller {
      */
     @FXML
     private void onclick_home(ActionEvent event) {
-        System.out.println("Home button clicked");
+        System.out.println("Home button clicked111");
     }
 
     /**
