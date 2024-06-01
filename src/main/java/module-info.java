@@ -8,11 +8,13 @@ module app.fx {
     requires java.sql;
 
     opens app.fx to javafx.fxml;
+    opens app.fx.HY to javafx.fxml;
+    opens app.fx.HA to javafx.fxml;
+    opens app.fx.Merge to javafx.fxml;
+
     exports app.fx;
     exports app.fx.HY;
     exports app.fx.HA;
 
-    opens app.fx.HY to javafx.fxml;
-    opens app.fx.HA to javafx.fxml;
 }
 

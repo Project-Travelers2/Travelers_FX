@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Main_HA extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/app/fx/HA/travel_items_HA.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/app/fx/Merge/merge_travel_items_HA.fxml"));
         Scene scene = new Scene(fxmlloader.load(), 1600, 900);
         stage.setTitle("Travel items");
         stage.setScene(scene);
