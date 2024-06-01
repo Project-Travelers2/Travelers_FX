@@ -2,8 +2,17 @@ package app.fx;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
 public class V1_Controller {
+
+    @FXML private Button HOME;
+    @FXML private Button DEPARTURE;
+    @FXML private Button ARRIVE;
+    @FXML private Button DATE;
+    @FXML private Button SEARCH;
+    @FXML private Button FIND_ALL;
+
 
     /**
      * WBS: View1 - P1 - HOME_B
@@ -101,7 +110,7 @@ public class V1_Controller {
      * @param event search button click
      */
     @FXML
-    private void onclick_serach(ActionEvent event) {
+    private void onclick_search(ActionEvent event) {
         System.out.println("Serach button clicked");
     }
 
