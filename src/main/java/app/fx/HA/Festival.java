@@ -5,16 +5,18 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import app.fx.EnvConfig;
+
 public class Festival {
     public static void main(String[] args) {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
 
+            String url = EnvConfig.getEnv("DATABASE_URL");
+            String sql = EnvConfig.getEnv("QUERY_ALL_INFO");
+            String id = EnvConfig.getEnv("DATABASE_ID");
+            String pw = EnvConfig.getEnv("DATABASE_PW");
 
-            String url = "jdbc:oracle:thin:@localhost:1521/xe";
-            String sql = "select * from festival_information";
-            String id = "system";
-            String pw = "1234";
             Connection conn = DriverManager.getConnection(url, id, pw);
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
