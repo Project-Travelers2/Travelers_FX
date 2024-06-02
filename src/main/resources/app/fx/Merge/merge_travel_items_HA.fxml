@@ -23,13 +23,13 @@
                   <ButtonBar buttonMinWidth="180.0" buttonOrder="R_HE+U" prefHeight="100.0" prefWidth="1598.0">
                     <buttons>
                       <Button fx:id="FIND_ALL" mnemonicParsing="false" onAction="#onclick_all_festivals" prefHeight="70.0" text="전체" />
-                        <Button mnemonicParsing="false" prefHeight="70.0" text="영화" />
-                        <Button mnemonicParsing="false" prefHeight="70.0" text="음악" />
-                        <Button mnemonicParsing="false" prefHeight="70.0" text="패션" />
-                        <Button mnemonicParsing="false" prefHeight="70.0" text="음식" />
-                        <Button mnemonicParsing="false" prefHeight="70.0" text="여름" />
-                        <Button mnemonicParsing="false" prefHeight="70.0" text="겨울" />
-                        <Button mnemonicParsing="false" prefHeight="70.0" text="검색" />
+                        <Button fx:id="FIND_MOVIE" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="영화" />
+                        <Button fx:id="FIND_MUSIC" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="음악" />
+                        <Button fx:id="FIND_FASSION" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="패션" />
+                        <Button fx:id="FIND_FOOD" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="음식" />
+                        <Button fx:id="FIND_SUMMER" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="여름" />
+                        <Button fx:id="FIND_WINTER" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="겨울" />
+                        <Button fx:id="SEARCH" mnemonicParsing="false" onAction="#onclick_navigate_flight" prefHeight="70.0" text="검색" />
                     </buttons>
                      <padding>
                         <Insets left="20.0" right="50.0" />
