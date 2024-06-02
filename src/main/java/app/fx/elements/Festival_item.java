@@ -19,6 +19,4 @@ public class Festival_item extends Button {
         this.fest_info = fest_info;
         this.setText(fest_info.festival_name);
     }
-
-
 }

@@ -30,7 +30,8 @@ public class V1_Controller {
      */
     @FXML
     private void onclick_home(ActionEvent event) {
-        System.out.println("Home button clicked111");
+        System.out.println("Home button clicked");
+        onclick_all_festivals(event);
     }
 
     /**
@@ -94,6 +95,9 @@ public class V1_Controller {
         //}
     }
 
+    /**
+     * GridPane 페이지 다음 페이지 이동
+     */
     public void pageUp() {
         try {
             _env.pageUp();
@@ -105,6 +109,9 @@ public class V1_Controller {
         }
     }
 
+    /**
+     * GridPane 페이지 이전 페이지 이동
+     */
     public void pageDown() {
         try {
             _env.pageDown();

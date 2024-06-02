@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
@@ -23,7 +24,8 @@ public class Main_HA extends Application {
         stage.show();
     }
 
-    private static void bindTestKey(Scene scene, V1_Controller controller) {
+    // 테스트용 키 바인딩
+    private static void bindTestKey(@NotNull Scene scene, V1_Controller controller) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
