@@ -19,29 +19,12 @@ public class Queries {
     }
 
     public List<FESTIVAL_INFORMATION> all_festival_list() {
+        List<FESTIVAL_INFORMATION> festival_list = new ArrayList<>();
+
         try (Connection conn = DriverManager.getConnection(url, id, pw)){
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("select * from festival_information");
 
-            while(rs.next()) {
-                int f_num = rs.getInt("festival_mainid");
-                String f_name = rs.getString("festival_name");
-//                System.out.println(rs.getRow());
-                System.out.println(f_num+ "\t" +f_name);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    public List<FESTIVAL_INFORMATION> specific_festival_list(int festival_id) {
-        List<FESTIVAL_INFORMATION> festival_list = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection(url, id, pw)){
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from festival_information where FESTIVAL_CODE = " + festival_id);
-
-//            List<FESTIVAL_INFORMATION> festival_list = new ArrayList<>();
             while(rs.next()) {
                 FESTIVAL_INFORMATION f = new FESTIVAL_INFORMATION();
 
@@ -55,11 +38,35 @@ public class Queries {
                 f.website_link = rs.getString("WEBSITE_LINK");
 
                 festival_list.add(f);
-//                System.out.println(f.toString());
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            return festival_list;
+        }
+    }
 
-//            return festival_list;
+    public List<FESTIVAL_INFORMATION> specific_festival_list(int festival_id) {
+        List<FESTIVAL_INFORMATION> festival_list = new ArrayList<>();
 
+        try (Connection conn = DriverManager.getConnection(url, id, pw)){
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("select * from festival_information where FESTIVAL_CODE = " + festival_id);
+
+            while(rs.next()) {
+                FESTIVAL_INFORMATION f = new FESTIVAL_INFORMATION();
+
+                f.festival_loccode = rs.getInt("FESTIVAL_LOCCODE");
+                f.festival_code = rs.getInt("FESTIVAL_CODE");
+                f.festival_mainid = rs.getInt("FESTIVAL_MAINID");
+                f.festival_name = rs.getString("FESTIVAL_NAME");
+                f.location = rs.getString("LOCATION");
+                f.date_range = rs.getString("DATE_RANGE");
+                f.description = rs.getString("DESCRIPTION");
+                f.website_link = rs.getString("WEBSITE_LINK");
+
+                festival_list.add(f);
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
