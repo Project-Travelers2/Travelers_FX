@@ -16,6 +16,8 @@ module app.fx {
     exports app.fx;
     exports app.fx.HY;
     exports app.fx.HA;
+    exports app.fx.TEST;
+    opens app.fx.TEST to javafx.fxml;
 
 }
 
