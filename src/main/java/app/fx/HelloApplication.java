@@ -10,8 +10,8 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        String apiKey = EnvConfig.getEnv("API_KEY");
-        String dbUrl = EnvConfig.getEnv("DATABASE_URL");
+        String apiKey = _env.getEnv("API_KEY");
+        String dbUrl = _env.getEnv("DATABASE_URL");
 
         System.out.println(apiKey);
         System.out.println(dbUrl);

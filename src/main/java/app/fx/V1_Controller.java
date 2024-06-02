@@ -1,5 +1,6 @@
 package app.fx;
 
+import app.fx.Data.FESTIVAL_INFORMATION;
 import app.fx.HA.Queries;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,11 +38,22 @@ public class V1_Controller {
      */
     @FXML
     private void onclick_all_festivals(ActionEvent event) {
+        // GirdPane에 있던 버튼들 제거
         List<Node> nodes = GRID_FESTIVALS.getChildren();
-
         nodes.clear();
 
-//        GRID_FESTIVALS.getChildren().forEach(node -> {
+        // 데이터 리스트 받아오기
+        System.out.println("All festivals button clicked");
+        List<FESTIVAL_INFORMATION> fest_info = Queries.instance.all_festival_list();
+        
+        // 리스트에서 현재 보여줘야할 데이터의 뷰 위치 확인
+        for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
+            System.out.println(fest_info1.toString());
+        }
+        
+        // 버튼 6개 생성
+        
+        //        GRID_FESTIVALS.getChildren().forEach(node -> {
 //            System.out.println("Node: " + node +
 //                    ", Row: " + GridPane.getRowIndex(node) +
 //                    ", Column: " + GridPane.getColumnIndex(node));
@@ -49,9 +61,6 @@ public class V1_Controller {
 ////            GRID_FESTIVALS.getChildren().remove(node);
 //
 //        });
-
-        System.out.println("All festivals button clicked");
-        Queries.instance.all_festival_list();
     }
 
     /**
@@ -78,7 +87,11 @@ public class V1_Controller {
             default:    break;
         }
 
-        Queries.instance.specific_festival_list(festival_code);
+        List<FESTIVAL_INFORMATION> fest_info = Queries.instance.specific_festival_list(festival_code);
+
+        for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
+            System.out.println(fest_info1.toString());
+        }
     }
 
     /**
