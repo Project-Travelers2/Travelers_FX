@@ -52,15 +52,6 @@ public class V1_Controller {
         }
         
         // 버튼 6개 생성
-        
-        //        GRID_FESTIVALS.getChildren().forEach(node -> {
-//            System.out.println("Node: " + node +
-//                    ", Row: " + GridPane.getRowIndex(node) +
-//                    ", Column: " + GridPane.getColumnIndex(node));
-//
-////            GRID_FESTIVALS.getChildren().remove(node);
-//
-//        });
     }
 
     /**
@@ -70,10 +61,16 @@ public class V1_Controller {
      */
     @FXML
     private void onclick_cat_festivals(ActionEvent event) {
+        // 클릭한 메뉴 버튼을 확인합니다.
         Button clickedButton = (Button) event.getSource();
         String buttonId = clickedButton.getId();
-        System.out.println(buttonId + " festivals button clicked");
+        //System.out.println(buttonId + " festivals button clicked");
 
+        // GirdPane에 있던 버튼들 제거
+        List<Node> nodes = GRID_FESTIVALS.getChildren();
+        nodes.clear();
+
+        // 축제 코드를 생성합니다.
         int festival_code = 0;
         switch (buttonId) {
             case "FIND_MOVIE":  festival_code = 1;  break;
