@@ -2,6 +2,7 @@ package app.fx;
 
 import app.fx.Data.FESTIVAL_INFORMATION;
 import app.fx.HA.Queries;
+import app.fx.elements.Festival_item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -47,34 +48,21 @@ public class V1_Controller {
         System.out.println("All festivals button clicked");
         List<FESTIVAL_INFORMATION> fest_info = Queries.instance.all_festival_list();
         
-        // 리스트에서 현재 보여줘야할 데이터의 뷰 위치 확인
-        for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
-            System.out.println(fest_info1.toString());
+        // TEST: 리스트에서 현재 보여줘야할 데이터의 뷰 위치 확인
+        //for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
+        //    System.out.println(fest_info1.toString());
+        //}
+
+        // 현재 페이지 1번
+        int pageNum = _env.pageNumber;
+        for (int i = 0; i < 6; i++) {
+            // 6개만 출력
+            System.out.println(fest_info.get(i).toString());
+            FESTIVAL_INFORMATION info = fest_info.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
+            Festival_item item = new Festival_item(info);
+
+            GRID_FESTIVALS.add(item, i%3, i/3);
         }
-        
-        // 버튼 6개 생성
-        Button addButton1 = new Button("Add New Button");
-        addButton1.setPrefSize(515, 280);
-        addButton1.setText("Festival name");
-        addButton1.setFont(new Font("Arial", 24));
-        addButton1.setId("FESTIVAL_ITEM");
-
-        Button addButton2 = new Button("Add New Button");
-        addButton2.setPrefSize(515, 280);
-        addButton2.setText("Festival name");
-        addButton2.setFont(new Font("Arial", 24));
-        addButton2.setId("FESTIVAL_ITEM");
-
-        Button addButton3 = new Button("Add New Button");
-        addButton3.setPrefSize(515, 280);
-        addButton3.setText("Festival name");
-        addButton3.setFont(new Font("Arial", 24));
-        addButton3.setId("FESTIVAL_ITEM");
-
-        GRID_FESTIVALS.add(addButton1, 0, 0);
-        GRID_FESTIVALS.add(addButton2, 1, 0);
-        GRID_FESTIVALS.add(addButton3, 2, 0);
-//        GridPane.setConstraints(addButton, 0, 0);
 
     }
 
