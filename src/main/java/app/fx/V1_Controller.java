@@ -95,57 +95,8 @@ public class V1_Controller {
         //}
     }
 
-    /**
-     * GridPane 페이지 다음 페이지 이동
-     */
-    public void pageUp() {
-        try {
-            _env.pageUp();
-            display();
-        } catch (IndexOutOfBoundsException e) {
-            // 추가작업 수행하지 않음
-        } catch  (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    
 
-    /**
-     * GridPane 페이지 이전 페이지 이동
-     */
-    public void pageDown() {
-        try {
-            _env.pageDown();
-            display();
-        } catch (IndexOutOfBoundsException e) {
-            // 추가작업 수행하지 않음
-        } catch (Exception e) {
-             e.printStackTrace();
-        }
-    }
-
-    private void gridClear() {
-        // GirdPane에 있던 버튼들 제거
-        List<Node> nodes = GRID_FESTIVALS.getChildren();
-        nodes.clear();
-    }
-
-    private void display() {
-        gridClear();
-
-        int pageNum = _env.pageNumber;
-        for (int i = 0; i < 6; i++) {
-            // 최대 인덱스 초과시 종료
-            if ((pageNum - 1) * 6 + i >= _env.festival_informations.size())
-                break;
-            
-            // 6개만 출력
-            System.out.println(_env.festival_informations.get(i).toString());
-            FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
-            Festival_item item = new Festival_item(info);
-
-            GRID_FESTIVALS.add(item, i%3, i/3);
-        }
-    }
 
     /**
      * WBS: View1 - P1 - DEP_B
@@ -259,6 +210,63 @@ public class V1_Controller {
     }
 
 
+    // <editor-fold defaultstate="collapsed" desc="region: GridPane Control">
+    /**
+     * GridPane 페이지 다음 페이지 이동
+     */
+    public void pageUp() {
+        try {
+            _env.pageUp();
+            display();
+        } catch (IndexOutOfBoundsException e) {
+            // 추가작업 수행하지 않음
+        } catch  (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * GridPane 페이지 이전 페이지 이동
+     */
+    public void pageDown() {
+        try {
+            _env.pageDown();
+            display();
+        } catch (IndexOutOfBoundsException e) {
+            // 추가작업 수행하지 않음
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * GridPane 비우기
+     */
+    private void gridClear() {
+        // GirdPane에 있던 버튼들 제거
+        List<Node> nodes = GRID_FESTIVALS.getChildren();
+        nodes.clear();
+    }
+
+    /**
+     * GridPane에 아이템 게시
+     */
+    private void display() {
+        gridClear();
+
+        int pageNum = _env.pageNumber;
+        for (int i = 0; i < 6; i++) {
+            // 최대 인덱스 초과시 종료
+            if ((pageNum - 1) * 6 + i >= _env.festival_informations.size())
+                break;
+
+            // 6개만 출력
+            System.out.println(_env.festival_informations.get(i).toString());
+            FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
+            Festival_item item = new Festival_item(info);
+
+            GRID_FESTIVALS.add(item, i%3, i/3);
+        }
+    }
+    // </editor-fold>
 }
