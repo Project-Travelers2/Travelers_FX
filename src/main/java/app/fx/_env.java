@@ -31,7 +31,7 @@ public class _env {
 
         int upNum = pageNumber + 1;
         if (upNum > festival_informations.size() / 6) {
-            upNum = festival_informations.size() / 6;
+            throw new IndexOutOfBoundsException("festival_informations size overflow");
         }
 
         pageNumber = upNum;
@@ -44,7 +44,7 @@ public class _env {
 
         int downNum = pageNumber - 1;
         if (downNum == 0) {
-            return;
+            throw new IndexOutOfBoundsException("festival_informations index underflow");
         }
 
         pageNumber = downNum;
