@@ -6,6 +6,7 @@ module app.fx {
     requires org.kordamp.bootstrapfx.core;
     requires java.dotenv;
     requires java.sql;
+    requires annotations;
 
     opens app.fx to javafx.fxml;
     opens app.fx.HY to javafx.fxml;
