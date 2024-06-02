@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 
 import java.util.List;
 
@@ -52,6 +53,29 @@ public class V1_Controller {
         }
         
         // 버튼 6개 생성
+        Button addButton1 = new Button("Add New Button");
+        addButton1.setPrefSize(515, 280);
+        addButton1.setText("Festival name");
+        addButton1.setFont(new Font("Arial", 24));
+        addButton1.setId("FESTIVAL_ITEM");
+
+        Button addButton2 = new Button("Add New Button");
+        addButton2.setPrefSize(515, 280);
+        addButton2.setText("Festival name");
+        addButton2.setFont(new Font("Arial", 24));
+        addButton2.setId("FESTIVAL_ITEM");
+
+        Button addButton3 = new Button("Add New Button");
+        addButton3.setPrefSize(515, 280);
+        addButton3.setText("Festival name");
+        addButton3.setFont(new Font("Arial", 24));
+        addButton3.setId("FESTIVAL_ITEM");
+
+        GRID_FESTIVALS.add(addButton1, 0, 0);
+        GRID_FESTIVALS.add(addButton2, 1, 0);
+        GRID_FESTIVALS.add(addButton3, 2, 0);
+//        GridPane.setConstraints(addButton, 0, 0);
+
     }
 
     /**
