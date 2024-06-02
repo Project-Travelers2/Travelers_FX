@@ -5,17 +5,17 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import app.fx.EnvConfig;
+import app.fx._env;
 
 public class ConnectDB_sample {
     public static void main(String[] args) {
         try {
 //            Class.forName("oracle.jdbc.OracleDriver");
 
-            String url = EnvConfig.getEnv("DATABASE_URL");
-            String sql = EnvConfig.getEnv("QUERY_ALL_INFO");
-            String id = EnvConfig.getEnv("DATABASE_ID");
-            String pw = EnvConfig.getEnv("DATABASE_PW");
+            String url = _env.getEnv("DATABASE_URL");
+            String sql = _env.getEnv("QUERY_ALL_INFO");
+            String id = _env.getEnv("DATABASE_ID");
+            String pw = _env.getEnv("DATABASE_PW");
 
             Connection conn = DriverManager.getConnection(url, id, pw);
             Statement st = conn.createStatement();
