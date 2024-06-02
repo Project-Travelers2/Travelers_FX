@@ -7,10 +7,10 @@ import java.sql.Statement;
 
 import app.fx.EnvConfig;
 
-public class Festival {
+public class ConnectDB_sample {
     public static void main(String[] args) {
         try {
-            Class.forName("oracle.jdbc.OracleDriver");
+//            Class.forName("oracle.jdbc.OracleDriver");
 
             String url = EnvConfig.getEnv("DATABASE_URL");
             String sql = EnvConfig.getEnv("QUERY_ALL_INFO");
@@ -24,6 +24,7 @@ public class Festival {
             while(rs.next()) {
                 int f_num = rs.getInt("festival_mainid");
                 String f_name = rs.getString("festival_name");
+//                System.out.println(rs.getRow());
                 System.out.println(f_num+ "\t" +f_name);
             }
 
