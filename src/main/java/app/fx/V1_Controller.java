@@ -3,7 +3,11 @@ package app.fx;
 import app.fx.HA.Queries;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+
+import java.util.List;
 
 public class V1_Controller {
 
@@ -13,6 +17,7 @@ public class V1_Controller {
     @FXML private Button DATE;
     @FXML private Button SEARCH;
     @FXML private Button FIND_ALL;
+    @FXML private GridPane GRID_FESTIVALS;
 
 
     /**
@@ -32,6 +37,19 @@ public class V1_Controller {
      */
     @FXML
     private void onclick_all_festivals(ActionEvent event) {
+        List<Node> nodes = GRID_FESTIVALS.getChildren();
+
+        nodes.clear();
+
+//        GRID_FESTIVALS.getChildren().forEach(node -> {
+//            System.out.println("Node: " + node +
+//                    ", Row: " + GridPane.getRowIndex(node) +
+//                    ", Column: " + GridPane.getColumnIndex(node));
+//
+////            GRID_FESTIVALS.getChildren().remove(node);
+//
+//        });
+
         System.out.println("All festivals button clicked");
         Queries.instance.all_festival_list();
     }
