@@ -61,8 +61,6 @@ public class V1_Controller {
         }
 
         Queries.instance.specific_festival_list(festival_code);
-//        String buttonText = clickedButton.getText();
-//        System.out.println(buttonText + "\t" + buttonId);
     }
 
     /**
