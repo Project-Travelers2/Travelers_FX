@@ -24,6 +24,32 @@ public class _env {
         festival_informations = null;
     }
 
+    public static void pageUp() throws Exception{
+        if (festival_informations == null || festival_informations.size() == 0) {
+            throw new Exception("festival_informations is null or Empty");
+        }
+
+        int upNum = pageNumber + 1;
+        if (upNum > festival_informations.size() / 6) {
+            upNum = festival_informations.size() / 6;
+        }
+
+        pageNumber = upNum;
+    }
+
+    public static void pageDown() throws Exception{
+        if (festival_informations == null || festival_informations.size() == 0) {
+            throw new Exception("festival_informations is null or Empty");
+        }
+
+        int downNum = pageNumber - 1;
+        if (downNum == 0) {
+            return;
+        }
+
+        pageNumber = downNum;
+    }
+
     public static void main(String[] args) {
         System.out.println("DATABASE_URL: " + getEnv("DATABASE_URL"));
         System.out.println("DATABASE_ID : " + getEnv("DATABASE_ID"));

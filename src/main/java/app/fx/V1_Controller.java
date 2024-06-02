@@ -43,10 +43,6 @@ public class V1_Controller {
         // 페이지 속성 초기화
         _env.ResetItemProperties();
 
-        // GirdPane에 있던 버튼들 제거
-        List<Node> nodes = GRID_FESTIVALS.getChildren();
-        nodes.clear();
-
         // 데이터 리스트 받아오기
         System.out.println("All festivals button clicked");
         _env.festival_informations = Queries.instance.all_festival_list();
@@ -56,17 +52,7 @@ public class V1_Controller {
         //    System.out.println(fest_info1.toString());
         //}
 
-//        display();
-        int pageNum = _env.pageNumber;
-        for (int i = 0; i < 6; i++) {
-            // 6개만 출력
-            System.out.println(_env.festival_informations.get(i).toString());
-            FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
-            Festival_item item = new Festival_item(info);
-
-            GRID_FESTIVALS.add(item, i%3, i/3);
-        }
-
+        display();
     }
 
     /**
@@ -82,10 +68,6 @@ public class V1_Controller {
 
         // 페이지 속성 초기화
         _env.ResetItemProperties();
-
-        // GirdPane에 있던 버튼들 제거
-        List<Node> nodes = GRID_FESTIVALS.getChildren();
-        nodes.clear();
 
         // 축제 코드를 생성합니다.
         int festival_code = 0;
@@ -109,28 +91,42 @@ public class V1_Controller {
         //    System.out.println(fest_info1.toString());
         //}
 
-        int pageNum = _env.pageNumber;
-        for (int i = 0; i < 6; i++) {
-            // 6개만 출력
-            System.out.println(_env.festival_informations.get(i).toString());
-            FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
-            Festival_item item = new Festival_item(info);
-
-            GRID_FESTIVALS.add(item, i%3, i/3);
-        }
+        display();
     }
 
     public void pageUp() {
-
+        try {
+            _env.pageUp();
+            display();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void pageDown() {
+        try {
+            _env.pageDown();
+            display();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void gridClear() {
+        // GirdPane에 있던 버튼들 제거
+        List<Node> nodes = GRID_FESTIVALS.getChildren();
+        nodes.clear();
     }
 
     private void display() {
+        gridClear();
+
         int pageNum = _env.pageNumber;
         for (int i = 0; i < 6; i++) {
+            // 최대 인덱스 초과시 종료
+            if ((pageNum - 1) * 6 + i >= _env.festival_informations.size())
+                break;
+            
             // 6개만 출력
             System.out.println(_env.festival_informations.get(i).toString());
             FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
