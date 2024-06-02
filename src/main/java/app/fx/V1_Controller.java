@@ -1,5 +1,6 @@
 package app.fx;
 
+import app.fx.HA.Queries;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -32,6 +33,7 @@ public class V1_Controller {
     @FXML
     private void onclick_all_festivals(ActionEvent event) {
         System.out.println("All festivals button clicked");
+        Queries.instance.all_festival_list();
     }
 
     /**
@@ -41,7 +43,26 @@ public class V1_Controller {
      */
     @FXML
     private void onclick_cat_festivals(ActionEvent event) {
-        System.out.println("Cat festivals button clicked");
+        Button clickedButton = (Button) event.getSource();
+        String buttonId = clickedButton.getId();
+        System.out.println(buttonId + " festivals button clicked");
+
+        int festival_code = 0;
+        switch (buttonId) {
+            case "FIND_MOVIE":  festival_code = 1;  break;
+            case "FIND_MUSIC":  festival_code = 2;  break;
+            case "FIND_FASSION":festival_code = 3;  break;
+            case "FIND_FOOD":   festival_code = 4;  break;
+            case "FIND_SUMMER": festival_code = 5;  break;
+            case "FIND_WINTER": festival_code = 6;  break;
+            case "FIND":        festival_code = 7; // TODO 7번 데이터 분류 질문
+                break;
+            default:    break;
+        }
+
+        Queries.instance.specific_festival_list(festival_code);
+//        String buttonText = clickedButton.getText();
+//        System.out.println(buttonText + "\t" + buttonId);
     }
 
     /**
