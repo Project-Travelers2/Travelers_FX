@@ -46,13 +46,13 @@ public class V1_Controller {
         // 데이터 리스트 받아오기
         System.out.println("All festivals button clicked");
         _env.festival_informations = Queries.instance.all_festival_list();
-        
+
+        display();
+
         // TEST: 리스트에서 현재 보여줘야할 데이터의 뷰 위치 확인
         //for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
         //    System.out.println(fest_info1.toString());
         //}
-
-        display();
     }
 
     /**
@@ -86,19 +86,21 @@ public class V1_Controller {
         // 데이터 리스트 받아오기
         _env.festival_informations = Queries.instance.specific_festival_list(festival_code);
 
+        display();
+
         // TEST: 리스트에서 현재 보여줘야할 데이터 리스트 보기
         //for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
         //    System.out.println(fest_info1.toString());
         //}
-
-        display();
     }
 
     public void pageUp() {
         try {
             _env.pageUp();
             display();
-        } catch (Exception e) {
+        } catch (IndexOutOfBoundsException e) {
+            // 추가작업 수행하지 않음
+        } catch  (Exception e) {
             e.printStackTrace();
         }
     }
@@ -107,8 +109,10 @@ public class V1_Controller {
         try {
             _env.pageDown();
             display();
+        } catch (IndexOutOfBoundsException e) {
+            // 추가작업 수행하지 않음
         } catch (Exception e) {
-            e.printStackTrace();
+             e.printStackTrace();
         }
     }
 
