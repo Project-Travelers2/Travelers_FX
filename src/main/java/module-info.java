@@ -7,6 +7,7 @@ module app.fx {
     requires java.dotenv;
     requires java.sql;
     requires annotations;
+    requires commons.csv;
 
     opens app.fx to javafx.fxml;
     opens app.fx.HY to javafx.fxml;
