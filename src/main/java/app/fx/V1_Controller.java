@@ -40,25 +40,28 @@ public class V1_Controller {
      */
     @FXML
     private void onclick_all_festivals(ActionEvent event) {
+        // 페이지 속성 초기화
+        _env.ResetItemProperties();
+
         // GirdPane에 있던 버튼들 제거
         List<Node> nodes = GRID_FESTIVALS.getChildren();
         nodes.clear();
 
         // 데이터 리스트 받아오기
         System.out.println("All festivals button clicked");
-        List<FESTIVAL_INFORMATION> fest_info = Queries.instance.all_festival_list();
+        _env.festival_informations = Queries.instance.all_festival_list();
         
         // TEST: 리스트에서 현재 보여줘야할 데이터의 뷰 위치 확인
         //for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
         //    System.out.println(fest_info1.toString());
         //}
 
-        // 현재 페이지 1번
+//        display();
         int pageNum = _env.pageNumber;
         for (int i = 0; i < 6; i++) {
             // 6개만 출력
-            System.out.println(fest_info.get(i).toString());
-            FESTIVAL_INFORMATION info = fest_info.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
+            System.out.println(_env.festival_informations.get(i).toString());
+            FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
             Festival_item item = new Festival_item(info);
 
             GRID_FESTIVALS.add(item, i%3, i/3);
@@ -76,7 +79,9 @@ public class V1_Controller {
         // 클릭한 메뉴 버튼을 확인합니다.
         Button clickedButton = (Button) event.getSource();
         String buttonId = clickedButton.getId();
-        //System.out.println(buttonId + " festivals button clicked");
+
+        // 페이지 속성 초기화
+        _env.ResetItemProperties();
 
         // GirdPane에 있던 버튼들 제거
         List<Node> nodes = GRID_FESTIVALS.getChildren();
@@ -96,10 +101,42 @@ public class V1_Controller {
             default:    break;
         }
 
-        List<FESTIVAL_INFORMATION> fest_info = Queries.instance.specific_festival_list(festival_code);
+        // 데이터 리스트 받아오기
+        _env.festival_informations = Queries.instance.specific_festival_list(festival_code);
 
-        for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
-            System.out.println(fest_info1.toString());
+        // TEST: 리스트에서 현재 보여줘야할 데이터 리스트 보기
+        //for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
+        //    System.out.println(fest_info1.toString());
+        //}
+
+        int pageNum = _env.pageNumber;
+        for (int i = 0; i < 6; i++) {
+            // 6개만 출력
+            System.out.println(_env.festival_informations.get(i).toString());
+            FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
+            Festival_item item = new Festival_item(info);
+
+            GRID_FESTIVALS.add(item, i%3, i/3);
+        }
+    }
+
+    public void pageUp() {
+
+    }
+
+    public void pageDown() {
+
+    }
+
+    private void display() {
+        int pageNum = _env.pageNumber;
+        for (int i = 0; i < 6; i++) {
+            // 6개만 출력
+            System.out.println(_env.festival_informations.get(i).toString());
+            FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
+            Festival_item item = new Festival_item(info);
+
+            GRID_FESTIVALS.add(item, i%3, i/3);
         }
     }
 
@@ -213,4 +250,8 @@ public class V1_Controller {
     private void onclick_navigate_flight(ActionEvent event) {
         System.out.println("Navigate flight button clicked");
     }
+
+
+
+
 }
