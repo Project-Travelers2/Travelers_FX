@@ -9,9 +9,13 @@ import java.io.IOException;
 
 public class Main_HY extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/app/fx/HY/travel_items.fxml"));
+    public void start(Stage stage) throws IOException{
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/app/fx/HY/merge_travel_items_HY.fxml"));
         Scene scene = new Scene(fxmlloader.load(), 1600, 900);
+
+        // css 연결하기
+        scene.getStylesheets().add(getClass().getResource("festival.css").toString());
+
         stage.setTitle("Travel items111");
         stage.setScene(scene);
         stage.show();

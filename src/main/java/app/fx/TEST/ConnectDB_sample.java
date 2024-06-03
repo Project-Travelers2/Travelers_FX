@@ -10,7 +10,7 @@ import app.fx._env;
 public class ConnectDB_sample {
     public static void main(String[] args) {
         try {
-//            Class.forName("oracle.jdbc.OracleDriver");
+            Class.forName("oracle.jdbc.OracleDriver");
 
             String url = _env.getEnv("DATABASE_URL");
             String sql = _env.getEnv("QUERY_ALL_INFO");
