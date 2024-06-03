@@ -1,5 +1,6 @@
 package app.fx;
 
+import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.FESTIVAL_INFORMATION;
 import app.fx.HA.Queries;
 import app.fx.elements.Festival_item;
@@ -7,16 +8,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
+import javafx.util.Callback;
 
 import java.util.List;
 
 public class V1_Controller {
 
+    @FXML private AnchorPane ROOT;
     @FXML private Button HOME;
     @FXML private Button DEPARTURE;
-    @FXML private Button ARRIVE;
+    @FXML private Button ARRIVAL;
     @FXML private Button DATE;
     @FXML private Button SEARCH;
     @FXML private Button FIND_ALL;
@@ -95,8 +102,6 @@ public class V1_Controller {
         //}
     }
 
-    
-
 
     /**
      * WBS: View1 - P1 - DEP_B
@@ -106,17 +111,84 @@ public class V1_Controller {
     @FXML
     private void onclick_departure(ActionEvent event) {
         System.out.println("Departure button clicked");
+        
+        // 한국 민간공항 리스트 출력 테스트
+        // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기
+        String CountryCode = "KR";
+
+        // 2 공항 리스트에서 민간공항 리스트 가져오기
+        List<AIRPORT_INFORMATION> airport_informations = Queries.instance.airport_list(CountryCode);
+
+        // 3 민간공항 리스트를 ListView에 할당하기
+        // ListView 생성
+        ListView<AIRPORT_INFORMATION> listView = new ListView<>();
+        
+        // ListView에 사용자 정의 항목 추가
+        for (AIRPORT_INFORMATION airport_information : airport_informations) {
+            listView.getItems().add(airport_information);
+        }
+
+        // 리스트 뷰에 해당 커스텀 객체의 동작 설정
+        listView.setCellFactory(new Callback<ListView<AIRPORT_INFORMATION>, ListCell<AIRPORT_INFORMATION>>() {
+            @Override
+            public ListCell<AIRPORT_INFORMATION> call(ListView<AIRPORT_INFORMATION> airportInformationListView) {
+                return new ListCell<AIRPORT_INFORMATION>() {
+                    @Override
+                    protected void updateItem(AIRPORT_INFORMATION item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                        } else {
+                            setText(item.toString());
+                        }
+                    }
+                };
+            }
+        });
+
+        // ListView 항목 선택 이벤트 핸들러 설정 (클릭시 실행 이벤트 설정
+        listView.setOnMouseClicked(this::onclick_select_departure);
+
+        // ScrollPane 생성 및 ListView 추가
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(listView);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefSize(300, 200); // 고정된 크기 설정
+
+        // ScrollPane을 AnchorPane에 추가
+        ROOT.getChildren().add(scrollPane);
+        AnchorPane.setTopAnchor(scrollPane, 50.0);
+        AnchorPane.setLeftAnchor(scrollPane, 50.0);
     }
 
     /**
      * WBS: View1 - P1 - DEP_1_B
      * onclick select departure location button
-     * @param event select departure location click
+     * @param mouseEvent select departure location click
      */
-    @FXML
-    private void onclick_select_departure(ActionEvent event) {
-        System.out.println("Select departure button clicked");
+    private void onclick_select_departure(MouseEvent mouseEvent) {
+        ListView<AIRPORT_INFORMATION> listView = (ListView<AIRPORT_INFORMATION>) mouseEvent.getSource();
+        AIRPORT_INFORMATION selectedItem = listView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+
+            // 선택한 객체가 AIRPORT_INFORMATION인가?
+            if (selectedItem instanceof AIRPORT_INFORMATION) {
+                System.out.println("Selected item: " + selectedItem.toString());
+                // 그러면 _env에 할당
+                _env.departure_information = selectedItem;
+            }
+
+            //_env.departure_information = selectedItem
+
+            // DEPARTURE 버튼 텍스트 설정
+            DEPARTURE.setText(_env.departure_information.toString());
+
+            // scrollPane 제거
+            ScrollPane scrollPane = (ScrollPane) listView.getParent().getParent().getParent();
+            ROOT.getChildren().remove(scrollPane);
+        }
     }
+
 
     /**
      * WBS: View1 - P1 - ARR_B
@@ -125,17 +197,84 @@ public class V1_Controller {
      */
     @FXML
     private void onclick_arrival(ActionEvent event) {
-        System.out.println("Arrival button clicked");
+        System.out.println("arrival button clicked");
+
+        // 한국 민간공항 리스트 출력 테스트
+        // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기
+        String CountryCode = "KR"; // TODO: diff
+
+        // 2 공항 리스트에서 민간공항 리스트 가져오기
+        List<AIRPORT_INFORMATION> airport_informations = Queries.instance.airport_list(CountryCode);
+
+        // 3 민간공항 리스트를 ListView에 할당하기
+        // ListView 생성
+        ListView<AIRPORT_INFORMATION> listView = new ListView<>();
+
+        // ListView에 사용자 정의 항목 추가
+        for (AIRPORT_INFORMATION airport_information : airport_informations) {
+            listView.getItems().add(airport_information);
+        }
+
+        // 리스트 뷰에 해당 커스텀 객체의 동작 설정
+        listView.setCellFactory(new Callback<ListView<AIRPORT_INFORMATION>, ListCell<AIRPORT_INFORMATION>>() {
+            @Override
+            public ListCell<AIRPORT_INFORMATION> call(ListView<AIRPORT_INFORMATION> airportInformationListView) {
+                return new ListCell<AIRPORT_INFORMATION>() {
+                    @Override
+                    protected void updateItem(AIRPORT_INFORMATION item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                        } else {
+                            setText(item.toString());
+                        }
+                    }
+                };
+            }
+        });
+
+        // ListView 항목 선택 이벤트 핸들러 설정 (클릭시 실행 이벤트 설정
+        listView.setOnMouseClicked(this::onclick_select_arrival); // TODO: diff
+
+        // ScrollPane 생성 및 ListView 추가
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(listView);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefSize(300, 200); // 고정된 크기 설정
+
+        // ScrollPane을 AnchorPane에 추가
+        ROOT.getChildren().add(scrollPane);
+        AnchorPane.setTopAnchor(scrollPane, 50.0);
+        AnchorPane.setLeftAnchor(scrollPane, 300.0); // TODO: diff
     }
 
     /**
      * WBS: View1 - P1 - ARR_1_B
      * onclick select arrival location button
-     * @param event select arrival location button click
+     * @param mouseEvent select arrival location button click
      */
     @FXML
-    private void onclick_select_arrival(ActionEvent event) {
-        System.out.println("Select arrival button clicked");
+    private void onclick_select_arrival(MouseEvent mouseEvent) {
+        ListView<AIRPORT_INFORMATION> listView = (ListView<AIRPORT_INFORMATION>) mouseEvent.getSource();
+        AIRPORT_INFORMATION selectedItem = listView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+
+            // 선택한 객체가 AIRPORT_INFORMATION인가?
+            if (selectedItem instanceof AIRPORT_INFORMATION) {
+                System.out.println("Selected item: " + selectedItem.toString());
+                // 그러면 _env에 할당
+                _env.arrival_information = selectedItem; // TODO: diff
+            }
+
+            //_env.departure_information = selectedItem
+
+            // DEPARTURE 버튼 텍스트 설정
+            ARRIVAL.setText(_env.arrival_information.toString()); // TODO: diff
+
+            // scrollPane 제거
+            ScrollPane scrollPane = (ScrollPane) listView.getParent().getParent().getParent();
+            ROOT.getChildren().remove(scrollPane);
+        }
     }
 
     /**
