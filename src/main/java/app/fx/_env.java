@@ -4,6 +4,7 @@ import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.FESTIVAL_INFORMATION;
 import io.github.cdimascio.dotenv.Dotenv;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class _env {
@@ -18,6 +19,9 @@ public class _env {
 
     public static AIRPORT_INFORMATION departure_information;
     public static AIRPORT_INFORMATION arrival_information;
+
+    public static LocalDate departure_date;
+    public static LocalDate arrival_date;
 
     /**
      * 아이템 페이지 속성 초기화
