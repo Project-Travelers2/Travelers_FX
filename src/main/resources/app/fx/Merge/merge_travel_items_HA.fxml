@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.fx.V1_Controller">
+<AnchorPane fx:id="ROOT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.fx.V1_Controller">
    <children>
       <Pane layoutY="-0.19999999999999996" AnchorPane.bottomAnchor="600.2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.19999999999999996">
          <children>
@@ -54,7 +54,7 @@
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3d3ff" height="60.0" layoutX="264.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
                   <Pane layoutX="344.0" layoutY="2.0" prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="ARRIVE" layoutX="40.0" layoutY="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onclick_arrival" prefHeight="100.0" prefWidth="120.0" text="모든 곳" />
+                        <Button fx:id="ARRIVAL" layoutX="40.0" layoutY="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onclick_arrival" prefHeight="100.0" prefWidth="120.0" text="모든 곳" />
                      </children>
                      <padding>
                         <Insets bottom="20.0" top="50.0" />
