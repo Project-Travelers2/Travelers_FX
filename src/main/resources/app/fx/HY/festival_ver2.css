@@ -1,0 +1,78 @@
+.root {
+    -fx-background-color: #f3f3f3;
+}
+
+#all {
+    -fx-font-family: "Helvetica75";
+    /*-fx-font-size: 50px;*/
+}
+
+.label-> travle_product {
+    -fx-font-family: "Helvetica75";
+}
+
+/* 상단 바 */
+#TOP_BAR {
+    -fx-font-family : '배달의민족 도현';
+}
+#HOME, #TitleBar {
+    -fx-background-color: #8ac5fd;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+#TRAVLE_PRODUCT {
+    -fx-font-family : '휴먼모음T';
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+/* 축제 메뉴바 */
+#FIND, #FIND_ONE, #FIND_ALL, #FIND_MOVIE, #FIND_MUSIC, #FIND_FASSION, #FIND_FOOD, #FIND_SUMMER, #FIND_WINTER, #FIND_SEARCH{
+    -fx-font-family : '배달의민족 도현';
+    -fx-font-size: 20px;
+    /*-fx-text-fill: white;*/
+    -fx-background-color: white;
+}
+
+
+
+/* 여행 메뉴바 */
+#ARRIVE,#DEPARTURE, #airplane_logo, #FlightBar, #flight_bar{
+    -fx-font-family : '배달의민족 도현';
+    -fx-font-size: 25px;
+    -fx-background-color: #89c3fb;
+    -fx-text-fill: white;
+}
+
+#SEARCH{
+    -fx-font-family : '배달의민족 도현';
+    -fx-font-size: 20px;
+    -fx-text-fill: #89c3fb;
+    -fx-background-color: white;
+}
+
+#DATE {
+    -fx-font-family : '배달의민족 도현';
+    -fx-font-size: 18px;
+    -fx-background-color: #f6fafd;
+    -fx-text-fill: #89c3fb;
+
+}
+
+#GRID_FESTIVALS {
+    -fx-font-family : '배달의민족 도현';
+    -fx-background-color: #e5f2ff;
+    /*-fx-padding: 3 30 3 30;*/
+    -fx-text-fill: #242d35;
+    -fx-font-size: 14px;
+}
+
+#viewer_1, #viewer_2, #viewer_3, #viewer_4, #viewer_5, #viewer_6 {
+    -fx-background-color: #e3f0fd;
+}
+
+#SEPERATOR {
+    -fx-border-width: 1 0 0 0; /* Adjust this if needed */
+    -fx-border-color: transparent;
+}
