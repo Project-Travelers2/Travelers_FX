@@ -298,8 +298,8 @@ public class V1_Controller {
     }
 
     /**
-     * WBS: View1 - P1 - END_B // TODO: NEW
-     * WBS: View1 - P1 - END_1_B // TODO: NEW
+     * WBS: View1 - P1 - END_B
+     * WBS: View1 - P1 - END_1_B
      * onclick arrival datetime datePicker
      * @param event arrival datetime select
      */
@@ -331,6 +331,9 @@ public class V1_Controller {
     //============================================================================
 
     /**
+     * @deprecated 이 메서드는 ALL_B, CAT_B에서 구현되었습니다. 때문에 구현을 중단합니다.
+     * {@link #onclick_all_festivals(ActionEvent)} instead
+     * {@link #onclick_cat_festivals(ActionEvent)} instead
      * WBS: View1 - P2 - ITM_B
      * initialize travelers festivals
      */
