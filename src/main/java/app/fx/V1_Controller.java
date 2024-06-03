@@ -278,6 +278,7 @@ public class V1_Controller {
 
     /**
      * WBS: View1 - P1 - SDT_B
+     * WBS: View1 - P1 - SDT_1_B
      * onclick departure datetime datepicker
      * @param event departure datetime select
      */
@@ -298,6 +299,7 @@ public class V1_Controller {
 
     /**
      * WBS: View1 - P1 - END_B // TODO: NEW
+     * WBS: View1 - P1 - END_1_B // TODO: NEW
      * onclick arrival datetime datePicker
      * @param event arrival datetime select
      */
@@ -314,16 +316,6 @@ public class V1_Controller {
         }
 
         _env.arrival_date = selectedDate; // TODO: diff
-    }
-
-    /**
-     * WBS: View1 - P1 - SDT_1_B // TODO: Deprecated
-     * onclick select datetime button
-     * @param event select datetime button click
-     */
-    @FXML
-    private void onclick_select_datetime_button(ActionEvent event) {
-        System.out.println("Select datetime button clicked");
     }
 
     /**
