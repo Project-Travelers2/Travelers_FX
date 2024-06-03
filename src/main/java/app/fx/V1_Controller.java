@@ -7,15 +7,13 @@ import app.fx.elements.Festival_item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class V1_Controller {
@@ -24,7 +22,8 @@ public class V1_Controller {
     @FXML private Button HOME;
     @FXML private Button DEPARTURE;
     @FXML private Button ARRIVAL;
-    @FXML private Button DATE;
+    @FXML private DatePicker DEPARTURE_DATE;
+    @FXML private DatePicker ARRIVAL_DATE;
     @FXML private Button SEARCH;
     @FXML private Button FIND_ALL;
     @FXML private GridPane GRID_FESTIVALS;
@@ -279,16 +278,46 @@ public class V1_Controller {
 
     /**
      * WBS: View1 - P1 - SDT_B
-     * onclick datetime button
-     * @param event datetime button click
+     * onclick departure datetime datepicker
+     * @param event departure datetime select
      */
     @FXML
-    private void onclick_datetime(ActionEvent event) {
-        System.out.println("Datetime button clicked");
+    private void onclick_departure_datetime(ActionEvent event) {
+        System.out.println("departure datetime datePicker selected");
+
+        // DatePicker에서 선택한 날짜를 가져옴
+        LocalDate selectedDate = DEPARTURE_DATE.getValue();
+
+        if (selectedDate == null) {
+            System.out.println("No date selected");
+            return;
+        }
+
+        _env.departure_date = selectedDate;
     }
 
     /**
-     * WBS: View1 - P1 - SDT_1_B
+     * WBS: View1 - P1 - END_B // TODO: NEW
+     * onclick arrival datetime datePicker
+     * @param event arrival datetime select
+     */
+    @FXML
+    private void onclick_arrival_datetime(ActionEvent event) {
+        System.out.println("arrival datetime datePicker selected");
+
+        // DatePicker에서 선택한 날짜를 가져옴
+        LocalDate selectedDate = ARRIVAL_DATE.getValue(); // TODO: diff
+
+        if (selectedDate == null) {
+            System.out.println("No date selected");
+            return;
+        }
+
+        _env.arrival_date = selectedDate; // TODO: diff
+    }
+
+    /**
+     * WBS: View1 - P1 - SDT_1_B // TODO: Deprecated
      * onclick select datetime button
      * @param event select datetime button click
      */
