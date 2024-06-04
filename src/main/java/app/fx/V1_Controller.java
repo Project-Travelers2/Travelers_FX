@@ -328,8 +328,33 @@ public class V1_Controller {
         System.out.println("Serach button clicked");
 
         // 현재까지 선택한 정보들 출력하기
+        System.out.println("=============================");
+        System.out.println("현재 선택한 정보들");
+        System.out.println("여행 정보 : " + _env.selected_festival);
+        System.out.println("출발 공항 : " + _env.departure_information);
+        System.out.println("도착 공항 : " + _env.arrival_information);
+        System.out.println("출발일 : " + _env.departure_date);
+        System.out.println("도착일 : " + _env.arrival_date);
+        System.out.println("=============================");
 
+        if (isCanNavigate()) {
+            System.out.println("안내 조건을 만족했습니다. 다음 단계로 넘어갑니다.");
+        } else {
+            System.out.println("아직 선택하지 않은 조건이 있습니다.");
+            return;
+        }
+    }
 
+    private boolean isCanNavigate() {
+        if (_env.selected_festival == null ||
+            _env.departure_information == null ||
+            _env.arrival_information == null ||
+            _env.departure_date == null ||
+            _env.arrival_date == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     //============================================================================
