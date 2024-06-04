@@ -14,7 +14,8 @@ public class Festival {
 
 
             String url = _env.getEnv("DATABASE_URL");
-            String sql = _env.getEnv("QUERY_ALL_INFO");
+            String sql = _env.getEnv("Login_INFO");
+            String sql2 = _env.getEnv("QUERY_ALL_INFO");
             String id = _env.getEnv("DATABASE_ID");
             String pw = _env.getEnv("DATABASE_PW");
             Connection conn = DriverManager.getConnection(url, id, pw);
@@ -26,6 +27,20 @@ public class Festival {
                 String f_name = rs.getString("festival_name");
                 System.out.println(f_num+ "\t" +f_name);
             }
+
+//            while(rs.next()) {
+//                String user_id = rs.getString("USER_ID");
+//                String user_name = rs.getString("USER_NAME");
+//                String user_type = rs.getString("USER_TYPE");
+//                System.out.println(user_id + " " + user_name + " " + user_type);
+//            }
+
+//            rs = st.executeQuery(sql2);
+//            while(rs.next()) {
+//                int f_num = rs.getInt("festival_mainid");
+//                String f_name = rs.getString("festival_name");
+//                System.out.println(f_num+ "\t" +f_name);
+//            }
 
         } catch(Exception e) {
             e.printStackTrace();
