@@ -326,6 +326,10 @@ public class V1_Controller {
     @FXML
     private void onclick_search(ActionEvent event) {
         System.out.println("Serach button clicked");
+
+        // 현재까지 선택한 정보들 출력하기
+
+
     }
 
     //============================================================================
@@ -345,11 +349,15 @@ public class V1_Controller {
     /**
      * WBS: View1 - P2 - ITM_B2
      * onclick festival item button
-     * @param event festival item click
+     * 이 이벤트는 버튼 생성시 람다식으로 할당되었습니다.
+     * {@link #display()} 생성한 버튼의 디스플레이 단계에서 배치됨
+     * @param item festival item click
      */
-    @FXML
-    private void onclick_festival_item(ActionEvent event) {
+    private void onclick_festival_item(Festival_item item) {
         System.out.println("Festival item button clicked");
+
+        // 선택한 아이템을 할당합니다.
+        _env.selected_festival = item;
     }
 
     /**
@@ -426,7 +434,8 @@ public class V1_Controller {
             // 6개만 출력
             System.out.println(_env.festival_informations.get(i).toString());
             FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
-            Festival_item item = new Festival_item(info);
+            Festival_item item = new Festival_item(info); // Button을 상속한 Festival_item 인스턴스 생성
+            item.setOnAction(event -> onclick_festival_item(item));
 
             GRID_FESTIVALS.add(item, i%3, i/3);
         }
