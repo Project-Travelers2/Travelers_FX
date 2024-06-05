@@ -8,6 +8,7 @@ module app.fx {
     requires java.sql;
     requires annotations;
     requires commons.csv;
+    requires ojdbc8;
 
     opens app.fx to javafx.fxml;
     opens app.fx.HY to javafx.fxml;

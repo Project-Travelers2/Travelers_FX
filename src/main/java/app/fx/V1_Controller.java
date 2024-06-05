@@ -6,17 +6,23 @@ import app.fx.HA.Queries;
 import app.fx.elements.Festival_item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class V1_Controller {
+public class V1_Controller implements Initializable {
 
     @FXML private AnchorPane ROOT;
     @FXML private Button HOME;
@@ -27,7 +33,14 @@ public class V1_Controller {
     @FXML private Button SEARCH;
     @FXML private Button FIND_ALL;
     @FXML private GridPane GRID_FESTIVALS;
+    @FXML private Button login;
 
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        login.setOnAction(event -> login());
+        System.out.println("로그인 창으로 이동합니다.");
+    }
 
     /**
      * WBS: View1 - P1 - HOME_B
@@ -38,6 +51,21 @@ public class V1_Controller {
     private void onclick_home(ActionEvent event) {
         System.out.println("Home button clicked");
         onclick_all_festivals(event);
+    }
+
+    private void login() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/HY/login.fxml"));
+//                Pane nextScene = loader.load();
+            Scene scene = new Scene(loader.load(), 1600, 900);
+
+            // Assuming you are getting the Stage from the RootPane
+            Stage stage = (Stage) login.getScene().getWindow();
+            stage.setScene(scene);
+            System.out.println("로그인 창으로 이동합니다");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -465,5 +493,7 @@ public class V1_Controller {
             GRID_FESTIVALS.add(item, i%3, i/3);
         }
     }
+
+
     // </editor-fold>
 }

@@ -15,9 +15,16 @@
 #TOP_BAR {
     -fx-font-family : '배달의민족 도현';
 }
-#HOME, #TitleBar {
+#HOME, #TitleBar, #login {
     -fx-background-color: #8ac5fd;
     -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+#login {
+    -fx-background-color: white;
+    -fx-font-family : '배달의민족 도현';
+    -fx-text-fill: #8ac5fd;
     -fx-font-size: 15px;
 }
 
