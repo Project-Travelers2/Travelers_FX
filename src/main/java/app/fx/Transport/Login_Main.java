@@ -12,6 +12,9 @@ public class Login_Main extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         LoginController_V1 controller = fxmlLoader.getController();
 
+        //css
+       // scene.getStylesheets().add(getClass().getResource("login.css").toString());
+
         stage.setTitle("login");
         stage.setScene(scene);
         stage.show();

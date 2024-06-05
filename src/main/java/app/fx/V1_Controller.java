@@ -61,13 +61,14 @@ public class V1_Controller implements Initializable {
      */
     private void login() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/HY/login.fxml"));
-//                Pane nextScene = loader.load();
-            Scene scene = new Scene(loader.load(), 1600, 900);
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/Transport/login_test.fxml"));
+            Scene scene = new Scene(loader.load(), 1600, 900);
             // Assuming you are getting the Stage from the RootPane
             Stage stage = (Stage) login.getScene().getWindow();
             stage.setScene(scene);
+
+
             System.out.println("로그인 창으로 이동합니다");
         } catch (Exception e) {
             e.printStackTrace();
