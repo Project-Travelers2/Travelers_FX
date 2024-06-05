@@ -2,6 +2,8 @@ package app.fx;
 
 import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.FESTIVAL_INFORMATION;
+import app.fx.Data.USERS;
+import app.fx.elements.Festival_item;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.time.LocalDate;
@@ -16,6 +18,9 @@ public class _env {
 
     public static int pageNumber = 1;
     public static List<FESTIVAL_INFORMATION> festival_informations;
+    public static List<USERS> users;
+
+    public static Festival_item selected_festival;
 
     public static AIRPORT_INFORMATION departure_information;
     public static AIRPORT_INFORMATION arrival_information;

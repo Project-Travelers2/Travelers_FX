@@ -6,17 +6,23 @@ import app.fx.HA.Queries;
 import app.fx.elements.Festival_item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class V1_Controller {
+public class V1_Controller implements Initializable {
 
     @FXML private AnchorPane ROOT;
     @FXML private Button HOME;
@@ -27,7 +33,14 @@ public class V1_Controller {
     @FXML private Button SEARCH;
     @FXML private Button FIND_ALL;
     @FXML private GridPane GRID_FESTIVALS;
+    @FXML private Button login;
 
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        login.setOnAction(event -> login());
+        System.out.println("로그인 창으로 이동합니다.");
+    }
 
     /**
      * WBS: View1 - P1 - HOME_B
@@ -38,6 +51,28 @@ public class V1_Controller {
     private void onclick_home(ActionEvent event) {
         System.out.println("Home button clicked");
         onclick_all_festivals(event);
+    }
+
+
+    /**
+     * 24.06.05
+     * 작업자 : 형주희 // TODO HY.
+     * 작업내용 : 메인 화면 로그인 창 이동
+     */
+    private void login() {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/Transport/login_test.fxml"));
+            Scene scene = new Scene(loader.load(), 1600, 900);
+            // Assuming you are getting the Stage from the RootPane
+            Stage stage = (Stage) login.getScene().getWindow();
+            stage.setScene(scene);
+
+
+            System.out.println("로그인 창으로 이동합니다");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -326,6 +361,35 @@ public class V1_Controller {
     @FXML
     private void onclick_search(ActionEvent event) {
         System.out.println("Serach button clicked");
+
+        // 현재까지 선택한 정보들 출력하기
+        System.out.println("=============================");
+        System.out.println("현재 선택한 정보들");
+        System.out.println("여행 정보 : " + _env.selected_festival);
+        System.out.println("출발 공항 : " + _env.departure_information);
+        System.out.println("도착 공항 : " + _env.arrival_information);
+        System.out.println("출발일 : " + _env.departure_date);
+        System.out.println("도착일 : " + _env.arrival_date);
+        System.out.println("=============================");
+
+        if (isCanNavigate()) {
+            System.out.println("안내 조건을 만족했습니다. 다음 단계로 넘어갑니다.");
+        } else {
+            System.out.println("아직 선택하지 않은 조건이 있습니다.");
+            return;
+        }
+    }
+
+    private boolean isCanNavigate() {
+        if (_env.selected_festival == null ||
+            _env.departure_information == null ||
+            _env.arrival_information == null ||
+            _env.departure_date == null ||
+            _env.arrival_date == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     //============================================================================
@@ -345,11 +409,15 @@ public class V1_Controller {
     /**
      * WBS: View1 - P2 - ITM_B2
      * onclick festival item button
-     * @param event festival item click
+     * 이 이벤트는 버튼 생성시 람다식으로 할당되었습니다.
+     * {@link #display()} 생성한 버튼의 디스플레이 단계에서 배치됨
+     * @param item festival item click
      */
-    @FXML
-    private void onclick_festival_item(ActionEvent event) {
+    private void onclick_festival_item(Festival_item item) {
         System.out.println("Festival item button clicked");
+
+        // 선택한 아이템을 할당합니다.
+        _env.selected_festival = item;
     }
 
     /**
@@ -426,10 +494,13 @@ public class V1_Controller {
             // 6개만 출력
             System.out.println(_env.festival_informations.get(i).toString());
             FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
-            Festival_item item = new Festival_item(info);
+            Festival_item item = new Festival_item(info); // Button을 상속한 Festival_item 인스턴스 생성
+            item.setOnAction(event -> onclick_festival_item(item));
 
             GRID_FESTIVALS.add(item, i%3, i/3);
         }
     }
+
+
     // </editor-fold>
 }

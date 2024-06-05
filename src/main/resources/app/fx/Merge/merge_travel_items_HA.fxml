@@ -95,7 +95,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#onclick_festival_item" prefHeight="300.0" prefWidth="534.0" text="view1" />
+            <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" />
             <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.columnIndex="1" />
             <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.columnIndex="2" />
             <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.rowIndex="1" />

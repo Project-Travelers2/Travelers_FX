@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="all" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.fx.V1_Controller">
+<AnchorPane fx:id="all" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" stylesheets="@festival.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.fx.V1_Controller">
    <children>
       <Pane layoutY="-0.19999999999999996" AnchorPane.bottomAnchor="600.2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.19999999999999996">
          <children>
@@ -63,13 +63,14 @@
                         <Insets bottom="20.0" top="50.0" />
                      </padding>
                   </Pane>
-                  <Button fx:id="DATE" layoutX="550.0" layoutY="49.0" mnemonicParsing="false" onAction="#onclick_datetime" prefHeight="60.0" prefWidth="790.0" text="출발일 전체" />
+                  <Button fx:id="DATE" layoutX="550.0" layoutY="49.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="790.0" text="출발일 전체" />
                   <Button fx:id="SEARCH" layoutX="1370.0" layoutY="49.0" mnemonicParsing="false" onAction="#onclick_search" prefHeight="60.0" prefWidth="180.0" text="항공권 검색" />
                </children>
             </Pane>
             <Pane fx:id="TitleBar" prefHeight="50.0" prefWidth="1600.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8cc9ff00" height="50.0" stroke="WHITE" strokeType="INSIDE" width="1600.0" />
+                  <Button fx:id="login" layoutX="1477.0" layoutY="7.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="109.0" text="로그인" />
                   <Pane fx:id="TOP_BAR" layoutX="40.0" layoutY="-2.0" prefHeight="50.0" prefWidth="280.0">
                      <children>
                         <Button fx:id="HOME" layoutY="7.0" mnemonicParsing="false" onAction="#onclick_home" prefHeight="40.0" prefWidth="100.0" text="HOME" />
@@ -101,7 +102,7 @@
                   <Pane prefHeight="284.0" prefWidth="513.0">
                      <children>
                         <Button layoutY="208.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="514.0" text="reserve" />
-                        <Button mnemonicParsing="false" onAction="#onclick_festival_item" prefHeight="136.0" prefWidth="513.0" text="detail" />
+                        <Button mnemonicParsing="false" prefHeight="136.0" prefWidth="513.0" text="detail" />
                      </children>
                   </Pane>
                </children>
@@ -111,7 +112,7 @@
                   <Pane prefHeight="284.0" prefWidth="513.0">
                      <children>
                         <Button layoutY="208.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="514.0" text="reserve" />
-                        <Button mnemonicParsing="false" onAction="#onclick_festival_item" prefHeight="136.0" prefWidth="513.0" text="detail" />
+                        <Button mnemonicParsing="false" prefHeight="136.0" prefWidth="513.0" text="detail" />
                      </children>
                   </Pane>
                </children>
@@ -121,7 +122,7 @@
                   <Pane prefHeight="284.0" prefWidth="513.0">
                      <children>
                         <Button layoutY="208.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="514.0" text="reserve" />
-                        <Button mnemonicParsing="false" onAction="#onclick_festival_item" prefHeight="136.0" prefWidth="513.0" text="detail" />
+                        <Button mnemonicParsing="false" prefHeight="136.0" prefWidth="513.0" text="detail" />
                      </children>
                   </Pane>
                </children>
@@ -131,7 +132,7 @@
                   <Pane prefHeight="284.0" prefWidth="513.0">
                      <children>
                         <Button layoutY="208.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="514.0" text="reserve" />
-                        <Button mnemonicParsing="false" onAction="#onclick_festival_item" prefHeight="136.0" prefWidth="513.0" text="detail" />
+                        <Button mnemonicParsing="false" prefHeight="136.0" prefWidth="513.0" text="detail" />
                      </children>
                   </Pane>
                </children>
@@ -141,7 +142,7 @@
                   <Pane prefHeight="284.0" prefWidth="513.0">
                      <children>
                         <Button layoutY="208.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="514.0" text="reserve" />
-                        <Button mnemonicParsing="false" onAction="#onclick_festival_item" prefHeight="136.0" prefWidth="513.0" text="detail" />
+                        <Button mnemonicParsing="false" prefHeight="136.0" prefWidth="513.0" text="detail" />
                      </children>
                   </Pane>
                </children>
@@ -151,7 +152,7 @@
                   <Pane prefHeight="284.0" prefWidth="513.0">
                      <children>
                         <Button layoutY="208.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="514.0" text="reserve" />
-                        <Button mnemonicParsing="false" onAction="#onclick_festival_item" prefHeight="136.0" prefWidth="513.0" text="detail" />
+                        <Button mnemonicParsing="false" prefHeight="136.0" prefWidth="513.0" text="detail" />
                      </children>
                   </Pane>
                </children>
