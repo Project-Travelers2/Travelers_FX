@@ -53,6 +53,12 @@ public class V1_Controller implements Initializable {
         onclick_all_festivals(event);
     }
 
+
+    /**
+     * 24.06.05
+     * 작업자 : 형주희 // TODO HY.
+     * 작업내용 : 메인 화면 로그인 창 이동
+     */
     private void login() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/HY/login.fxml"));

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.fx.HY.SignUp">
+   <children>
+      <Pane fx:id="RootPane" layoutX="510.0" layoutY="260.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="exit_btn" mnemonicParsing="false" prefHeight="400.0" prefWidth="600.0" text="exit" />
+            <Label alignment="CENTER" layoutX="122.0" layoutY="20.0" prefHeight="64.0" prefWidth="353.0" text="회원가입" />
+            <HBox layoutX="190.0" layoutY="80.0" prefHeight="22.0" prefWidth="227.0">
+               <children>
+                  <TextField fx:id="field_id" prefHeight="22.0" prefWidth="227.0" text="USER_NUMBER" />
+               </children>
+            </HBox>
+            <HBox layoutX="190.0" layoutY="130.0" prefHeight="22.0" prefWidth="227.0">
+               <children>
+                  <TextField fx:id="field_pw" prefHeight="22.0" prefWidth="227.0" text="ID" />
+               </children>
+            </HBox>
+            <HBox layoutX="190.0" layoutY="180.0" prefHeight="22.0" prefWidth="227.0">
+               <children>
+                  <PasswordField prefHeight="22.0" prefWidth="587.0" text="PASSWORD" />
+               </children>
+            </HBox>
+            <Button fx:id="register_btn" layoutX="217.0" layoutY="283.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="172.0" text="가입하기" />
+            <HBox layoutX="190.0" layoutY="230.0" prefHeight="22.0" prefWidth="227.0">
+               <children>
+                  <RadioButton fx:id="db_user" mnemonicParsing="false" prefHeight="22.0" prefWidth="72.0" text="USER">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="SELECT" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="db_staff" mnemonicParsing="false" prefHeight="22.0" prefWidth="72.0" text="STAFF" toggleGroup="$SELECT" />
+                  <RadioButton fx:id="db_manager" mnemonicParsing="false" prefHeight="22.0" prefWidth="90.0" text="MANAGER" toggleGroup="$SELECT" />
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
