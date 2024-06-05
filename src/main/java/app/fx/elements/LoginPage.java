@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import org.w3c.dom.Text;
 
 public class LoginPage extends Pane {
@@ -20,17 +22,22 @@ public class LoginPage extends Pane {
         this.setPrefSize(600.0, 400.0);
         this.setId("RootPane");
 
-        Label tLbl = new Label("Login Page");
+        Label tLbl = new Label("FESTI + VEL");
         tLbl.setPrefSize(360, 70);
         tLbl.setLayoutX(120.0);
         tLbl.setLayoutY(80.0);
         tLbl.setAlignment(Pos.CENTER);
+        tLbl.setFont(Font.font("배달의민족 도현"));
+        tLbl.setTextFill(Paint.valueOf("#89C3FBFF"));
+
 
         Label txtID = new Label("ID");
         txtID.setPrefSize(100, 20);
         txtID.setLayoutX(90.0);
         txtID.setLayoutY(150.0);
         txtID.setAlignment(Pos.CENTER_RIGHT);
+        txtID.setFont(Font.font("배달의민족 도현"));
+
 
 
         this.username = new TextField();
@@ -44,6 +51,7 @@ public class LoginPage extends Pane {
         txtPW.setLayoutX(90.0);
         txtPW.setLayoutY(180.0);
         txtPW.setAlignment(Pos.CENTER_RIGHT);
+        txtPW.setFont(Font.font("배달의민족 도현"));
 
         this.password = new PasswordField();
         this.password.setLayoutX(200.0);
@@ -58,13 +66,19 @@ public class LoginPage extends Pane {
         this.loginButton.setMnemonicParsing(false);
         this.loginButton.setPrefSize(100.0, 30.0);
         this.loginButton.setId("login_btn");
+        loginButton.setFont(Font.font("배달의민족 도현"));
+        loginButton.setStyle("-fx-background-color: #89c3fb");
+        loginButton.setTextFill(Paint.valueOf("white"));
 
         this.registerButton = new Button("회원가입");
         this.registerButton.setLayoutX(250.0);
-        this.registerButton.setLayoutY(300.0);
+        this.registerButton.setLayoutY(290.0);
         this.registerButton.setMnemonicParsing(false);
         this.registerButton.setPrefSize(100.0, 30.0);
         this.registerButton.setId("register_btn");
+        registerButton.setFont(Font.font("배달의민족 도현"));
+        registerButton.setStyle("-fx-background-color: #89c3fb");
+        registerButton.setTextFill(Paint.valueOf("white"));
 
         this.getChildren().addAll(tLbl, txtID, username, txtPW, password, loginButton, registerButton);
         System.out.println("Login Page Initialized");
