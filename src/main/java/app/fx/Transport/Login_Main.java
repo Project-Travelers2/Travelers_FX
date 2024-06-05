@@ -1,16 +1,16 @@
-package app.fx.HA;
+package app.fx.Transport;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Login_HA extends Application {
+public class Login_Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/app/fx/HA/login_test.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/app/fx/Transport/login_test.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        LoginController_HA controller = fxmlLoader.getController();
+        LoginController_V1 controller = fxmlLoader.getController();
 
         stage.setTitle("login");
         stage.setScene(scene);

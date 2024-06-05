@@ -1,17 +1,15 @@
-package app.fx.HA;
+package app.fx.Transport;
 
 import app.fx.elements.LoginPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController_HA implements Initializable {
+public class LoginController_V1 implements Initializable {
     @FXML private AnchorPane ROOT;
 
     private LoginPage loginPage;
