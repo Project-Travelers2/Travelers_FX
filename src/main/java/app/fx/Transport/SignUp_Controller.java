@@ -1,4 +1,4 @@
-package app.fx.HA;
+package app.fx.Transport;
 
 import app.fx.elements.SignUpPage;
 import javafx.event.ActionEvent;
