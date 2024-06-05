@@ -70,6 +70,7 @@
             <Pane fx:id="TitleBar" prefHeight="50.0" prefWidth="1600.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8cc9ff00" height="50.0" stroke="WHITE" strokeType="INSIDE" width="1600.0" />
+                  <Button fx:id="login" layoutX="1477.0" layoutY="7.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="109.0" text="로그인" />
                   <Pane fx:id="TOP_BAR" layoutX="40.0" layoutY="-2.0" prefHeight="50.0" prefWidth="280.0">
                      <children>
                         <Button fx:id="HOME" layoutY="7.0" mnemonicParsing="false" onAction="#onclick_home" prefHeight="40.0" prefWidth="100.0" text="HOME" />
