@@ -40,6 +40,7 @@ public class V1_Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        login.setOnAction(event -> login());
 //        System.out.println("로그인 창으로 이동합니다.");
+        // TODO: 작업 완료하고 유저 뷰 여따 넣어.
     }
 
     /**
