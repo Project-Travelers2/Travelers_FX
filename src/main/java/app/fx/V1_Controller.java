@@ -38,8 +38,8 @@ public class V1_Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        login.setOnAction(event -> login());
-        System.out.println("로그인 창으로 이동합니다.");
+//        login.setOnAction(event -> login());
+//        System.out.println("로그인 창으로 이동합니다.");
     }
 
     /**
