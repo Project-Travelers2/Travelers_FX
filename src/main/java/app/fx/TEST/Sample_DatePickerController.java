@@ -1,4 +1,4 @@
-package app.fx.HA;
+package app.fx.TEST;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

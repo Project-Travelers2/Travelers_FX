@@ -4,7 +4,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.fx.HA.Sample_DatePickerController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.fx.TEST.Sample_DatePickerController">
     <children>
         <DatePicker fx:id="datePicker" layoutX="100.0" layoutY="100.0" />
         <Button layoutX="100.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleDateButtonAction" text="Get Selected Date" />
