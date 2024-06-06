@@ -1,4 +1,4 @@
-package app.fx.HA;
+package app.fx.Transport;
 
 import app.fx.Data.USERS;
 import app.fx._env;
@@ -14,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class NewItemController_HA implements Initializable {
+public class UserViewController_HA implements Initializable {
 
     @FXML
     AnchorPane ROOT;

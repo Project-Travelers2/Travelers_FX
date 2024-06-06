@@ -1,4 +1,4 @@
-package app.fx.HA;
+package app.fx.Transport;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,10 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class NewItemMain_HA extends Application {
+public class UserViewMain_HA extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/app/fx/samples/UserView.fxml"));
         Parent root = fxmlLoader.load();
         stage.setTitle("New Item");
         stage.setScene(new Scene(root));
