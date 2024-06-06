@@ -2,8 +2,14 @@ package app.fx;
 
 import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.FESTIVAL_INFORMATION;
+import app.fx.Data.USERS;
 import app.fx.HA.Queries;
 import app.fx.elements.Festival_item;
+import app.fx.elements.User_Pane;
+import app.fx.elements._User_Pane.User_Customer;
+import app.fx.elements._User_Pane.User_LoginRequired;
+import app.fx.elements._User_Pane.User_Manager;
+import app.fx.elements._User_Pane.User_Staff;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -25,6 +32,7 @@ import java.util.ResourceBundle;
 public class V1_Controller implements Initializable {
 
     @FXML private AnchorPane ROOT;
+    @FXML private Pane TitleBar;
     @FXML private Button HOME;
     @FXML private Button DEPARTURE;
     @FXML private Button ARRIVAL;
@@ -41,6 +49,29 @@ public class V1_Controller implements Initializable {
 //        login.setOnAction(event -> login());
 //        System.out.println("로그인 창으로 이동합니다.");
         // TODO: 작업 완료하고 유저 뷰 여따 넣어.
+
+        USERS userTest = new USERS();
+        userTest.user_type = "3";
+        _env.selected_user = userTest;
+
+        User_Pane pane;
+        // 유저 레벨 0 (로그인 안됨)
+        if (_env.selected_user == null || _env.selected_user.user_type == "0") {
+            // 기본 뷰 할당
+            pane = new User_LoginRequired(_env.selected_user);
+            TitleBar.getChildren().add(pane);
+        } else if (_env.selected_user.user_type == "1") {
+            pane = new User_Customer(_env.selected_user);
+            TitleBar.getChildren().add(pane);
+        } else if (_env.selected_user.user_type == "2") {
+            pane = new User_Staff(_env.selected_user);
+            TitleBar.getChildren().add(pane);
+        } else if (_env.selected_user.user_type == "3") {
+            pane = new User_Manager(_env.selected_user);
+            ROOT.getChildren().add(pane);
+        }
+
+
     }
 
     /**

@@ -18,7 +18,7 @@
    <children>
       <Pane layoutY="-0.19999999999999996" AnchorPane.bottomAnchor="600.2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.19999999999999996">
          <children>
-            <Pane fx:id="MenuBar" layoutX="-2.0" layoutY="200.0" prefHeight="100.0" prefWidth="1600.0">
+            <Pane fx:id="MenuBar" layoutY="200.0" prefHeight="100.0" prefWidth="1600.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" width="1600.0" />
                   <ButtonBar buttonMinWidth="180.0" buttonOrder="R_HE+U" prefHeight="100.0" prefWidth="1598.0">

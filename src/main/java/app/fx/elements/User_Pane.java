@@ -25,7 +25,7 @@ public class User_Pane extends GridPane {
         this.setId("USER_PANE");
         this.setAlignment(javafx.geometry.Pos.CENTER);
         this.setHgap(10.0);
-        this.setLayoutX(1300.0);
+        this.setLayoutX(1250.0);
         this.setLayoutY(0);
         this.setPrefSize(300.0, 50.0);
 
