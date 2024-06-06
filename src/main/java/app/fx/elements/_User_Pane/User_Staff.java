@@ -8,7 +8,8 @@ public class User_Staff extends User_Pane {
 
     // 현재 사용자의 정보를 할당한다. (여긴 없지만.)
     public User_Staff(USERS currUser) {
-        super(currUser);
+        super();
+        this.selectedUser = currUser;
 
         // Button 생성 및 추가
         Button langBtn = new Button("언어");

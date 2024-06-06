@@ -14,12 +14,13 @@ import java.util.List;
 
 public class User_Pane extends GridPane {
 
-    public USERS selectedUser;
     public List<Button> grids = new ArrayList<Button>();
+    public USERS selectedUser;
+
 
     // 사용자 단계에 따라 다른 생성이 필요하다.
     // 기본 패널 수준만 남긴다.
-    private User_Pane() {
+    public User_Pane() {
         // GridPane 설정
         this.setId("USER_PANE");
         this.setAlignment(javafx.geometry.Pos.CENTER);
@@ -44,11 +45,6 @@ public class User_Pane extends GridPane {
 
         // Padding 설정
         this.setPadding(new Insets(10, 10, 10, 10));
-    }
-
-    public User_Pane(USERS selectedUser) {
-        this();
-        this.selectedUser = selectedUser;
     }
 
     public Button getElement(int index) throws IndexOutOfBoundsException{
