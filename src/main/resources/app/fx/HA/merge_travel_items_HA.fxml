@@ -6,6 +6,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -30,7 +31,7 @@
                         <Button fx:id="FIND_FOOD" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="음식" />
                         <Button fx:id="FIND_SUMMER" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="여름" />
                         <Button fx:id="FIND_WINTER" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="겨울" />
-                        <Button fx:id="SEARCH" mnemonicParsing="false" onAction="#onclick_navigate_flight" prefHeight="70.0" text="검색" />
+                        <Button mnemonicParsing="false" onAction="#onclick_navigate_flight" prefHeight="70.0" text="검색" />
                     </buttons>
                      <padding>
                         <Insets left="20.0" right="50.0" />
@@ -80,27 +81,6 @@
                         </Label>
                      </children>
                   </Pane>
-                  <GridPane fx:id="USER_PANE" alignment="CENTER" hgap="10.0" layoutX="1300.0" prefHeight="50.0" prefWidth="300.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Button fx:id="langBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="언어" />
-                        <Button fx:id="favBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="즐겨찾기" GridPane.columnIndex="1" />
-                        <Button fx:id="loginBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="로그인" GridPane.columnIndex="2" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </GridPane>
                </children>
             </Pane>
          </children>
@@ -116,7 +96,21 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" />
+            <Pane prefHeight="300.0" prefWidth="534.0">
+               <children>
+                  <ImageView fitHeight="280.0" fitWidth="514.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="DESCRIPTION" alignment="CENTER" prefHeight="210.0" prefWidth="514.0" text="Label">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="RESERVE" layoutY="208.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="514.0" text="reserve">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
             <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.columnIndex="1" />
             <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.columnIndex="2" />
             <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.rowIndex="1" />

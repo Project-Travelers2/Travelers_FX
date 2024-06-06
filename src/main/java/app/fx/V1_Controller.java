@@ -71,7 +71,7 @@ public class V1_Controller implements Initializable {
             ROOT.getChildren().add(pane);
         }
 
-
+        onclick_all_festivals(null);
     }
 
     /**
@@ -527,7 +527,8 @@ public class V1_Controller implements Initializable {
             System.out.println(_env.festival_informations.get(i).toString());
             FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
             Festival_item item = new Festival_item(info); // Button을 상속한 Festival_item 인스턴스 생성
-            item.setOnAction(event -> onclick_festival_item(item));
+            item.description.setOnMouseClicked(mouseEvent -> onclick_festival_item(item));
+            item.reserve.setOnAction(event -> onclick_festival_item(item));
 
             GRID_FESTIVALS.add(item, i%3, i/3);
         }
