@@ -95,5 +95,17 @@ public class LoginController_V1 implements Initializable {
 
     private void register(ActionEvent event) {
         System.out.println("회원가입을 진행합니다.");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/Transport/signUp.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+            // Assuming you are getting the Stage from the RootPane
+            Stage stage = (Stage) LoginPage.registerButton.getScene().getWindow();
+            stage.setScene(scene);
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
