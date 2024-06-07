@@ -19,6 +19,7 @@ public class _env {
     public static int pageNumber = 1;
     public static List<FESTIVAL_INFORMATION> festival_informations;
     public static List<USERS> users;
+    public static USERS selected_user;
 
     public static Festival_item selected_festival;
 
