@@ -9,6 +9,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +48,12 @@ public class User_Pane extends GridPane {
 
         // Padding 설정
         this.setPadding(new Insets(10, 10, 10, 10));
+
+
     }
 
     public Button getElement(int index) throws IndexOutOfBoundsException{
         return null;
     }
+
 }

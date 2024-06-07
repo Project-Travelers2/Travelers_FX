@@ -91,5 +91,4 @@ public class LoginPage extends Pane {
     public String getPassword() {
         return this.password.getText();
     }
-
 }
