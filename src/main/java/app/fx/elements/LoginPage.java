@@ -16,7 +16,7 @@ public class LoginPage extends Pane {
     public TextField username;
     public PasswordField password;
     public Button loginButton;
-    public Button registerButton;
+    public static Button registerButton;
 
     public LoginPage() {
         this.setPrefSize(600.0, 400.0);
