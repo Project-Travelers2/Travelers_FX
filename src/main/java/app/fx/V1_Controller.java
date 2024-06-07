@@ -330,8 +330,7 @@ public class V1_Controller implements Initializable {
             case "FIND_FOOD":   festival_code = 4;  break;
             case "FIND_SUMMER": festival_code = 5;  break;
             case "FIND_WINTER": festival_code = 6;  break;
-            case "FIND":        festival_code = 7; // TODO 7번 데이터 분류 질문
-                break;
+            case "FIND_ETC":    festival_code = 7; break;
             default:    break;
         }
 

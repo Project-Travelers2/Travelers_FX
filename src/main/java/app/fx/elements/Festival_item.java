@@ -54,7 +54,8 @@ public class Festival_item extends Pane {
         this.fest_info = fest_info;
 //        this.setText(fest_info.festival_name);
         
-        description.setText(fest_info.festival_name);
+//        description.setText(fest_info.festival_name);
+        description.setText("");
         reserve.setText("reserve");
 
         String imagePath = fest_info.image_path;

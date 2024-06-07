@@ -30,7 +30,7 @@
                         <Button fx:id="FIND_FOOD" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="음식" />
                         <Button fx:id="FIND_SUMMER" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="여름" />
                         <Button fx:id="FIND_WINTER" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="겨울" />
-                        <Button fx:id="SEARCH" mnemonicParsing="false" onAction="#onclick_navigate_flight" prefHeight="70.0" text="검색" />
+                        <Button fx:id="FIND_ETC" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="기타" />
                     </buttons>
                      <padding>
                         <Insets left="20.0" right="50.0" />
