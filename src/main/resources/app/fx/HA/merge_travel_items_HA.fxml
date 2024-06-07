@@ -98,7 +98,7 @@
          <children>
             <Pane prefHeight="300.0" prefWidth="534.0">
                <children>
-                  <ImageView fitHeight="280.0" fitWidth="514.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="BACKGROUND" fitHeight="280.0" fitWidth="514.0" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="DESCRIPTION" alignment="CENTER" prefHeight="210.0" prefWidth="514.0" text="Label">
                      <font>
                         <Font size="25.0" />

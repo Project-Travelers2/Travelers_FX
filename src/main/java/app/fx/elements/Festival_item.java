@@ -52,7 +52,9 @@ public class Festival_item extends Pane {
         this();
         this.fest_info = fest_info;
 //        this.setText(fest_info.festival_name);
+        
         description.setText(fest_info.festival_name);
         reserve.setText("reserve");
+//        imageView.setImage(); // 이미지 세팅하기
     }
 }
