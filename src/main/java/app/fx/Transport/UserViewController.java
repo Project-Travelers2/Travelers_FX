@@ -8,7 +8,6 @@ import app.fx.elements._User_Pane.User_LoginRequired;
 import app.fx.elements._User_Pane.User_Manager;
 import app.fx.elements._User_Pane.User_Staff;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -17,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UserViewController_HA implements Initializable {
+public class UserViewController implements Initializable {
 
     @FXML
     AnchorPane ROOT;

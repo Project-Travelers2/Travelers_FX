@@ -52,7 +52,7 @@ public class V1_Controller implements Initializable {
 
 
         USERS userTest = new USERS();
-        userTest.user_type = "3";
+        userTest.user_type = "0";
         _env.selected_user = userTest;
 
         User_Pane pane = null;
@@ -92,26 +92,33 @@ public class V1_Controller implements Initializable {
         else if (btnID.equals("logout_manager")) logout_manager(event);
     }
 
+    // TODO: 0607 로그인
     private void login_required(ActionEvent event) {
         System.out.println("0: 로그인 요청");
 
         // 로그인이 완료되었다면
         // _env.selectedUser에 받아온 유저 정보를 할당
         // 이 정보는 user_type이 1,2,3중에 하나임
+
+        // userView 제거
+        // initialize에 있던 userView 생성코드 재실행 (USERS 따라서 나와야 하는 UI는 다르다)
     }
 
+    // TODO: 0607 로그인
     private void logout_customer(ActionEvent event) {
         System.out.println("1: 사용자 로그아웃");
 
         // user_type이 1
     }
 
+    // TODO: 0607 로그인
     private void logout_staff(ActionEvent event) {
         System.out.println("2: 직원 로그아웃");
 
         // user_type이 2
     }
 
+    // TODO: 0607 로그인
     private void logout_manager(ActionEvent event) {
         System.out.println("3: 관리자 로그아웃");
 
