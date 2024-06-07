@@ -1,24 +1,14 @@
 package app.fx.Data;
 
 public class AIRPORT_INFORMATION {
-    public String id;
-    public String ident;
+    public String airport_id;
     public String type;
     public String name;
     public int latitude_deg;
     public int longitude_deg;
-    public int elevation_ft;
-    public String continent;
-    public String iso_country;
-    public String iso_region;
     public String municipality;
     public String scheduled_service;
-    public String gps_code;
-    public String iata_code;
-    public String local_code;
-    public String home_link;
-    public String wikipedia_link;
-    public String keywords;
+    public String iso_country;
 
     public String getName() {
         return name;

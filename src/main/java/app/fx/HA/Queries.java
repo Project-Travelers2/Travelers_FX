@@ -1,7 +1,7 @@
 package app.fx.HA;
 
 import app.fx.Data.AIRPORT_INFORMATION;
-import app.fx.Data.FESTIVAL_INFORMATION;
+import app.fx.Data.FESTIVALS;
 import app.fx._env;
 
 import java.sql.*;
@@ -19,24 +19,28 @@ public class Queries {
         this.pw = _env.getEnv("DATABASE_PW");
     }
 
-    public List<FESTIVAL_INFORMATION> all_festival_list() {
-        List<FESTIVAL_INFORMATION> festival_list = new ArrayList<>();
+    public static void main(String[] args) {
+        Queries.instance.all_festival_list();
+    }
+
+    public List<FESTIVALS> all_festival_list() {
+        List<FESTIVALS> festival_list = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(url, id, pw)){
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from festival_information");
+            ResultSet rs = st.executeQuery("select * from FESTIVALS");
 
             while(rs.next()) {
-                FESTIVAL_INFORMATION f = new FESTIVAL_INFORMATION();
-
-                f.festival_loccode = rs.getInt("FESTIVAL_LOCCODE");
-                f.festival_code = rs.getInt("FESTIVAL_CODE");
-                f.festival_mainid = rs.getInt("FESTIVAL_MAINID");
+                FESTIVALS f = new FESTIVALS();
+                f.festival_id = rs.getString("FESTIVAL_ID");
                 f.festival_name = rs.getString("FESTIVAL_NAME");
-                f.location = rs.getString("LOCATION");
-                f.date_range = rs.getString("DATE_RANGE");
                 f.description = rs.getString("DESCRIPTION");
+                f.start_date = rs.getDate("START_DATE");
+                f.end_date = rs.getDate("END_DATE");
                 f.website_link = rs.getString("WEBSITE_LINK");
+                f.image_path = rs.getString("IMAGE_PATH");
+                f.festival_code_id = rs.getString("FESTIVAL_CODE_ID");
+                f.local_id = rs.getString("LOCAL_ID");
 
                 festival_list.add(f);
             }
@@ -47,24 +51,24 @@ public class Queries {
         }
     }
 
-    public List<FESTIVAL_INFORMATION> specific_festival_list(int festival_id) {
-        List<FESTIVAL_INFORMATION> festival_list = new ArrayList<>();
+    public List<FESTIVALS> specific_festival_list(int festival_id) {
+        List<FESTIVALS> festival_list = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(url, id, pw)){
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from festival_information where FESTIVAL_CODE = " + festival_id);
+            ResultSet rs = st.executeQuery("select * from FESTIVALS where FESTIVAL_CODE_ID = " + festival_id);
 
             while(rs.next()) {
-                FESTIVAL_INFORMATION f = new FESTIVAL_INFORMATION();
-
-                f.festival_loccode = rs.getInt("FESTIVAL_LOCCODE");
-                f.festival_code = rs.getInt("FESTIVAL_CODE");
-                f.festival_mainid = rs.getInt("FESTIVAL_MAINID");
+                FESTIVALS f = new FESTIVALS();
+                f.festival_id = rs.getString("FESTIVAL_ID");
                 f.festival_name = rs.getString("FESTIVAL_NAME");
-                f.location = rs.getString("LOCATION");
-                f.date_range = rs.getString("DATE_RANGE");
                 f.description = rs.getString("DESCRIPTION");
+                f.start_date = rs.getDate("START_DATE");
+                f.end_date = rs.getDate("END_DATE");
                 f.website_link = rs.getString("WEBSITE_LINK");
+                f.image_path = rs.getString("IMAGE_PATH");
+                f.festival_code_id = rs.getString("FESTIVAL_CODE_ID");
+                f.local_id = rs.getString("LOCAL_ID");
 
                 festival_list.add(f);
             }
@@ -83,29 +87,19 @@ public class Queries {
             Statement st = conn.createStatement();
             // 컬럼명은 대소문자 구분합니다. ㅂㄷㅂㄷ
 //            ResultSet rs = st.executeQuery("select * from AIRPORTS WHERE COUNTRY_CODE = " + CountryCode);
-            ResultSet rs = st.executeQuery("SELECT * FROM airports WHERE iso_country = " + "\'"+CountryCode+"\'"+
+            ResultSet rs = st.executeQuery("SELECT * FROM AIRPORTS WHERE ISO_COUNTRY = " + "\'"+CountryCode+"\'"+
                     "AND SCHEDULED_SERVICE = " + "\'yes\'");
 
             while(rs.next()) {
                 AIRPORT_INFORMATION air = new AIRPORT_INFORMATION();
-                air.id = rs.getString("id");
-                air.ident = rs.getString("ident");
-                air.type = rs.getString("type");
-                air.name = rs.getString("name");
-                air.latitude_deg = rs.getInt("latitude_deg");
-                air.longitude_deg = rs.getInt("longitude_deg");
-                air.elevation_ft = rs.getInt("elevation_ft");
-                air.continent = rs.getString("continent");
-                air.iso_country = rs.getString("iso_country");
-                air.iso_region = rs.getString("iso_region");
-                air.municipality = rs.getString("municipality");
-                air.scheduled_service = rs.getString("scheduled_service");
-                air.gps_code = rs.getString("gps_code");
-                air.iata_code = rs.getString("iata_code");
-                air.local_code = rs.getString("local_code");
-                air.home_link = rs.getString("home_link");
-                air.wikipedia_link = rs.getString("wikipedia_link");
-                air.keywords = rs.getString("keywords");
+                air.airport_id = rs.getString("AIRPORT_ID");
+                air.type = rs.getString("TYPE");
+                air.name = rs.getString("NAME");
+                air.latitude_deg = rs.getInt("LATITUDE_DEG");
+                air.longitude_deg = rs.getInt("LONGITUDE_DEG");
+                air.municipality = rs.getString("MUNICIPALITY");
+                air.scheduled_service = rs.getString("SCHEDULED_SERVICE");
+                air.iso_country = rs.getString("ISO_COUNTRY");
 
                 System.out.println(air.toString());
 

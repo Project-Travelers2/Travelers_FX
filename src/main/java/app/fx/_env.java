@@ -1,7 +1,7 @@
 package app.fx;
 
 import app.fx.Data.AIRPORT_INFORMATION;
-import app.fx.Data.FESTIVAL_INFORMATION;
+import app.fx.Data.FESTIVALS;
 import app.fx.Data.USERS;
 import app.fx.elements.Festival_item;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -17,7 +17,7 @@ public class _env {
     }
 
     public static int pageNumber = 1;
-    public static List<FESTIVAL_INFORMATION> festival_informations;
+    public static List<FESTIVALS> festival_informations;
     public static List<USERS> users;
     public static USERS selected_user;
 

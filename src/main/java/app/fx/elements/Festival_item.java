@@ -1,16 +1,17 @@
 package app.fx.elements;
 
-import app.fx.Data.FESTIVAL_INFORMATION;
+import app.fx.Data.FESTIVALS;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
 public class Festival_item extends Pane {
 
-    private FESTIVAL_INFORMATION fest_info;
+    private FESTIVALS fest_info;
     public Label description;
     public Button reserve;
     public ImageView imageView;
@@ -48,13 +49,17 @@ public class Festival_item extends Pane {
         this.getChildren().addAll(imageView, description, reserve);
     }
 
-    public Festival_item(FESTIVAL_INFORMATION fest_info) {
+    public Festival_item(FESTIVALS fest_info) {
         this();
         this.fest_info = fest_info;
 //        this.setText(fest_info.festival_name);
         
         description.setText(fest_info.festival_name);
         reserve.setText("reserve");
-//        imageView.setImage(); // 이미지 세팅하기
+
+        String imagePath = fest_info.image_path;
+        Image image = new Image(getClass().getResource(imagePath).toString());
+
+        imageView.setImage(new Image(getClass().getResource(fest_info.image_path).toString())); // 이미지 세팅하기
     }
 }
