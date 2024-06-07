@@ -1,6 +1,7 @@
 package app.fx.HY;
 
 import app.fx.V1_Controller;
+import app.fx._env;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +18,10 @@ public class Main_Final1 extends Application {
         FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/app/fx/Merge/merge_travel_items.fxml"));
         Scene scene = new Scene(fxmlloader.load(), 1600, 900);
         V1_Controller controller = fxmlloader.getController();
+
         bindTestKey(scene, controller);
+
+        scene.getStylesheets().add(getClass().getResource("festival.css").toString());
 
         stage.setTitle("Travel items");
         stage.setScene(scene);

@@ -99,7 +99,6 @@ public class Login_Controller implements Initializable {
 
     /**
      * 로그인 창을 나갑니다.
-     * @param event 나가기 버튼 클릭
      */
     @FXML
     private void exit() {

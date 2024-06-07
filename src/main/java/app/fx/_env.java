@@ -5,6 +5,7 @@ import app.fx.Data.FESTIVAL_INFORMATION;
 import app.fx.Data.USERS;
 import app.fx.elements.Festival_item;
 import io.github.cdimascio.dotenv.Dotenv;
+import javafx.scene.Scene;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +16,8 @@ public class _env {
     public static String getEnv(String key) {
         return dotenv.get(key);
     }
+
+//    public static Scene scene;
 
     public static int pageNumber = 1;
     public static List<FESTIVAL_INFORMATION> festival_informations;

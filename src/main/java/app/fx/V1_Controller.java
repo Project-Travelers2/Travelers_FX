@@ -5,6 +5,7 @@ import app.fx.Data.FESTIVAL_INFORMATION;
 import app.fx.Data.USERS;
 import app.fx.HA.Queries;
 import app.fx.elements.Festival_item;
+import app.fx.elements.LoginPage;
 import app.fx.elements.User_Pane;
 import app.fx.elements._User_Pane.User_Customer;
 import app.fx.elements._User_Pane.User_LoginRequired;
@@ -25,6 +26,10 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -43,13 +48,23 @@ public class V1_Controller implements Initializable {
     @FXML private GridPane GRID_FESTIVALS;
     @FXML private Button login;
 
+//    public Scene curr_scene;
+
+    User_Pane pane;
+    LoginPage loginPage;
+    //database
+    private static final String url = _env.getEnv("DATABASE_URL");
+    private static final String id = _env.getEnv("DATABASE_ID");
+    private static final String pw =_env.getEnv("DATABASE_PW");
+
+//    public void reapplyCssToScene() {
+//        curr_scene.getRoot().applyCss();
+//    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        login.setOnAction(event -> login());
 //        System.out.println("로그인 창으로 이동합니다.");
-        // TODO: 작업 완료하고 유저 뷰 여따 넣어.
-
 
         USERS userTest = new USERS();
         userTest.user_type = "0";
@@ -78,6 +93,9 @@ public class V1_Controller implements Initializable {
             return;
         }
 
+//        Scene scene = ROOT.getScene();
+//        scene.getRoot().applyCss();
+
         pane.getElement(2).setOnAction(event -> logAction(event));
     }
 
@@ -96,12 +114,121 @@ public class V1_Controller implements Initializable {
     private void login_required(ActionEvent event) {
         System.out.println("0: 로그인 요청");
 
+        loginPage = new LoginPage();
+        loginPage.setId("LoginPage");
+        loginPage.loginButton.setOnAction(this::login);
+        loginPage.registerButton.setOnAction(this::register);
+        ROOT.getChildren().add(loginPage);
+
         // 로그인이 완료되었다면
         // _env.selectedUser에 받아온 유저 정보를 할당
         // 이 정보는 user_type이 1,2,3중에 하나임
 
         // userView 제거
-        // initialize에 있던 userView 생성코드 재실행 (USERS 따라서 나와야 하는 UI는 다르다)
+
+
+
+
+
+    }
+
+    private void login(ActionEvent event) {
+        String userId = loginPage.getUsername();
+        String password = loginPage.getPassword();
+        if (validateLogin(userId, password)) {
+            // 화면전환
+            try {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login");
+                alert.setContentText("로그인 되었습니다");
+                alert.show();
+
+                // TODO: id로 들어가서 로그인 창, 유저 뷰 제거하기
+                ROOT.getChildren().remove(loginPage);
+                ROOT.getChildren().remove(pane);
+
+
+                // initialize에 있던 userView 생성코드 재실행 (USERS 따라서 나와야 하는 UI는 다르다)
+                pane = null;
+                // 유저 레벨 0 (로그인 안됨)
+                if (_env.selected_user == null || _env.selected_user.user_type == "0") {
+                    // 기본 뷰 할당
+                    pane = new User_LoginRequired(_env.selected_user);
+                    TitleBar.getChildren().add(pane);
+                } else if (_env.selected_user.user_type == "1") {
+                    pane = new User_Customer(_env.selected_user);
+                    TitleBar.getChildren().add(pane);
+                } else if (_env.selected_user.user_type == "2") {
+                    pane = new User_Staff(_env.selected_user);
+                    TitleBar.getChildren().add(pane);
+                } else if (_env.selected_user.user_type == "3") {
+                    pane = new User_Manager(_env.selected_user);
+                    ROOT.getChildren().add(pane);
+                }
+
+                onclick_all_festivals(null);
+
+                if (pane == null) {
+                    return;
+                }
+
+                pane.getElement(2).setOnAction(_event -> logAction(_event));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("경고");
+            alert.setContentText("로그인 실패");
+            alert.show();
+            loginPage.username.clear();
+            loginPage.password.clear();
+            System.out.println("로그인 실패");
+        }
+        System.out.println("id: " + loginPage.getUsername());
+        System.out.println("pw: " + loginPage.getPassword());
+    }
+
+    private boolean validateLogin(String userId, String userpw) {
+        boolean isValid = false;
+        try (Connection conn = DriverManager.getConnection(url, id, pw)) {
+            String query = "SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ? ";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, userId);
+            preparedStatement.setString(2, userpw);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                USERS user = new USERS();
+                user.user_id = resultSet.getInt("USER_ID");
+                user.user_name = resultSet.getString("USER_NAME");
+                user.user_password = resultSet.getString("USER_PASSWORD");
+                user.user_type = String.valueOf(resultSet.getInt("USER_TYPE"));
+
+                _env.selected_user = user;
+                isValid = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isValid;
+    }
+
+    private void register(ActionEvent event) {
+        System.out.println("회원가입을 진행합니다.");
+        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/Transport/signUp.fxml"));
+//            Scene scene = new Scene(loader.load(), 600, 400);
+//            // Assuming you are getting the Stage from the RootPane
+//            Stage stage = (Stage) LoginPage.registerButton.getScene().getWindow();
+//            stage.setScene(scene);
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // TODO: 0607 로그인

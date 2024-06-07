@@ -1,5 +1,6 @@
 package app.fx.Transport;
 
+import app.fx.Data.USERS;
 import app.fx._env;
 import app.fx.elements.LoginPage;
 import javafx.event.ActionEvent;
@@ -49,11 +50,12 @@ public class LoginController_V1 implements Initializable {
                 alert.setTitle("Login");
                 alert.setContentText("로그인 되었습니다");
                 alert.show();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/HY/merge_travel_items_HY.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/Merge/merge_travel_items.fxml"));
 //                Pane nextScene = loader.load();
                 Scene scene = new Scene(loader.load(), 1600, 900);
 
-                // Assuming you are getting the Stage from the RootPane
+                String user_type = System.getenv("user_type");
+                System.out.println(user_type);
                 Stage stage = (Stage) ROOT.getScene().getWindow();
                 stage.setScene(scene);
                 System.out.println("로그인이 되었습니다.");
@@ -75,9 +77,8 @@ public class LoginController_V1 implements Initializable {
 
     private boolean validateLogin(String userId, String userpw) {
         boolean isValid = false;
-
         try (Connection conn = DriverManager.getConnection(url, id, pw)) {
-            String query = "SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ?";
+            String query = "SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ? AND USER_TYPE = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, userId);
             preparedStatement.setString(2, userpw);
