@@ -1,7 +1,9 @@
 package app.fx.elements._User_Pane;
 
 import app.fx.Data.USERS;
+import app.fx.Transport.UserViewController_HA;
 import app.fx.elements.User_Pane;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 
 public class User_Staff extends User_Pane {
@@ -26,10 +28,11 @@ public class User_Staff extends User_Pane {
         grids.add(favBtn);
 
         Button loginBtn = new Button("로그아웃");
-        loginBtn.setId("loginBtn");
+        loginBtn.setId("logout_staff");
         loginBtn.setPrefSize(100.0, 30.0);
         this.add(loginBtn, 2, 0);
         grids.add(loginBtn);
+//        loginBtn.setOnAction(event -> logAction(event));
     }
 
     @Override
