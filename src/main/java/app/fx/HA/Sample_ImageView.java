@@ -14,11 +14,12 @@ public class Sample_ImageView extends Application {
         // 이미지 파일의 경로
         // 절대경로
 //        String imagePath = "file:C:\\Projects\\Project1_Travelers\\Travelers_FX\\src\\main\\resources\\app\\fx\\HA/1101_부산국제영화제.jpg"; // 로컬 파일 경로
-        String imagePath = "file:/src/main/app/fx/HA/1101_부산국제영화제.jpg";
+        String imagePath = "/app/fx/HA/1101_부산국제영화제.jpg";
         // String imagePath = "http://example.com/image.jpg"; // 웹 URL 경로
 
         // Image 객체 생성
-        Image image = new Image(imagePath);
+//        Image image = new Image(imagePath);
+        Image image = new Image(getClass().getResource(imagePath).toString());
 
         // ImageView 객체 생성 및 이미지 설정
         ImageView imageView = new ImageView(image);

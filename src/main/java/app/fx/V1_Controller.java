@@ -1,7 +1,7 @@
 package app.fx;
 
 import app.fx.Data.AIRPORT_INFORMATION;
-import app.fx.Data.FESTIVAL_INFORMATION;
+import app.fx.Data.FESTIVALS;
 import app.fx.Data.USERS;
 import app.fx.HA.Queries;
 import app.fx.elements.Festival_item;
@@ -703,7 +703,7 @@ public class V1_Controller implements Initializable {
 
             // 6개만 출력
             System.out.println(_env.festival_informations.get(i).toString());
-            FESTIVAL_INFORMATION info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
+            FESTIVALS info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
             Festival_item item = new Festival_item(info); // Button을 상속한 Festival_item 인스턴스 생성
             item.description.setOnMouseClicked(mouseEvent -> onclick_festival_item(item));
             item.reserve.setOnAction(event -> onclick_festival_item(item));
