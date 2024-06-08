@@ -4,6 +4,7 @@ import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.FESTIVALS;
 import app.fx.Data.USERS;
 import app.fx.HA.Queries;
+import app.fx.elements.DetailedImageView;
 import app.fx.elements.Festival_item;
 import app.fx.elements.LoginPage;
 import app.fx.elements.User_Pane;
@@ -627,6 +628,10 @@ public class V1_Controller implements Initializable {
 
         // 선택한 아이템을 할당합니다.
         _env.selected_festival = item;
+
+        // TODO: festival item
+        DetailedImageView detail = new DetailedImageView(item);
+        ROOT.getChildren().add(detail);
     }
 
     /**
