@@ -4,10 +4,7 @@ import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.FESTIVALS;
 import app.fx.Data.USERS;
 import app.fx.HA.Queries;
-import app.fx.elements.DetailedImageView;
-import app.fx.elements.Festival_item;
-import app.fx.elements.LoginPage;
-import app.fx.elements.User_Pane;
+import app.fx.elements.*;
 import app.fx.elements._User_Pane.User_Customer;
 import app.fx.elements._User_Pane.User_LoginRequired;
 import app.fx.elements._User_Pane.User_Manager;
@@ -39,6 +36,9 @@ public class V1_Controller implements Initializable {
 
     @FXML private AnchorPane ROOT;
     @FXML private Pane TitleBar;
+    @FXML private Pane CONTENTS;
+    private Festivals_tab festivalsTab;
+
     @FXML private Button HOME;
     @FXML private Button DEPARTURE;
     @FXML private Button ARRIVAL;
@@ -300,7 +300,18 @@ public class V1_Controller implements Initializable {
         System.out.println("All festivals button clicked");
         _env.festival_informations = Queries.instance.all_festival_list();
 
-        display();
+        // CONTENTS 영역에 패널 생성
+        if (festivalsTab != null) {
+            festivalsTab.clear();
+            festivalsTab = null;
+        }
+        festivalsTab = new Festivals_tab(CONTENTS);
+        // TODO: 11111 할당받아야 할 요소
+        festivalsTab.setGridFestivals(_env.festival_informations);
+
+//        display();
+
+
 
         // TEST: 리스트에서 현재 보여줘야할 데이터의 뷰 위치 확인
         //for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
@@ -338,7 +349,15 @@ public class V1_Controller implements Initializable {
         // 데이터 리스트 받아오기
         _env.festival_informations = Queries.instance.specific_festival_list(festival_code);
 
-        display();
+        // CONTENTS 영역에 패널 생성
+        if (festivalsTab != null) {
+            festivalsTab.clear();
+            festivalsTab = null;
+        }
+        festivalsTab = new Festivals_tab(CONTENTS);
+        festivalsTab.setGridFestivals(_env.festival_informations);
+
+//        display();
 
         // TEST: 리스트에서 현재 보여줘야할 데이터 리스트 보기
         //for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
@@ -709,6 +728,7 @@ public class V1_Controller implements Initializable {
             System.out.println(_env.festival_informations.get(i).toString());
             FESTIVALS info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
             Festival_item item = new Festival_item(info); // Button을 상속한 Festival_item 인스턴스 생성
+            // TODO: 22222 할당해야할 이벤트
             item.description.setOnMouseClicked(mouseEvent -> onclick_festival_item(item));
             item.reserve.setOnAction(event -> onclick_festival_item(item));
 

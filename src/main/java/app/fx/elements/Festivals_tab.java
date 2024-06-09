@@ -140,6 +140,9 @@ public class Festivals_tab {
     }
 
 
+    public void clear() {
+        this.rootFestivals.getChildren().clear();
+    }
     
     
     public void pageUp() {
