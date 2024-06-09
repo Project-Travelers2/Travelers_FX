@@ -2,6 +2,7 @@ package app.fx.HA;
 
 import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.FESTIVALS;
+import app.fx.Data.USERS;
 import app.fx._env;
 
 import java.sql.*;
@@ -110,5 +111,31 @@ public class Queries {
         } finally {
             return airport_list;
         }
+    }
+
+    public boolean validateLogin(String userId, String userpw) {
+        boolean isValid = false;
+        try (Connection conn = DriverManager.getConnection(url, id, pw)) {
+            String query = "SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ? ";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, userId);
+            preparedStatement.setString(2, userpw);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                USERS user = new USERS();
+                user.user_id = resultSet.getInt("USER_ID");
+                user.user_name = resultSet.getString("USER_NAME");
+                user.user_password = resultSet.getString("USER_PASSWORD");
+                user.user_type = String.valueOf(resultSet.getInt("USER_TYPE"));
+
+                _env.selected_user = user;
+                isValid = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isValid;
     }
 }

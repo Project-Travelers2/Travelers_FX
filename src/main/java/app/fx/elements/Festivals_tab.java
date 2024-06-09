@@ -23,6 +23,7 @@ public class Festivals_tab {
     private final int DISPLAY_COUNT_PER_PAGE = 6;
     private final int ROWS_PER_PAGE = 3;
     private int maxPageCount = 1;
+    private int elementSize = 1;
 
 
     public Festivals_tab() {
@@ -114,8 +115,9 @@ public class Festivals_tab {
         this.controller = controller;
 
         //다른 버튼 눌러서 재시작할때
-        maxPageCount = festivals.size() / DISPLAY_COUNT_PER_PAGE; // 최대 페이지수: 요소 수 / 페이지당 표시 요소 수
-        resetTabValues(maxPageCount);
+        elementSize = festivals.size();
+        maxPageCount = elementSize / DISPLAY_COUNT_PER_PAGE; // 최대 페이지수: 요소 수 / 페이지당 표시 요소 수
+        resetTabValues(maxPageCount == 0 ? 1 : maxPageCount);
 
         festivalsPagination.setPageFactory(new Callback<Integer, Node>() {
             // 한번은 실행됨
@@ -130,7 +132,7 @@ public class Festivals_tab {
         GridPane gridPane = initializeGrid();
 
         for (int i = 0; i < DISPLAY_COUNT_PER_PAGE; i++) {
-            if (festivalsPagination.getCurrentPageIndex() * DISPLAY_COUNT_PER_PAGE + i >= maxPageCount * DISPLAY_COUNT_PER_PAGE) {
+            if (festivalsPagination.getCurrentPageIndex() * DISPLAY_COUNT_PER_PAGE + i >= elementSize) {
                 break;
             }
 

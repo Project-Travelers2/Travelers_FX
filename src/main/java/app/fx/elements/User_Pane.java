@@ -7,6 +7,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.Priority;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class User_Pane extends GridPane {
         this.setLayoutX(1250.0);
         this.setLayoutY(0);
         this.setPrefSize(300.0, 50.0);
+
 
         // ColumnConstraints 설정
         ColumnConstraints col1 = new ColumnConstraints(100, 100, Double.MAX_VALUE);

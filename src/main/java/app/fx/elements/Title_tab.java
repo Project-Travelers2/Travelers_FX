@@ -1,6 +1,7 @@
 package app.fx.elements;
 
 import app.fx.Data.USERS;
+import app.fx.HA.Queries;
 import app.fx.V1_Controller;
 import app.fx._env;
 import app.fx.elements._User_Pane.User_Customer;
@@ -13,15 +14,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class Title_tab extends Pane {
 
@@ -39,6 +36,7 @@ public class Title_tab extends Pane {
     private User_Pane userPane;
 
     LoginPage loginPage;
+    SignupPage signupPage;
 
     private void initialize() {
         // Initialize and add the background Rectangle
@@ -89,7 +87,7 @@ public class Title_tab extends Pane {
         this.titleTab = titleTab;
         this.controller = controller;
         initialize();
-        addUserPane(currentUser);
+        addUserPane();
 
         HOME.setOnAction(e -> onclick_home());
 
@@ -97,16 +95,23 @@ public class Title_tab extends Pane {
         userPane.getElement(2).setOnAction(event -> logAction(event));
     }
 
-    private void addUserPane(USERS currentUser) {
+
+
+
+    private void addUserPane() {
         // 유저 레벨 0 (로그인 안됨)
-        if (_env.selected_user == null || _env.selected_user.user_type == "0") {
+        if (_env.selected_user == null || _env.selected_user.user_type.equals("0")) {
             // 기본 뷰 할당
+            System.out.println(0);
             userPane = new User_LoginRequired(_env.selected_user);
-        } else if (_env.selected_user.user_type == "1") {
+        } else if (_env.selected_user.user_type.equals("1")) {
+            System.out.println(1);
             userPane = new User_Customer(_env.selected_user);
-        } else if (_env.selected_user.user_type == "2") {
+        } else if (_env.selected_user.user_type.equals("2")) {
+            System.out.println(2);
             userPane = new User_Staff(_env.selected_user);
-        } else if (_env.selected_user.user_type == "3") {
+        } else if (_env.selected_user.user_type.equals("3")) {
+            System.out.println(3);
             userPane = new User_Manager(_env.selected_user);
         }
 
@@ -116,8 +121,6 @@ public class Title_tab extends Pane {
     }
 
     private void logAction(ActionEvent event) {
-        // System.out.println(((Button)event.getSource()).getId() );
-
         String btnID = ((Button)event.getSource()).getId();
 
         if (btnID.equals("login_required")) login_required(event);
@@ -129,24 +132,23 @@ public class Title_tab extends Pane {
     private void login_required(ActionEvent event) {
         System.out.println("0: 로그인 요청");
 
+        // 혹시 login버튼 두번 눌렀으면 로그인 버튼 제거
+        if (loginPage != null) {
+            titleTab.getChildren().remove(loginPage);
+        }
+
         loginPage = new LoginPage();
         loginPage.setId("LoginPage");
         loginPage.loginButton.setOnAction(this::login);
         loginPage.registerButton.setOnAction(this::register);
-        controller.ROOT.getChildren().add(loginPage);
-
-        // 로그인이 완료되었다면
-        // _env.selectedUser에 받아온 유저 정보를 할당
-        // 이 정보는 user_type이 1,2,3중에 하나임
-
-        // userView 제거
-
+        loginPage.exitPane.setOnMouseClicked(mouseEvent -> exitPane(mouseEvent));
+        titleTab.getChildren().add(loginPage);
     }
 
     private void login(ActionEvent event) {
         String userId = loginPage.getUsername();
         String password = loginPage.getPassword();
-        if (validateLogin(userId, password)) {
+        if (Queries.instance.validateLogin(userId, password)) {
             // 화면전환
             try {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -154,27 +156,11 @@ public class Title_tab extends Pane {
                 alert.setContentText("로그인 되었습니다");
                 alert.show();
 
-                // TODO: id로 들어가서 로그인 창, 유저 뷰 제거하기
-                controller.ROOT.getChildren().remove(loginPage);
-                controller.ROOT.getChildren().remove(userPane);
+                titleTab.getChildren().remove(loginPage);
+                titleTab.getChildren().remove(signupPage);
+                titleTab.getChildren().remove(userPane);
 
-
-                // initialize에 있던 userView 생성코드 재실행 (USERS 따라서 나와야 하는 UI는 다르다)
-                // 유저 레벨 0 (로그인 안됨)
-                if (_env.selected_user == null || _env.selected_user.user_type == "0") {
-                    // 기본 뷰 할당
-                    userPane = new User_LoginRequired(_env.selected_user);
-                } else if (_env.selected_user.user_type == "1") {
-                    userPane = new User_Customer(_env.selected_user);
-                } else if (_env.selected_user.user_type == "2") {
-                    userPane = new User_Staff(_env.selected_user);
-                } else if (_env.selected_user.user_type == "3") {
-                    userPane = new User_Manager(_env.selected_user);
-                }
-
-                userPane.setLayoutX(1250.0);
-                userPane.setLayoutY(0.0);
-                titleTab.getChildren().add(userPane);
+                addUserPane();
 
                 controller.menuTab.onclick_all_festivals();
 
@@ -199,45 +185,23 @@ public class Title_tab extends Pane {
         System.out.println("pw: " + loginPage.getPassword());
     }
 
-    private boolean validateLogin(String userId, String userpw) {
-        final String url = _env.getEnv("DATABASE_URL");
-        final String id = _env.getEnv("DATABASE_ID");
-        final String pw =_env.getEnv("DATABASE_PW");
-        boolean isValid = false;
-        try (Connection conn = DriverManager.getConnection(url, id, pw)) {
-            String query = "SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ? ";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, userId);
-            preparedStatement.setString(2, userpw);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                USERS user = new USERS();
-                user.user_id = resultSet.getInt("USER_ID");
-                user.user_name = resultSet.getString("USER_NAME");
-                user.user_password = resultSet.getString("USER_PASSWORD");
-                user.user_type = String.valueOf(resultSet.getInt("USER_TYPE"));
-
-                _env.selected_user = user;
-                isValid = true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return isValid;
-    }
-
     private void register(ActionEvent event) {
         System.out.println("회원가입을 진행합니다.");
         try {
+            // TODO: 0610 회원가입 페이지 코드화
 //            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/Transport/signUp.fxml"));
 //            Scene scene = new Scene(loader.load(), 600, 400);
 //            // Assuming you are getting the Stage from the RootPane
 //            Stage stage = (Stage) LoginPage.registerButton.getScene().getWindow();
 //            stage.setScene(scene);
-
-
+            signupPage = new SignupPage();
+            signupPage.setId("SignupPage");
+            // 이벤트 연결
+//            loginPage.loginButton.setOnAction(this::login);
+//            loginPage.registerButton.setOnAction(this::register);
+            signupPage.exitPane.setOnMouseClicked(e -> exitPane(e));
+            signupPage.registerButton.setOnAction(e -> register_request(e));
+            titleTab.getChildren().add(signupPage);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -246,16 +210,91 @@ public class Title_tab extends Pane {
 
     private void logout_customer(ActionEvent event) {
         System.out.println("logout_customer");
-
+        logout();
     }
 
     private void logout_staff(ActionEvent event) {
         System.out.println("logout_staff");
-
+        logout();
     }
 
     private void logout_manager(ActionEvent event) {
         System.out.println("logout_manager");
+        logout();
+    }
+
+
+    private void logout() {
+//        System.out.println("logout");
+        // 1,2,3에서 동일한 상태로 로그인 요구 상태로 복귀
+        _env.selected_user = null;
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Login");
+        alert.setContentText("로그아웃 되었습니다");
+        alert.show();
+
+        titleTab.getChildren().remove(loginPage);
+        titleTab.getChildren().remove(userPane);
+
+        addUserPane();
+
+        controller.menuTab.onclick_all_festivals();
+
+        if (userPane == null) {
+            return;
+        }
+
+        userPane.getElement(2).setOnAction(_event -> logAction(_event));
+
+    }
+
+    //===
+
+    private void exitPane(MouseEvent event) {
+        System.out.println("signup_exit");
+
+        titleTab.getChildren().remove(loginPage);
+        titleTab.getChildren().remove(signupPage);
+        titleTab.getChildren().remove(userPane);
+
+        addUserPane();
+
+        controller.menuTab.onclick_all_festivals();
+
+        if (userPane == null) {
+            return;
+        }
+
+        userPane.getElement(2).setOnAction(_event -> logAction(_event));
+    }
+
+    private void register_request(ActionEvent event) {
+        System.out.println("register_request");
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("register_request");
+        alert.setContentText("회원가입을 요청했습니다.");
+        alert.show();
+
+
+        // TODO: 0610 회원등록 요청
+
+        
+        // TODO: 되었다 가정하고 창 지우기
+        titleTab.getChildren().remove(loginPage);
+        titleTab.getChildren().remove(signupPage);
+        titleTab.getChildren().remove(userPane);
+
+        addUserPane();
+
+        controller.menuTab.onclick_all_festivals();
+
+        if (userPane == null) {
+            return;
+        }
+
+        userPane.getElement(2).setOnAction(_event -> logAction(_event));
     }
 
     /**

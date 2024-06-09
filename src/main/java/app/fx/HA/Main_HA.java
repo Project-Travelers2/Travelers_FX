@@ -24,24 +24,24 @@ public class Main_HA extends Application {
         stage.show();
     }
 
-    // 테스트용 키 바인딩
-    private static void bindTestKey(@NotNull Scene scene, V1_Controller controller) {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                switch (keyEvent.getCode()) {
-                    case A:
-                        controller.pageDown();
-                        break;
-                    case D:
-                        controller.pageUp();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-    }
+//    // 테스트용 키 바인딩
+//    private static void bindTestKey(@NotNull Scene scene, V1_Controller controller) {
+//        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(KeyEvent keyEvent) {
+//                switch (keyEvent.getCode()) {
+//                    case A:
+//                        controller.pageDown();
+//                        break;
+//                    case D:
+//                        controller.pageUp();
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
+//    }
 
     public static void main(String[] args) {
         launch();

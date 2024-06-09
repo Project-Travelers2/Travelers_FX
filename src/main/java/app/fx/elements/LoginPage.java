@@ -7,20 +7,36 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import org.w3c.dom.Text;
 
 public class LoginPage extends Pane {
 
+    public Pane exitPane;
     public TextField username;
     public PasswordField password;
     public Button loginButton;
     public static Button registerButton;
 
     public LoginPage() {
+        this.setLayoutX(500.0);
+        this.setLayoutY(250.0);
         this.setPrefSize(600.0, 400.0);
         this.setId("RootPane");
+
+        exitPane = new Pane();
+        exitPane.setPrefHeight(900.0);
+        exitPane.setPrefWidth(1600.0);
+        this.getChildren().add(exitPane);
+
+        // TODO: 0609 배경추가
+        Rectangle background = new Rectangle(600.0, 400.0);
+        background.setFill(Color.DODGERBLUE);
+        background.setStroke(Color.BLACK);
+        this.getChildren().add(background);
 
         Label tLbl = new Label("FESTI + VEL");
         tLbl.setPrefSize(360, 70);
