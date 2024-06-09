@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import app.fx.TEST.CustomClass.Sample_CustomPane?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="app.fx.TEST.CustomClass.Sample_CustomPaneController">
+    <CustomPane fx:id="customPane"/>
+</VBox>
