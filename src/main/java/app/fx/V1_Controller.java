@@ -40,6 +40,8 @@ public class V1_Controller extends Controller implements Initializable {
     @FXML private Pane CONTENTS;
     private Festivals_tab festivalsTab;
 
+    @FXML private FlightBar flightBar;
+
     @FXML private Button HOME;
     @FXML private Button DEPARTURE;
     @FXML private Button ARRIVAL;
@@ -47,7 +49,7 @@ public class V1_Controller extends Controller implements Initializable {
     @FXML private DatePicker ARRIVAL_DATE;
     @FXML private Button SEARCH;
     @FXML private Button FIND_ALL;
-    @FXML private GridPane GRID_FESTIVALS;
+//    @FXML private GridPane GRID_FESTIVALS;
     @FXML private Button login;
 
 //    public Scene curr_scene;
@@ -268,7 +270,7 @@ public class V1_Controller extends Controller implements Initializable {
 
     /**
      * 24.06.05
-     * 작업자 : 형주희 // TODO HY.
+     * 작업자 : 형주희
      * 작업내용 : 메인 화면 로그인 창 이동
      */
     private void login() {
@@ -286,6 +288,7 @@ public class V1_Controller extends Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
 
     /**
      * WBS: View1 - P1 - ALL_B
@@ -307,17 +310,7 @@ public class V1_Controller extends Controller implements Initializable {
             festivalsTab = null;
         }
         festivalsTab = new Festivals_tab(CONTENTS);
-        // TODO: 11111 할당받아야 할 요소
         festivalsTab.setGridFestivals(_env.festival_informations, this);
-
-//        display();
-
-
-
-        // TEST: 리스트에서 현재 보여줘야할 데이터의 뷰 위치 확인
-        //for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
-        //    System.out.println(fest_info1.toString());
-        //}
     }
 
     /**
@@ -357,13 +350,6 @@ public class V1_Controller extends Controller implements Initializable {
         }
         festivalsTab = new Festivals_tab(CONTENTS);
         festivalsTab.setGridFestivals(_env.festival_informations, this);
-
-//        display();
-
-        // TEST: 리스트에서 현재 보여줘야할 데이터 리스트 보기
-        //for (FESTIVAL_INFORMATION fest_info1 : fest_info) {
-        //    System.out.println(fest_info1.toString());
-        //}
     }
 
 
@@ -640,18 +626,15 @@ public class V1_Controller extends Controller implements Initializable {
      * WBS: View1 - P2 - ITM_B2
      * onclick festival item button
      * 이 이벤트는 버튼 생성시 람다식으로 할당되었습니다.
-     * {@link #display()} 생성한 버튼의 디스플레이 단계에서 배치됨
      * @param item festival item click
      */
     @Override
     public void onclick_festival_item(Festival_item item) {
-        // TODO: 33333 할당할 이벤트
         System.out.println("Festival item button clicked");
 
         // 선택한 아이템을 할당합니다.
         _env.selected_festival = item;
 
-        // TODO: festival item
         DetailedImageView detail = new DetailedImageView(item);
         ROOT.getChildren().add(detail);
     }
@@ -684,7 +667,7 @@ public class V1_Controller extends Controller implements Initializable {
     public void pageUp() {
         try {
             _env.pageUp();
-            display();
+//            display();
         } catch (IndexOutOfBoundsException e) {
             // 추가작업 수행하지 않음
         } catch  (Exception e) {
@@ -698,7 +681,7 @@ public class V1_Controller extends Controller implements Initializable {
     public void pageDown() {
         try {
             _env.pageDown();
-            display();
+//            display();
         } catch (IndexOutOfBoundsException e) {
             // 추가작업 수행하지 않음
         } catch (Exception e) {
@@ -711,33 +694,32 @@ public class V1_Controller extends Controller implements Initializable {
      */
     private void gridClear() {
         // GirdPane에 있던 버튼들 제거
-        List<Node> nodes = GRID_FESTIVALS.getChildren();
-        nodes.clear();
+//        List<Node> nodes = GRID_FESTIVALS.getChildren();
+//        nodes.clear();
     }
 
-    /**
-     * GridPane에 아이템 게시
-     */
-    private void display() {
-        gridClear();
-
-        int pageNum = _env.pageNumber;
-        for (int i = 0; i < 6; i++) {
-            // 최대 인덱스 초과시 종료
-            if ((pageNum - 1) * 6 + i >= _env.festival_informations.size())
-                break;
-
-            // 6개만 출력
-            System.out.println(_env.festival_informations.get(i).toString());
-            FESTIVALS info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
-            Festival_item item = new Festival_item(info); // Button을 상속한 Festival_item 인스턴스 생성
-            // TODO: 22222 할당해야할 이벤트
-            item.description.setOnMouseClicked(mouseEvent -> onclick_festival_item(item));
-            item.reserve.setOnAction(event -> onclick_festival_item(item));
-
-            GRID_FESTIVALS.add(item, i%3, i/3);
-        }
-    }
+//    /**
+//     * GridPane에 아이템 게시
+//     */
+//    private void display() {
+//        gridClear();
+//
+//        int pageNum = _env.pageNumber;
+//        for (int i = 0; i < 6; i++) {
+//            // 최대 인덱스 초과시 종료
+//            if ((pageNum - 1) * 6 + i >= _env.festival_informations.size())
+//                break;
+//
+//            // 6개만 출력
+//            System.out.println(_env.festival_informations.get(i).toString());
+//            FESTIVALS info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
+//            Festival_item item = new Festival_item(info); // Button을 상속한 Festival_item 인스턴스 생성
+//            item.description.setOnMouseClicked(mouseEvent -> onclick_festival_item(item));
+//            item.reserve.setOnAction(event -> onclick_festival_item(item));
+//
+////            GRID_FESTIVALS.add(item, i%3, i/3);
+//        }
+//    }
 
 
     // </editor-fold>

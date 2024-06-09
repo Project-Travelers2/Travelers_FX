@@ -38,7 +38,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </Pane>
-            <Pane fx:id="FlightBar" layoutY="50.0" prefHeight="150.0" prefWidth="1600.0">
+            <Pane fx:id="flightBar" layoutY="50.0" prefHeight="150.0" prefWidth="1600.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f6faff" height="150.0" stroke="BLACK" strokeType="INSIDE" width="1600.0" />
                   <Pane layoutX="40.0" prefHeight="150.0" prefWidth="200.0">
