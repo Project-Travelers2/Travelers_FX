@@ -33,9 +33,10 @@ import java.util.ResourceBundle;
 public class V1_Controller extends Controller implements Initializable {
 
     @FXML private AnchorPane ROOT;
-    @FXML private Pane TitleBar;
-    @FXML public Pane CONTENTS;
-    public Festivals_tab festivalsTab;
+
+    @FXML private Pane TITLE_TAB;
+    public Title_tab titleTab;
+    @FXML private Button HOME;
 
     @FXML private Pane FLIGHT_TAB;
     public FlightTab flightTab;
@@ -43,17 +44,16 @@ public class V1_Controller extends Controller implements Initializable {
     @FXML private Pane MENU_TAB;
     public MenuTab menuTab;
 
-    @FXML private Button HOME;
+    @FXML public Pane CONTENTS;
+    public Festivals_tab festivalsTab;
 
 
-    @FXML private Button FIND_ALL;
-//    @FXML private GridPane GRID_FESTIVALS;
     @FXML private Button login;
 
-//    public Scene curr_scene;
 
     User_Pane pane;
     LoginPage loginPage;
+
     //database
     private static final String url = _env.getEnv("DATABASE_URL");
     private static final String id = _env.getEnv("DATABASE_ID");
@@ -73,13 +73,13 @@ public class V1_Controller extends Controller implements Initializable {
         if (_env.selected_user == null || _env.selected_user.user_type == "0") {
             // 기본 뷰 할당
             pane = new User_LoginRequired(_env.selected_user);
-            TitleBar.getChildren().add(pane);
+            TITLE_TAB.getChildren().add(pane);
         } else if (_env.selected_user.user_type == "1") {
             pane = new User_Customer(_env.selected_user);
-            TitleBar.getChildren().add(pane);
+            TITLE_TAB.getChildren().add(pane);
         } else if (_env.selected_user.user_type == "2") {
             pane = new User_Staff(_env.selected_user);
-            TitleBar.getChildren().add(pane);
+            TITLE_TAB.getChildren().add(pane);
         } else if (_env.selected_user.user_type == "3") {
             pane = new User_Manager(_env.selected_user);
             ROOT.getChildren().add(pane);
@@ -90,7 +90,8 @@ public class V1_Controller extends Controller implements Initializable {
             return;
         }
 
-        // Initialize FlightTab with the FLIGHT_TAB Pane
+        // Initialize Tab
+        titleTab = new Title_tab(ROOT, this);
         flightTab = new FlightTab(ROOT, FLIGHT_TAB);
         menuTab = new MenuTab(ROOT, MENU_TAB, this);
 
@@ -156,13 +157,13 @@ public class V1_Controller extends Controller implements Initializable {
                 if (_env.selected_user == null || _env.selected_user.user_type == "0") {
                     // 기본 뷰 할당
                     pane = new User_LoginRequired(_env.selected_user);
-                    TitleBar.getChildren().add(pane);
+                    TITLE_TAB.getChildren().add(pane);
                 } else if (_env.selected_user.user_type == "1") {
                     pane = new User_Customer(_env.selected_user);
-                    TitleBar.getChildren().add(pane);
+                    TITLE_TAB.getChildren().add(pane);
                 } else if (_env.selected_user.user_type == "2") {
                     pane = new User_Staff(_env.selected_user);
-                    TitleBar.getChildren().add(pane);
+                    TITLE_TAB.getChildren().add(pane);
                 } else if (_env.selected_user.user_type == "3") {
                     pane = new User_Manager(_env.selected_user);
                     ROOT.getChildren().add(pane);
@@ -252,17 +253,6 @@ public class V1_Controller extends Controller implements Initializable {
         System.out.println("3: 관리자 로그아웃");
 
         // user_type이 3
-    }
-
-    /**
-     * WBS: View1 - P1 - HOME_B
-     * onclick home event
-     * @param event home button click
-     */
-    @FXML
-    private void onclick_home(ActionEvent event) {
-        System.out.println("Home button clicked");
-        menuTab.onclick_all_festivals();
     }
 
 
