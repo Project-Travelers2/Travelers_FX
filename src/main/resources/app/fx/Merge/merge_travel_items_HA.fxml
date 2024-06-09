@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,24 +14,6 @@
       <Pane layoutY="-0.19999999999999996" AnchorPane.bottomAnchor="600.2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.19999999999999996">
          <children>
             <Pane fx:id="MENU_TAB" layoutY="200.0" prefHeight="100.0" prefWidth="1600.0">
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" width="1600.0" />
-                  <ButtonBar buttonMinWidth="180.0" buttonOrder="R_HE+U" prefHeight="100.0" prefWidth="1600.0">
-                    <buttons>
-                      <Button fx:id="FIND_ALL" mnemonicParsing="false" onAction="#onclick_all_festivals" prefHeight="70.0" text="전체" />
-                        <Button fx:id="FIND_MOVIE" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="영화" />
-                        <Button fx:id="FIND_MUSIC" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="음악" />
-                        <Button fx:id="FIND_FASSION" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="패션" />
-                        <Button fx:id="FIND_FOOD" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="음식" />
-                        <Button fx:id="FIND_SUMMER" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="여름" />
-                        <Button fx:id="FIND_WINTER" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="겨울" />
-                        <Button fx:id="FIND_ETC" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="기타" />
-                    </buttons>
-                     <padding>
-                        <Insets left="20.0" right="50.0" />
-                     </padding>
-                  </ButtonBar>
-               </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>

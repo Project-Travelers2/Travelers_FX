@@ -17,7 +17,7 @@ public class Main_HA extends Application {
         FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/app/fx/Merge/merge_travel_items_HA.fxml"));
         Scene scene = new Scene(fxmlloader.load(), 1600, 900);
         V1_Controller controller = fxmlloader.getController();
-        bindTestKey(scene, controller);
+//        bindTestKey(scene, controller);
 
         stage.setTitle("Travel items");
         stage.setScene(scene);

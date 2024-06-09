@@ -18,7 +18,6 @@ import javafx.geometry.Insets;
 public class MenuTab {
 
     private AnchorPane ROOT;
-//    private Festivals_tab festivalsTab;
     private V1_Controller controller;
 
     @FXML
@@ -134,7 +133,7 @@ public class MenuTab {
      * onclick find all festivals button
      */
     @FXML
-    private void onclick_all_festivals() {
+    public void onclick_all_festivals() {
         // 페이지 속성 초기화
         _env.ResetItemProperties();
 

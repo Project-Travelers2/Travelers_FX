@@ -85,7 +85,6 @@ public class V1_Controller extends Controller implements Initializable {
             ROOT.getChildren().add(pane);
         }
 
-        onclick_all_festivals(null);
 
         if (pane == null) {
             return;
@@ -95,16 +94,7 @@ public class V1_Controller extends Controller implements Initializable {
         flightTab = new FlightTab(ROOT, FLIGHT_TAB);
         menuTab = new MenuTab(ROOT, MENU_TAB, this);
 
-        // TODO 111112
-        // Bind event handlers
-//        menuTab.FIND_ALL.setOnAction(e -> onclick_all_festivals());
-//        menuTab.FIND_MOVIE.setOnAction(e -> onclick_cat_festivals("영화"));
-//        menuTab.FIND_MUSIC.setOnAction(e -> onclick_cat_festivals("음악"));
-//        menuTab.FIND_FASSION.setOnAction(e -> onclick_cat_festivals("패션"));
-//        menuTab.FIND_FOOD.setOnAction(e -> onclick_cat_festivals("음식"));
-//        menuTab.FIND_SUMMER.setOnAction(e -> onclick_cat_festivals("여름"));
-//        menuTab.FIND_WINTER.setOnAction(e -> onclick_cat_festivals("겨울"));
-//        menuTab.FIND_ETC.setOnAction(e -> onclick_cat_festivals("기타"));
+        menuTab.onclick_all_festivals();
 
 //        scene.getRoot().applyCss();
 
@@ -178,7 +168,7 @@ public class V1_Controller extends Controller implements Initializable {
                     ROOT.getChildren().add(pane);
                 }
 
-                onclick_all_festivals(null);
+                menuTab.onclick_all_festivals();
 
                 if (pane == null) {
                     return;
@@ -272,7 +262,7 @@ public class V1_Controller extends Controller implements Initializable {
     @FXML
     private void onclick_home(ActionEvent event) {
         System.out.println("Home button clicked");
-        onclick_all_festivals(event);
+        menuTab.onclick_all_festivals();
     }
 
 
@@ -298,81 +288,7 @@ public class V1_Controller extends Controller implements Initializable {
     }
 
 
-    /**
-     * WBS: View1 - P1 - ALL_B
-     * onclick find all festivals button
-     * @param event all button click
-     */
-    @FXML
-    private void onclick_all_festivals(ActionEvent event) {
-        // 페이지 속성 초기화
-        _env.ResetItemProperties();
-
-        // 데이터 리스트 받아오기
-        System.out.println("All festivals button clicked");
-        _env.festival_informations = Queries.instance.all_festival_list();
-
-        // CONTENTS 영역에 패널 생성
-        if (festivalsTab != null) {
-            festivalsTab.clear();
-            festivalsTab = null;
-        }
-        festivalsTab = new Festivals_tab(CONTENTS);
-        festivalsTab.setGridFestivals(_env.festival_informations, this);
-    }
-
-    /**
-     * WBS: View1 - P1 - CAT_B
-     * onclick category on festival button
-     * @param event category button click
-     */
-    @FXML
-    private void onclick_cat_festivals(ActionEvent event) {
-        // 클릭한 메뉴 버튼을 확인합니다.
-        Button clickedButton = (Button) event.getSource();
-        String buttonId = clickedButton.getId();
-
-        // 페이지 속성 초기화
-        _env.ResetItemProperties();
-
-        // 축제 코드를 생성합니다.
-        int festival_code = 0;
-        switch (buttonId) {
-            case "FIND_MOVIE":  festival_code = 1;  break;
-            case "FIND_MUSIC":  festival_code = 2;  break;
-            case "FIND_FASSION":festival_code = 3;  break;
-            case "FIND_FOOD":   festival_code = 4;  break;
-            case "FIND_SUMMER": festival_code = 5;  break;
-            case "FIND_WINTER": festival_code = 6;  break;
-            case "FIND_ETC":    festival_code = 7; break;
-            default:    break;
-        }
-
-        // 데이터 리스트 받아오기
-        _env.festival_informations = Queries.instance.specific_festival_list(festival_code);
-
-        // CONTENTS 영역에 패널 생성
-        if (festivalsTab != null) {
-            festivalsTab.clear();
-            festivalsTab = null;
-        }
-        festivalsTab = new Festivals_tab(CONTENTS);
-        festivalsTab.setGridFestivals(_env.festival_informations, this);
-    }
-
     //============================================================================
-
-    /**
-     * @deprecated 이 메서드는 ALL_B, CAT_B에서 구현되었습니다. 때문에 구현을 중단합니다.
-     * {@link #onclick_all_festivals(ActionEvent)} instead
-     * {@link #onclick_cat_festivals(ActionEvent)} instead
-     * WBS: View1 - P2 - ITM_B
-     * initialize travelers festivals
-     */
-    @FXML
-    private void initialize_travelers_festivals() {
-        System.out.println("initialize_travelers_festivals");
-    }
 
     /**
      * WBS: View1 - P2 - ITM_B2
@@ -389,26 +305,6 @@ public class V1_Controller extends Controller implements Initializable {
 
         DetailedImageView detail = new DetailedImageView(item);
         ROOT.getChildren().add(detail);
-    }
-
-    /**
-     * WBS: View1 - P2 - DET_B
-     * onclick detail of festival button
-     * @param event detail of festival click
-     */
-    @FXML
-    private void onclick_detail_of_festival(ActionEvent event) {
-        System.out.println("Detail of festival button clicked");
-    }
-
-    /**
-     * WBS: View1 - P2 - RES_B
-     * onclick navigate flight page
-     * @param event navigate flight page click
-     */
-    @FXML
-    private void onclick_navigate_flight(ActionEvent event) {
-        System.out.println("Navigate flight button clicked");
     }
 
 
@@ -440,38 +336,6 @@ public class V1_Controller extends Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
-    /**
-     * GridPane 비우기
-     */
-    private void gridClear() {
-        // GirdPane에 있던 버튼들 제거
-//        List<Node> nodes = GRID_FESTIVALS.getChildren();
-//        nodes.clear();
-    }
-
-//    /**
-//     * GridPane에 아이템 게시
-//     */
-//    private void display() {
-//        gridClear();
-//
-//        int pageNum = _env.pageNumber;
-//        for (int i = 0; i < 6; i++) {
-//            // 최대 인덱스 초과시 종료
-//            if ((pageNum - 1) * 6 + i >= _env.festival_informations.size())
-//                break;
-//
-//            // 6개만 출력
-//            System.out.println(_env.festival_informations.get(i).toString());
-//            FESTIVALS info = _env.festival_informations.get( (pageNum - 1) * 6 + i); // (pageNum - 1) * 6 + i 번째 요소
-//            Festival_item item = new Festival_item(info); // Button을 상속한 Festival_item 인스턴스 생성
-//            item.description.setOnMouseClicked(mouseEvent -> onclick_festival_item(item));
-//            item.reserve.setOnAction(event -> onclick_festival_item(item));
-//
-////            GRID_FESTIVALS.add(item, i%3, i/3);
-//        }
-//    }
 
 
     // </editor-fold>
