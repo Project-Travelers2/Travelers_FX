@@ -15,8 +15,12 @@ import java.util.List;
 public class Festivals_tab {
     private Pane rootFestivals;
     private Pagination festivalsPagination;
-    private GridPane gridFestivals;
     List<FESTIVALS> festivals;
+
+    private final int DISPLAY_COUNT_PER_PAGE = 6;
+    private final int ROWS_PER_PAGE = 3;
+    private int maxPageCount = 1;
+
 
     public Festivals_tab() {
         init();
@@ -26,8 +30,6 @@ public class Festivals_tab {
         this();
         this.rootFestivals = rootFestivals;
         this.rootFestivals.getChildren().add(festivalsPagination);
-//        this.rootFestivals.getChildren().remove(gridFestivals);
-//        this.rootFestivals.getChildren().addAll(gridFestivals, festivalsPagination);
     }
 
     /**
@@ -36,63 +38,19 @@ public class Festivals_tab {
      */
     public void init() {
         initPagination();
-//        initGrid();
-//
-
     }
 
+    /**
+     * Pagination 초기화
+     */
     public void initPagination() {
         festivalsPagination = new Pagination();
         festivalsPagination.setLayoutY(0.0);
         festivalsPagination.setPrefHeight(600.0);
         festivalsPagination.setPrefWidth(1600.0);
-//        festivalsPagination.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
-
-        festivalsPagination.setPageFactory(new Callback<Integer, Node>() {
-            @Override
-            public Node call(Integer index) {
-                return createPage(index);
-            }
-        });
-    }
-
-    private Node createPage(Integer index) {
-        GridPane gridPane = initGrid();
-
-        for (int i = 0; i < DISPLAY_COUNT_PER_PAGE; i++) {
-            if (festivalsPagination.getCurrentPageIndex() * DISPLAY_COUNT_PER_PAGE + i >= maxPageCount * DISPLAY_COUNT_PER_PAGE) {
-                break;
-            }
-
-            FESTIVALS info = this.festivals.get(festivalsPagination.getCurrentPageIndex() * DISPLAY_COUNT_PER_PAGE + i );
-            Festival_item item = new Festival_item(info);
-
-            gridPane.add(item, i%ROWS_PER_PAGE, i/ROWS_PER_PAGE);
-        }
-
-        this.gridFestivals = gridPane;
-
-        return gridPane;
     }
 
 
-    public GridPane initGrid() {
-        deleteGrid();
-        gridFestivals = initializeGrid();
-        return gridFestivals;
-    }
-
-    private void deleteGrid() {
-        if (this.rootFestivals == null) {
-            return;
-        }
-
-        if (this.gridFestivals == null) {
-            return;
-        }
-
-        this.rootFestivals.getChildren().remove(gridFestivals);
-    }
 
     private GridPane initializeGrid() {
         GridPane newGridPane = new GridPane();
@@ -141,34 +99,49 @@ public class Festivals_tab {
         festivalsPagination.setPageCount(maxPageCount);
         festivalsPagination.setCurrentPageIndex(0);
     }
-
-    private final int DISPLAY_COUNT_PER_PAGE = 6;
-    private final int ROWS_PER_PAGE = 3;
-//    private int pageNumber = 1;
-    private int maxPageCount = 1;
+    
 
 
+    /**
+     * 데이터 리스트를 바탕으로 pagination 설정
+     * @param festivals 데이터 리스트
+     */
     public void setGridFestivals(List<FESTIVALS> festivals) {
-        initGrid();
-        this.rootFestivals.getChildren().add(gridFestivals);
         this.festivals = festivals;
 
         //다른 버튼 눌러서 재시작할때
         maxPageCount = festivals.size() / DISPLAY_COUNT_PER_PAGE; // 최대 페이지수: 요소 수 / 페이지당 표시 요소 수
         resetTabValues(maxPageCount);
 
-//        for (int i = 0; i < DISPLAY_COUNT_PER_PAGE; i++) {
-//            if (festivalsPagination.getCurrentPageIndex() * DISPLAY_COUNT_PER_PAGE + i >= maxPageCount * DISPLAY_COUNT_PER_PAGE) {
-//                break;
-//            }
-//
-//            FESTIVALS info = this.festivals.get(festivalsPagination.getCurrentPageIndex() * DISPLAY_COUNT_PER_PAGE + i );
-//            Festival_item item = new Festival_item(info);
-//
-//            this.gridFestivals.add(item, i%ROWS_PER_PAGE, i/ROWS_PER_PAGE);
-//        }
+        festivalsPagination.setPageFactory(new Callback<Integer, Node>() {
+            // 한번은 실행됨
+            @Override
+            public Node call(Integer index) {
+                return createPage(index);
+            }
+        });
     }
 
+    private Node createPage(Integer index) {
+        GridPane gridPane = initializeGrid();
+
+        for (int i = 0; i < DISPLAY_COUNT_PER_PAGE; i++) {
+            if (festivalsPagination.getCurrentPageIndex() * DISPLAY_COUNT_PER_PAGE + i >= maxPageCount * DISPLAY_COUNT_PER_PAGE) {
+                break;
+            }
+
+            FESTIVALS info = this.festivals.get(festivalsPagination.getCurrentPageIndex() * DISPLAY_COUNT_PER_PAGE + i );
+            Festival_item item = new Festival_item(info);
+
+            gridPane.add(item, i%ROWS_PER_PAGE, i/ROWS_PER_PAGE);
+        }
+
+        return gridPane;
+    }
+
+
+    
+    
     public void pageUp() {
         int currentIndex = festivalsPagination.getCurrentPageIndex();
         if (currentIndex > 0) {
