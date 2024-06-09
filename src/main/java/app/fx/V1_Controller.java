@@ -2,7 +2,6 @@ package app.fx;
 
 import app.fx.Controllers.Controller;
 import app.fx.Data.AIRPORT_INFORMATION;
-import app.fx.Data.FESTIVALS;
 import app.fx.Data.USERS;
 import app.fx.HA.Queries;
 import app.fx.elements.*;
@@ -14,12 +13,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -40,14 +37,17 @@ public class V1_Controller extends Controller implements Initializable {
     @FXML private Pane CONTENTS;
     private Festivals_tab festivalsTab;
 
-    @FXML private FlightBar flightBar;
+    @FXML private Pane FLIGHT_TAB;
+    public FlightTab flightTab;
 
     @FXML private Button HOME;
-    @FXML private Button DEPARTURE;
-    @FXML private Button ARRIVAL;
-    @FXML private DatePicker DEPARTURE_DATE;
-    @FXML private DatePicker ARRIVAL_DATE;
-    @FXML private Button SEARCH;
+
+//    @FXML private Button DEPARTURE;
+//    @FXML private Button ARRIVAL;
+//    @FXML private DatePicker DEPARTURE_DATE;
+//    @FXML private DatePicker ARRIVAL_DATE;
+//    @FXML private Button SEARCH;
+
     @FXML private Button FIND_ALL;
 //    @FXML private GridPane GRID_FESTIVALS;
     @FXML private Button login;
@@ -96,6 +96,18 @@ public class V1_Controller extends Controller implements Initializable {
         if (pane == null) {
             return;
         }
+
+        // Initialize FlightTab with the FLIGHT_TAB Pane
+        flightTab = new FlightTab(FLIGHT_TAB);
+
+        // Bind event handlers
+        flightTab.DEPARTURE.setOnAction(e -> onclick_departure(e));
+        flightTab.ARRIVAL.setOnAction(e -> onclick_arrival(e));
+        flightTab.DEPARTURE_DATE.setOnAction(e -> onclick_departure_datetime(e));
+        flightTab.ARRIVAL_DATE.setOnAction(e -> onclick_arrival_datetime(e));
+        flightTab.SEARCH.setOnAction(e -> onclick_search(e));
+
+
 
 //        Scene scene = ROOT.getScene();
 //        scene.getRoot().applyCss();
@@ -431,7 +443,7 @@ public class V1_Controller extends Controller implements Initializable {
             //_env.departure_information = selectedItem
 
             // DEPARTURE 버튼 텍스트 설정
-            DEPARTURE.setText(_env.departure_information.toString());
+            flightTab.DEPARTURE.setText(_env.departure_information.toString());
 
             // scrollPane 제거
             ScrollPane scrollPane = (ScrollPane) listView.getParent().getParent().getParent();
@@ -519,7 +531,7 @@ public class V1_Controller extends Controller implements Initializable {
             //_env.departure_information = selectedItem
 
             // DEPARTURE 버튼 텍스트 설정
-            ARRIVAL.setText(_env.arrival_information.toString()); // TODO: diff
+            flightTab.ARRIVAL.setText(_env.arrival_information.toString()); // TODO: diff
 
             // scrollPane 제거
             ScrollPane scrollPane = (ScrollPane) listView.getParent().getParent().getParent();
@@ -538,7 +550,7 @@ public class V1_Controller extends Controller implements Initializable {
         System.out.println("departure datetime datePicker selected");
 
         // DatePicker에서 선택한 날짜를 가져옴
-        LocalDate selectedDate = DEPARTURE_DATE.getValue();
+        LocalDate selectedDate = flightTab.DEPARTURE_DATE.getValue();
 
         if (selectedDate == null) {
             System.out.println("No date selected");
@@ -559,7 +571,7 @@ public class V1_Controller extends Controller implements Initializable {
         System.out.println("arrival datetime datePicker selected");
 
         // DatePicker에서 선택한 날짜를 가져옴
-        LocalDate selectedDate = ARRIVAL_DATE.getValue(); // TODO: diff
+        LocalDate selectedDate = flightTab.ARRIVAL_DATE.getValue(); // TODO: diff
 
         if (selectedDate == null) {
             System.out.println("No date selected");

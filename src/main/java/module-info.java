@@ -22,6 +22,8 @@ module app.fx {
     opens app.fx.TEST to javafx.fxml;
     exports app.fx.Transport;
     opens app.fx.Transport to javafx.fxml;
+    exports app.fx.TEST.CustomClass;
+    opens app.fx.TEST.CustomClass to javafx.fxml;
 
 }
 
