@@ -34,19 +34,17 @@ public class V1_Controller extends Controller implements Initializable {
 
     @FXML private AnchorPane ROOT;
     @FXML private Pane TitleBar;
-    @FXML private Pane CONTENTS;
-    private Festivals_tab festivalsTab;
+    @FXML public Pane CONTENTS;
+    public Festivals_tab festivalsTab;
 
     @FXML private Pane FLIGHT_TAB;
     public FlightTab flightTab;
 
+    @FXML private Pane MENU_TAB;
+    public MenuTab menuTab;
+
     @FXML private Button HOME;
 
-//    @FXML private Button DEPARTURE;
-//    @FXML private Button ARRIVAL;
-//    @FXML private DatePicker DEPARTURE_DATE;
-//    @FXML private DatePicker ARRIVAL_DATE;
-//    @FXML private Button SEARCH;
 
     @FXML private Button FIND_ALL;
 //    @FXML private GridPane GRID_FESTIVALS;
@@ -60,10 +58,6 @@ public class V1_Controller extends Controller implements Initializable {
     private static final String url = _env.getEnv("DATABASE_URL");
     private static final String id = _env.getEnv("DATABASE_ID");
     private static final String pw =_env.getEnv("DATABASE_PW");
-
-//    public void reapplyCssToScene() {
-//        curr_scene.getRoot().applyCss();
-//    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -99,18 +93,19 @@ public class V1_Controller extends Controller implements Initializable {
 
         // Initialize FlightTab with the FLIGHT_TAB Pane
         flightTab = new FlightTab(ROOT, FLIGHT_TAB);
+        menuTab = new MenuTab(ROOT, MENU_TAB, this);
 
-        // TODO: 11111ASD
-//        // Bind event handlers
-//        flightTab.DEPARTURE.setOnAction(e -> onclick_departure(e));
-//        flightTab.ARRIVAL.setOnAction(e -> onclick_arrival(e));
-//        flightTab.DEPARTURE_DATE.setOnAction(e -> onclick_departure_datetime(e));
-//        flightTab.ARRIVAL_DATE.setOnAction(e -> onclick_arrival_datetime(e));
-//        flightTab.SEARCH.setOnAction(e -> onclick_search(e));
+        // TODO 111112
+        // Bind event handlers
+//        menuTab.FIND_ALL.setOnAction(e -> onclick_all_festivals());
+//        menuTab.FIND_MOVIE.setOnAction(e -> onclick_cat_festivals("영화"));
+//        menuTab.FIND_MUSIC.setOnAction(e -> onclick_cat_festivals("음악"));
+//        menuTab.FIND_FASSION.setOnAction(e -> onclick_cat_festivals("패션"));
+//        menuTab.FIND_FOOD.setOnAction(e -> onclick_cat_festivals("음식"));
+//        menuTab.FIND_SUMMER.setOnAction(e -> onclick_cat_festivals("여름"));
+//        menuTab.FIND_WINTER.setOnAction(e -> onclick_cat_festivals("겨울"));
+//        menuTab.FIND_ETC.setOnAction(e -> onclick_cat_festivals("기타"));
 
-
-
-//        Scene scene = ROOT.getScene();
 //        scene.getRoot().applyCss();
 
         pane.getElement(2).setOnAction(event -> logAction(event));
