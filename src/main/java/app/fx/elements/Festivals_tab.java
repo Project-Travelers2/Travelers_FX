@@ -1,6 +1,8 @@
 package app.fx.elements;
 
+import app.fx.Controllers.Controller;
 import app.fx.Data.FESTIVALS;
+import app.fx.V1_Controller;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
@@ -16,6 +18,7 @@ public class Festivals_tab {
     private Pane rootFestivals;
     private Pagination festivalsPagination;
     List<FESTIVALS> festivals;
+    Controller controller;
 
     private final int DISPLAY_COUNT_PER_PAGE = 6;
     private final int ROWS_PER_PAGE = 3;
@@ -106,8 +109,9 @@ public class Festivals_tab {
      * 데이터 리스트를 바탕으로 pagination 설정
      * @param festivals 데이터 리스트
      */
-    public void setGridFestivals(List<FESTIVALS> festivals) {
+    public void setGridFestivals(List<FESTIVALS> festivals, Controller controller) {
         this.festivals = festivals;
+        this.controller = controller;
 
         //다른 버튼 눌러서 재시작할때
         maxPageCount = festivals.size() / DISPLAY_COUNT_PER_PAGE; // 최대 페이지수: 요소 수 / 페이지당 표시 요소 수
@@ -132,6 +136,9 @@ public class Festivals_tab {
 
             FESTIVALS info = this.festivals.get(festivalsPagination.getCurrentPageIndex() * DISPLAY_COUNT_PER_PAGE + i );
             Festival_item item = new Festival_item(info);
+            item.description.setOnMouseClicked(mouseEvent -> this.controller.onclick_festival_item(item));
+            item.reserve.setOnAction(event -> this.controller.onclick_festival_item(item));
+
 
             gridPane.add(item, i%ROWS_PER_PAGE, i/ROWS_PER_PAGE);
         }

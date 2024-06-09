@@ -1,6 +1,10 @@
 package app.fx.HA;
 
+import app.fx.Controllers.Controller;
 import app.fx.Data.FESTIVALS;
+import app.fx._env;
+import app.fx.elements.DetailedImageView;
+import app.fx.elements.Festival_item;
 import app.fx.elements.Festivals_tab;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class Sample_PaginationController implements Initializable {
+public class Sample_PaginationController extends Controller implements Initializable {
 
     @FXML private Pane FESTIVALS;
 
@@ -30,6 +34,20 @@ public class Sample_PaginationController implements Initializable {
         // 테스트 데이터
         List<app.fx.Data.FESTIVALS> festival_informations = Queries.instance.all_festival_list();
 
-        festivals_area.setGridFestivals(festival_informations);
+        festivals_area.setGridFestivals(festival_informations, this);
+    }
+
+
+    @Override
+    public void onclick_festival_item(Festival_item item) {
+        System.out.println("Festival item button clicked");
+
+        // ROOT 할당하진 않음.
+//        // 선택한 아이템을 할당합니다.
+//        _env.selected_festival = item;
+//
+//        // TODO: festival item
+//        DetailedImageView detail = new DetailedImageView(item);
+//        ROOT.getChildren().add(detail);
     }
 }

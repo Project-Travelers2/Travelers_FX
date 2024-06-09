@@ -1,5 +1,6 @@
 package app.fx;
 
+import app.fx.Controllers.Controller;
 import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.FESTIVALS;
 import app.fx.Data.USERS;
@@ -32,7 +33,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class V1_Controller implements Initializable {
+public class V1_Controller extends Controller implements Initializable {
 
     @FXML private AnchorPane ROOT;
     @FXML private Pane TitleBar;
@@ -307,7 +308,7 @@ public class V1_Controller implements Initializable {
         }
         festivalsTab = new Festivals_tab(CONTENTS);
         // TODO: 11111 할당받아야 할 요소
-        festivalsTab.setGridFestivals(_env.festival_informations);
+        festivalsTab.setGridFestivals(_env.festival_informations, this);
 
 //        display();
 
@@ -355,7 +356,7 @@ public class V1_Controller implements Initializable {
             festivalsTab = null;
         }
         festivalsTab = new Festivals_tab(CONTENTS);
-        festivalsTab.setGridFestivals(_env.festival_informations);
+        festivalsTab.setGridFestivals(_env.festival_informations, this);
 
 //        display();
 
@@ -642,7 +643,9 @@ public class V1_Controller implements Initializable {
      * {@link #display()} 생성한 버튼의 디스플레이 단계에서 배치됨
      * @param item festival item click
      */
-    private void onclick_festival_item(Festival_item item) {
+    @Override
+    public void onclick_festival_item(Festival_item item) {
+        // TODO: 33333 할당할 이벤트
         System.out.println("Festival item button clicked");
 
         // 선택한 아이템을 할당합니다.
