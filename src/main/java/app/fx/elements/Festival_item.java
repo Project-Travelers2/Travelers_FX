@@ -17,33 +17,36 @@ public class Festival_item extends Pane {
     public ImageView imageView;
 
     public Festival_item() {
-        this.setPrefSize(515, 280);
+        this.setPrefSize(517, 260);
 //        this.setFont(new Font("Arial", 24));
         this.setId("FESTIVAL_ITEM");
 
         // Initialize ImageView
         imageView = new ImageView();
-        imageView.setFitHeight(280.0);
-        imageView.setFitWidth(514.0);
+        imageView.setLayoutY(0.0);
+        imageView.setFitHeight(250.0);
+        imageView.setFitWidth(517.0);
+        // 이미지 비율 유지
+        imageView.setPreserveRatio(false);
         imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
 
         // Initialize Label
         description = new Label();
         description.setAlignment(Pos.CENTER);
         description.setPrefHeight(210.0);
-        description.setPrefWidth(514.0);
+        description.setPrefWidth(517.0);
         description.setText("Label");
         description.setFont(new Font(25.0));
 
         // Initialize Button
         reserve = new Button();
-        reserve.setLayoutY(208.0);
+        reserve.setLayoutY(210.0);
         reserve.setMnemonicParsing(false);
-        reserve.setPrefHeight(76.0);
-        reserve.setPrefWidth(514.0);
+        reserve.setPrefHeight(20.0);
+        reserve.setPrefWidth(517.0);
         reserve.setText("reserve");
-        reserve.setFont(new Font(32.0));
+        reserve.setFont(new Font(22.0));
 
         // Add children to Pane
         this.getChildren().addAll(imageView, description, reserve);
@@ -62,6 +65,10 @@ public class Festival_item extends Pane {
         Image image = new Image(getClass().getResource(imagePath).toString());
 
         imageView.setImage(new Image(getClass().getResource(fest_info.image_path).toString())); // 이미지 세팅하기
+    }
+
+    public Festival_item(String test) {
+        this();
     }
 
     public FESTIVALS getFest_info() {
