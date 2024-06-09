@@ -41,13 +41,5 @@ public class Sample_PaginationController extends Controller implements Initializ
     @Override
     public void onclick_festival_item(Festival_item item) {
         System.out.println("Festival item button clicked");
-
-        // ROOT 할당하진 않음.
-//        // 선택한 아이템을 할당합니다.
-//        _env.selected_festival = item;
-//
-//        // TODO: festival item
-//        DetailedImageView detail = new DetailedImageView(item);
-//        ROOT.getChildren().add(detail);
     }
 }

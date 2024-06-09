@@ -67,10 +67,6 @@ public class Festival_item extends Pane {
         imageView.setImage(new Image(getClass().getResource(fest_info.image_path).toString())); // 이미지 세팅하기
     }
 
-    public Festival_item(String test) {
-        this();
-    }
-
     public FESTIVALS getFest_info() {
         return fest_info;
     }
