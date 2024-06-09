@@ -97,7 +97,7 @@ public class Title_tab extends Pane {
 
 
 
-
+    // TODO: 0610 완료 후 리팩토링
     private void addUserPane() {
         // 유저 레벨 0 (로그인 안됨)
         if (_env.selected_user == null || _env.selected_user.user_type.equals("0")) {
