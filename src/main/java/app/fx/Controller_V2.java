@@ -41,21 +41,15 @@ public class Controller_V2 extends Controller implements Initializable {
 //        scene.getRoot().applyCss();
     }
 
-
     //============================================================================
 
     public void catchEvent(ControlEvent e) {
-        switch (e.getEventCode()) {
-            case FLIGHT_DEPARTURE -> System.out.println("event; DEPARTURE");
-            case FLIGHT_ARRIVAL -> System.out.println("event; ARRIVAL");
-            case FLIGHT_DEPARTURE_DATE -> System.out.println("event; DEPARTURE_DATE");
-            case FLIGHT_ARRIVAL_DATE -> System.out.println("event; ARRIVAL_DATE");
-            case FLIGHT_SEARCH -> System.out.println("event; SEARCH");
-        }
+        titleTab.receive(e);
+        flightTab.receive(e);
+        menuTab.receive(e);
     }
 
-
-    // <editor-fold defaultstate="collapsed" desc="region: GridPane Control">
+    // <editor-fold defaultstate="collapsed" desc="#key events">
 
     public void handleKey(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {

@@ -6,7 +6,6 @@ import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.EventCode;
 import app.fx.HA.Queries;
 import app.fx._env;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -29,9 +28,11 @@ public class FlightTab extends Pane {
 
     @FXML
     public Button DEPARTURE;
+    private ScrollPane departure_scroll;
 
     @FXML
     public Button ARRIVAL;
+    private ScrollPane arrival_scroll;
 
     @FXML
     public Button SEARCH;
@@ -134,13 +135,39 @@ public class FlightTab extends Pane {
         initialize();
 
         // Bind event handlers
-        DEPARTURE.setOnAction(e -> onclick_departure(new ControlEvent(EventCode.FLIGHT_DEPARTURE)) );
-        ARRIVAL.setOnAction(e -> onclick_arrival(new ControlEvent(EventCode.FLIGHT_ARRIVAL)) );
-        DEPARTURE_DATE.setOnAction(e -> onclick_departure_datetime(new ControlEvent(EventCode.FLIGHT_DEPARTURE_DATE)) );
-        ARRIVAL_DATE.setOnAction(e -> onclick_arrival_datetime(new ControlEvent(EventCode.FLIGHT_ARRIVAL_DATE)) );
-        SEARCH.setOnAction(e -> onclick_search(new ControlEvent(EventCode.FLIGHT_SEARCH)) );
+        DEPARTURE.setOnAction(e -> onclick_departure(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE)) );
+        ARRIVAL.setOnAction(e -> onclick_arrival(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL)) );
+
+        DEPARTURE_DATE.setOnMouseClicked(e -> onclick_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_CLICK)) );
+        DEPARTURE_DATE.setOnAction(e -> onselect_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_SELECT)) );
+
+        ARRIVAL_DATE.setOnMouseClicked(e -> onclick_arrival_datetime(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL_DATE_CLICK)) );
+        ARRIVAL_DATE.setOnAction(e -> onselect_arrival_datetime(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL_DATE_SELECT)) );
+
+        SEARCH.setOnAction(e -> onclick_search(new ControlEvent(e, EventCode.FLIGHT_SEARCH)) );
     }
 
+    public void receive(ControlEvent e) {
+        if (e.getEventCode() != EventCode.FLIGHT_DEPARTURE) {
+            abort_departure();
+        }
+
+        if (e.getEventCode() != EventCode.FLIGHT_ARRIVAL) {
+            abort_arrival();
+        }
+
+        if (e.getEventCode() != EventCode.FLIGHT_DEPARTURE_DATE_CLICK ||
+            e.getEventCode() != EventCode.FLIGHT_DEPARTURE_DATE_SELECT) {
+            abort_departure_datetime();
+        }
+
+        if (e.getEventCode() != EventCode.FLIGHT_ARRIVAL_DATE_CLICK ||
+            e.getEventCode() != EventCode.FLIGHT_ARRIVAL_DATE_SELECT) {
+            abort_arrival_datetime();
+        }
+    }
+
+    // <editor-fold desc="#on departure">
     private void onclick_departure(ControlEvent e) {
         System.out.println("Departure button clicked");
         controller.catchEvent(e); // Broadcasting
@@ -183,15 +210,15 @@ public class FlightTab extends Pane {
         listView.setOnMouseClicked(this::onclick_select_departure);
 
         // ScrollPane 생성 및 ListView 추가
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(listView);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setPrefSize(300, 200); // 고정된 크기 설정
+        departure_scroll = new ScrollPane();
+        departure_scroll.setContent(listView);
+        departure_scroll.setFitToWidth(true);
+        departure_scroll.setPrefSize(300, 200); // 고정된 크기 설정
 
         // ScrollPane을 AnchorPane에 추가
-        ROOT.getChildren().add(scrollPane);
-        AnchorPane.setTopAnchor(scrollPane, 50.0);
-        AnchorPane.setLeftAnchor(scrollPane, 50.0);
+        ROOT.getChildren().add(departure_scroll);
+        AnchorPane.setTopAnchor(departure_scroll, 50.0);
+        AnchorPane.setLeftAnchor(departure_scroll, 50.0);
     }
 
     /**
@@ -217,11 +244,18 @@ public class FlightTab extends Pane {
             DEPARTURE.setText(_env.departure_information.toString());
 
             // scrollPane 제거
-            ScrollPane scrollPane = (ScrollPane) listView.getParent().getParent().getParent();
-            ROOT.getChildren().remove(scrollPane);
+            abort_departure();
         }
     }
 
+    private void abort_departure() {
+        if (departure_scroll != null) {
+            ROOT.getChildren().remove(departure_scroll);
+        }
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="#on arrival">
     private void onclick_arrival(ControlEvent e) {
         System.out.println("arrival button clicked");
         controller.catchEvent(e); // Broadcasting
@@ -264,15 +298,15 @@ public class FlightTab extends Pane {
         listView.setOnMouseClicked(this::onclick_select_arrival); // TODO: diff
 
         // ScrollPane 생성 및 ListView 추가
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(listView);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setPrefSize(300, 200); // 고정된 크기 설정
+        arrival_scroll = new ScrollPane();
+        arrival_scroll.setContent(listView);
+        arrival_scroll.setFitToWidth(true);
+        arrival_scroll.setPrefSize(300, 200); // 고정된 크기 설정
 
         // ScrollPane을 AnchorPane에 추가
-        ROOT.getChildren().add(scrollPane);
-        AnchorPane.setTopAnchor(scrollPane, 50.0);
-        AnchorPane.setLeftAnchor(scrollPane, 300.0); // TODO: diff
+        ROOT.getChildren().add(arrival_scroll);
+        AnchorPane.setTopAnchor(arrival_scroll, 50.0);
+        AnchorPane.setLeftAnchor(arrival_scroll, 300.0); // TODO: diff
     }
 
     /**
@@ -297,12 +331,22 @@ public class FlightTab extends Pane {
             // DEPARTURE 버튼 텍스트 설정
             ARRIVAL.setText(_env.arrival_information.toString()); // TODO: diff
 
-            // scrollPane 제거
-            ScrollPane scrollPane = (ScrollPane) listView.getParent().getParent().getParent();
-            ROOT.getChildren().remove(scrollPane);
+            abort_arrival();
         }
     }
 
+    private void abort_arrival() {
+        if (arrival_scroll != null) {
+            ROOT.getChildren().remove(arrival_scroll);
+        }
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="#on departure date">
+    private void onclick_departure_datetime(ControlEvent e) {
+        System.out.println("departure datetime datePicker clicked");
+        controller.catchEvent(e); // Broadcasting
+    }
 
     /**
      * WBS: View1 - P1 - SDT_B
@@ -310,7 +354,7 @@ public class FlightTab extends Pane {
      * onclick departure datetime datepicker
      * @param e departure datetime select
      */
-    private void onclick_departure_datetime(ControlEvent e) {
+    private void onselect_departure_datetime(ControlEvent e) {
         System.out.println("departure datetime datePicker selected");
         controller.catchEvent(e); // Broadcasting
 
@@ -325,13 +369,24 @@ public class FlightTab extends Pane {
         _env.departure_date = selectedDate;
     }
 
+    private void abort_departure_datetime() {
+        DEPARTURE_DATE.getValue();
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="#on arrival date">
+    private void onclick_arrival_datetime(ControlEvent e) {
+        System.out.println("arrival datetime datePicker clicked");
+        controller.catchEvent(e);
+    }
+
     /**
      * WBS: View1 - P1 - END_B
      * WBS: View1 - P1 - END_1_B
      * onclick arrival datetime datePicker
      * @param e arrival datetime select
      */
-    private void onclick_arrival_datetime(ControlEvent e) {
+    private void onselect_arrival_datetime(ControlEvent e) {
         System.out.println("arrival datetime datePicker selected");
         controller.catchEvent(e); // Broadcasting
 
@@ -346,6 +401,12 @@ public class FlightTab extends Pane {
         _env.arrival_date = selectedDate; // TODO: diff
     }
 
+    private void abort_arrival_datetime() {
+        ARRIVAL_DATE.getValue();
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="#on search">
     private void onclick_search(ControlEvent e) {
         System.out.println("Serach button clicked");
         controller.catchEvent(e); // Broadcasting
@@ -385,5 +446,6 @@ public class FlightTab extends Pane {
             return true;
         }
     }
+    // </editor-fold>
 
 }

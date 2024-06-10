@@ -2,7 +2,6 @@ package app.fx.elements;
 
 import app.fx.Control.ControlEvent;
 import app.fx.Data.EventCode;
-import app.fx.Data.USERS;
 import app.fx.HA.Queries;
 import app.fx.Controller_V2;
 import app.fx._env;
@@ -16,7 +15,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
@@ -91,19 +89,39 @@ public class Title_tab extends Pane {
         initialize();
         addUserPane();
 
-        HOME.setOnAction(e -> onclick_home());
+        HOME.setOnAction(e -> onclick_home(new ControlEvent(e, EventCode.TITLE_HOME)));
 
         // TODO: login action in titleTab
-        userPane.getElement(2).setOnAction(e -> logAction(new ControlEvent(EventCode.TITLE_LOGACTION)) );
+        userPane.getElement(2).setOnAction(e -> logAction(new ControlEvent(e, EventCode.TITLE_LOGACTION)) );
+    }
+
+    public void receive(ControlEvent e) {
+        if (e.getEventCode() != EventCode.TITLE_LOGIN_REQUIRED &&
+            e.getEventCode() != EventCode.TITLE_LOGIN &&
+            e.getEventCode() != EventCode.TITLE_REGISTER &&
+            e.getEventCode() != EventCode.TITLE_REGISTER_REQUEST &&
+            e.getEventCode() != EventCode.TITLE_REGISTER_EXIT) {
+            abort_login();
+        }
     }
 
     public void keyRequest(String key) {
         switch (key.toString()) {
             case "login":
-                login(new ControlEvent(EventCode.TITLE_LOGIN));
+                login(new ControlEvent((ActionEvent) null, EventCode.TITLE_LOGIN));
         }
     }
 
+    // <editor-fold desc="#home">
+    /**
+     * WBS: View1 - P1 - HOME_B
+     * onclick home event
+     */
+    private void onclick_home(ControlEvent e) {
+        System.out.println("Home button clicked");
+        controller.menuTab.onclick_all_festivals();
+    }
+    // </editor-fold>
 
     private void addUserPane() {
         // 유저 레벨 0 (로그인 안됨)
@@ -123,15 +141,17 @@ public class Title_tab extends Pane {
         titleTab.getChildren().add(userPane);
     }
 
+    // <editor-fold desc="#log action">
     private void logAction(ControlEvent e) {
         controller.catchEvent(e);
-        String btnID = ((Button)e.getSource()).getId();
+        String btnID = ((Button)e.event.getSource()).getId();
 
-        if (btnID.equals("login_required")) login_required(new ControlEvent(EventCode.TITLE_LOGIN_REQUIRED));
-        else if (btnID.equals("logout_customer")) logout_customer(new ControlEvent(EventCode.TITLE_LOGOUT_CUSTOMER));
-        else if (btnID.equals("logout_staff")) logout_staff(new ControlEvent(EventCode.TITLE_LOGOUT_STAFF));
-        else if (btnID.equals("logout_manager")) logout_manager(new ControlEvent(EventCode.TITLE_LOGOUT_MANAGER));
+        if (btnID.equals("login_required")) login_required(new ControlEvent(e.event, EventCode.TITLE_LOGIN_REQUIRED));
+        else if (btnID.equals("logout_customer")) logout_customer(new ControlEvent(e.event, EventCode.TITLE_LOGOUT_CUSTOMER));
+        else if (btnID.equals("logout_staff")) logout_staff(new ControlEvent(e.event, EventCode.TITLE_LOGOUT_STAFF));
+        else if (btnID.equals("logout_manager")) logout_manager(new ControlEvent(e.event, EventCode.TITLE_LOGOUT_MANAGER));
     }
+    // </editor-fold>
 
 
 
@@ -146,9 +166,9 @@ public class Title_tab extends Pane {
 
         loginPage = new LoginPage();
         loginPage.setId("LoginPage");
-        loginPage.loginButton.setOnAction(ev -> login(new ControlEvent(EventCode.TITLE_LOGIN)) );
-        loginPage.registerButton.setOnAction(ev -> register(new ControlEvent(EventCode.TITLE_REGISTER)) );
-        loginPage.exitPane.setOnMouseClicked(ev -> exitPane(new ControlEvent(EventCode.TITLE_LOGIN_EXIT)));
+        loginPage.loginButton.setOnAction(ev -> login(new ControlEvent(ev, EventCode.TITLE_LOGIN)) );
+        loginPage.registerButton.setOnAction(ev -> register(new ControlEvent(ev, EventCode.TITLE_REGISTER)) );
+        loginPage.exitPane.setOnMouseClicked(ev -> exitPane(new ControlEvent(ev, EventCode.TITLE_LOGIN_EXIT)) );
         titleTab.getChildren().add(loginPage);
     }
 
@@ -176,7 +196,7 @@ public class Title_tab extends Pane {
                     return;
                 }
 
-                userPane.getElement(2).setOnAction(ev -> logAction(new ControlEvent(EventCode.TITLE_LOGIN)));
+                userPane.getElement(2).setOnAction(ev -> logAction(new ControlEvent(ev, EventCode.TITLE_LOGIN)));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -193,6 +213,8 @@ public class Title_tab extends Pane {
         System.out.println("pw: " + loginPage.getPassword());
     }
 
+
+
     private void register(ControlEvent e) {
         controller.catchEvent(e);
         System.out.println("회원가입을 진행합니다.");
@@ -208,8 +230,8 @@ public class Title_tab extends Pane {
             // 이벤트 연결
 //            loginPage.loginButton.setOnAction(this::login);
 //            loginPage.registerButton.setOnAction(this::register);
-            signupPage.exitPane.setOnMouseClicked(_e -> exitPane(new ControlEvent(EventCode.TITLE_REGISTER_EXIT)));
-            signupPage.registerButton.setOnAction(_e -> register_request(_e));
+            signupPage.exitPane.setOnMouseClicked(_e -> exitPane(new ControlEvent(_e, EventCode.TITLE_REGISTER_EXIT)));
+            signupPage.registerButton.setOnAction(_e -> register_request(new ControlEvent(_e, EventCode.TITLE_REGISTER_REQUEST)));
             titleTab.getChildren().add(signupPage);
 
         } catch (Exception ex) {
@@ -257,11 +279,21 @@ public class Title_tab extends Pane {
             return;
         }
 
-        userPane.getElement(2).setOnAction(e -> logAction(new ControlEvent(EventCode.TITLE_LOGIN)) );
+        userPane.getElement(2).setOnAction(e -> logAction(new ControlEvent(e, EventCode.TITLE_LOGIN)) );
 
     }
 
     //===
+
+    private void abort_login() {
+        if (loginPage != null) {
+            titleTab.getChildren().remove(loginPage);
+        }
+
+        if (signupPage != null) {
+            titleTab.getChildren().remove(signupPage);
+        }
+    }
 
     private void exitPane(ControlEvent e) {
         controller.catchEvent(e);
@@ -279,10 +311,10 @@ public class Title_tab extends Pane {
             return;
         }
 
-        userPane.getElement(2).setOnAction(ev -> logAction(new ControlEvent(EventCode.TITLE_LOGACTION)));
+        userPane.getElement(2).setOnAction(ev -> logAction(new ControlEvent(ev, EventCode.TITLE_LOGACTION)));
     }
 
-    private void register_request(ActionEvent event) {
+    private void register_request(ControlEvent e) {
         System.out.println("register_request");
 
         String _id = signupPage.getSignupId();
@@ -348,17 +380,11 @@ public class Title_tab extends Pane {
         }
 
         // TODO: 13131
-        userPane.getElement(2).setOnAction(e -> logAction(new ControlEvent(EventCode.TITLE_LOGACTION)));
+        userPane.getElement(2).setOnAction(_e -> logAction(new ControlEvent(_e, EventCode.TITLE_LOGACTION)));
     }
 
-    /**
-     * WBS: View1 - P1 - HOME_B
-     * onclick home event
-     */
-    private void onclick_home() {
-        System.out.println("Home button clicked");
-        controller.menuTab.onclick_all_festivals();
-    }
+
+
 
 
 }
