@@ -138,4 +138,35 @@ public class Queries {
 
         return isValid;
     }
+
+    public boolean requestSignup(String requestId, String requestPw) {
+        // SQL 쿼리 작성
+        String insertQuery = "INSERT INTO USERS (USER_ID, USER_NAME, USER_PASSWORD, USER_TYPE) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = DriverManager.getConnection(url, id, pw);
+             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+
+            // 쿼리 파라미터 설정
+            preparedStatement.setInt(1, 7); // 명시적으로 USER_ID 값을 7로 설정
+            preparedStatement.setString(2, requestId); // USER_NAME 값 설정
+            preparedStatement.setString(3, requestPw); // USER_PASSWORD 값 설정
+            preparedStatement.setInt(4, 1); // USER_TYPE 값을 1로 설정
+
+            // 쿼리 실행
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("회원가입이 성공적으로 완료되었습니다.");
+                return true;
+            } else {
+                System.out.println("회원가입에 실패했습니다.");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
 }

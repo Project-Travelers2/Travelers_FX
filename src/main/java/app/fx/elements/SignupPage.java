@@ -116,14 +116,16 @@ public class SignupPage extends Pane {
         return exitPane;
     }
 
-    public String getSignupId() { return idField.toString(); }
+    public String getSignupId() {
+        return idField.getText();
+    }
 
     public String getSignupPw() {
-        return pwField.toString();
+        return pwField.getText();
     }
 
     public String getSignupPwConf() {
-        return pwConfField.toString();
+        return pwConfField.getText();
     }
 
     public Button getRegisterButton() {

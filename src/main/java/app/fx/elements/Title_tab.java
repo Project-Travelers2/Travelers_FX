@@ -103,22 +103,16 @@ public class Title_tab extends Pane {
     }
 
 
-
-    // TODO: 0610 완료 후 리팩토링
     private void addUserPane() {
         // 유저 레벨 0 (로그인 안됨)
         if (_env.selected_user == null || _env.selected_user.user_type.equals("0")) {
             // 기본 뷰 할당
-            System.out.println(0);
             userPane = new User_LoginRequired(_env.selected_user);
         } else if (_env.selected_user.user_type.equals("1")) {
-            System.out.println(1);
             userPane = new User_Customer(_env.selected_user);
         } else if (_env.selected_user.user_type.equals("2")) {
-            System.out.println(2);
             userPane = new User_Staff(_env.selected_user);
         } else if (_env.selected_user.user_type.equals("3")) {
-            System.out.println(3);
             userPane = new User_Manager(_env.selected_user);
         }
 
@@ -295,7 +289,7 @@ public class Title_tab extends Pane {
             return;
         }
 
-        if ( !_pw.toString().equals(_pwConf.toString()) ) {
+        if ( !(_pw.toString() != _pwConf.toString()) ) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("회원가입 오류");
             alert.setContentText("비밀번호가 서로 맞지 않습니다. 다시 입력해주세요.");
@@ -303,8 +297,21 @@ public class Title_tab extends Pane {
             return;
         }
 
-        
-        
+        boolean queryResult = Queries.instance.requestSignup(_id, _pw);
+
+        if (!queryResult) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("회원가입 오류");
+            alert.setContentText("중복되는 id가 있습니다.");
+            alert.show();
+            return;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("회원가입 완료");
+            alert.setContentText("회원가입이 완료되었습니다! 로그인을 진행해주세요.");
+            alert.show();
+        }
+
         // TODO: 되었다 가정하고 창 지우기
         titleTab.getChildren().remove(loginPage);
         titleTab.getChildren().remove(signupPage);
