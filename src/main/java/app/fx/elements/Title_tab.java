@@ -281,14 +281,29 @@ public class Title_tab extends Pane {
     private void register_request(ActionEvent event) {
         System.out.println("register_request");
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("register_request");
-        alert.setContentText("회원가입을 요청했습니다.");
-        alert.show();
-
-
         // TODO: 0610 회원등록 요청
+        String _id = signupPage.getSignupId();
+        String _pw = signupPage.getSignupPw();
+        String _pwConf = signupPage.getSignupPwConf();
 
+        // 이거 왜 작동안함?
+        if ( _id.toString().equals(null) || _id.toString().equals("") ) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("회원가입 오류");
+            alert.setContentText("아이디를 입력해주세요.");
+            alert.show();
+            return;
+        }
+
+        if ( !_pw.toString().equals(_pwConf.toString()) ) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("회원가입 오류");
+            alert.setContentText("비밀번호가 서로 맞지 않습니다. 다시 입력해주세요.");
+            alert.show();
+            return;
+        }
+
+        
         
         // TODO: 되었다 가정하고 창 지우기
         titleTab.getChildren().remove(loginPage);

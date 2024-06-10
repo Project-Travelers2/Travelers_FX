@@ -12,11 +12,11 @@ import javafx.scene.paint.Color;
 
 public class SignupPage extends Pane {
 
-    private Pane signupPane;
+    private final Pane signupPane;
     public Pane exitPane;
-    private TextField idField;
-    private PasswordField pwField;
-    private PasswordField pwConfField;
+    private final TextField idField;
+    private final PasswordField pwField;
+    private final PasswordField pwConfField;
     public Button registerButton;
 
     public SignupPage() {
@@ -116,16 +116,14 @@ public class SignupPage extends Pane {
         return exitPane;
     }
 
-    public TextField getIdField() {
-        return idField;
+    public String getSignupId() { return idField.toString(); }
+
+    public String getSignupPw() {
+        return pwField.toString();
     }
 
-    public PasswordField getPwField() {
-        return pwField;
-    }
-
-    public PasswordField getPwConfField() {
-        return pwConfField;
+    public String getSignupPwConf() {
+        return pwConfField.toString();
     }
 
     public Button getRegisterButton() {
