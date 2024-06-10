@@ -225,17 +225,9 @@ public class Title_tab extends Pane {
         controller.catchEvent(e);
         System.out.println("회원가입을 진행합니다.");
         try {
-            // TODO: 0610 회원가입 페이지 코드화
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/Transport/signUp.fxml"));
-//            Scene scene = new Scene(loader.load(), 600, 400);
-//            // Assuming you are getting the Stage from the RootPane
-//            Stage stage = (Stage) LoginPage.registerButton.getScene().getWindow();
-//            stage.setScene(scene);
             signupPage = new SignupPage();
             signupPage.setId("SignupPage");
-            // 이벤트 연결
-//            loginPage.loginButton.setOnAction(this::login);
-//            loginPage.registerButton.setOnAction(this::register);
+
             signupPage.exitPane.setOnMouseClicked(_e -> exitPane(new ControlEvent(_e, EventCode.TITLE_REGISTER_EXIT)));
             signupPage.registerButton.setOnAction(_e -> register_request(new ControlEvent(_e, EventCode.TITLE_REGISTER_REQUEST)));
             titleTab.getChildren().add(signupPage);

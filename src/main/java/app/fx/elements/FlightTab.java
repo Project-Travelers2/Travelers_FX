@@ -6,6 +6,8 @@ import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.EventCode;
 import app.fx.HA.Queries;
 import app.fx._env;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -139,11 +141,51 @@ public class FlightTab extends Pane {
         DEPARTURE.setOnAction(e -> onclick_departure(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE)) );
         ARRIVAL.setOnAction(e -> onclick_arrival(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL)) );
 
+        // TODO: 0611 특정 날짜 색 입히기
+        LocalDate specialDate = LocalDate.of(2024, 6, 20);
+
         DEPARTURE_DATE.setOnMouseClicked(e -> onclick_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_CLICK)) );
         DEPARTURE_DATE.setOnAction(e -> onselect_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_SELECT)) );
+        DEPARTURE_DATE.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        // 특정 날짜에 색깔 입히기
+                        if (item.equals(specialDate)) {
+                            setStyle("-fx-background-color: #ff4444;");  // 빨간색 배경
+                            setTooltip(new Tooltip("This is a special date!"));
+                        }
+                    }
+                };
+            }
+        });
+
 
         ARRIVAL_DATE.setOnMouseClicked(e -> onclick_arrival_datetime(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL_DATE_CLICK)) );
         ARRIVAL_DATE.setOnAction(e -> onselect_arrival_datetime(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL_DATE_SELECT)) );
+
+        // TODO: 0611 값 수동할당
+//        LocalDate initialDate = LocalDate.of(2024, 7, 10);
+//        ARRIVAL_DATE.setValue(initialDate);
+
+        // TODO: 0611 특정 날짜로 하이라이트 (제대로 동작안함)
+        LocalDate initialDate = LocalDate.of(2024, 7, 10);
+        ARRIVAL_DATE.showingProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    // DatePicker가 열릴 때 원하는 날짜로 이동
+                    ARRIVAL_DATE.setValue(initialDate);
+                    ARRIVAL_DATE.getEditor().getScene().getWindow().requestFocus();
+                    // 날짜를 선택하지 않도록 기본 값을 초기화
+                    ARRIVAL_DATE.setValue(null);
+                }
+            }
+        });
 
         SEARCH.setOnAction(e -> onclick_search(new ControlEvent(e, EventCode.FLIGHT_SEARCH)) );
     }
@@ -414,26 +456,17 @@ public class FlightTab extends Pane {
 
         // 로그인 되어있는지 확인
         if (_env.selected_user != null) {
-            // 현재까지 선택한 정보들 출력하기
-            System.out.println("=============================");
-            System.out.println("현재 선택한 정보들");
-            System.out.println("여행 정보 : " + _env.selected_festival);
-            System.out.println("출발 공항 : " + _env.departure_information);
-            System.out.println("도착 공항 : " + _env.arrival_information);
-            System.out.println("출발일 : " + _env.departure_date);
-            System.out.println("도착일 : " + _env.arrival_date);
-            System.out.println("=============================");
-
             if (isCanNavigate()) {
                 System.out.println("안내 조건을 만족했습니다. 다음 단계로 넘어갑니다.");
+                controller.reservation.doReservation();
             } else {
                 System.out.println("아직 선택하지 않은 조건이 있습니다.");
-                return;
             }
+
+            return;
         }
 
         if (requestLogin()) {
-            // TODO: 13131 확인창 출력하고 확인 누르면 로긴창으로 이동하기
             System.out.println("로그인 진행");
             controller.titleTab.login_required();
         } else {

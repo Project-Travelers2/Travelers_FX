@@ -2,6 +2,7 @@ package app.fx;
 
 import app.fx.Control.ControlEvent;
 import app.fx.Control.Controller;
+import app.fx.HA.Reservation;
 import app.fx.elements.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,6 +29,8 @@ public class Controller_V2 extends Controller implements Initializable {
     @FXML public Pane CONTENTS;
     public Festivals_tab festivalsTab;
 
+    public Reservation reservation;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -35,6 +38,7 @@ public class Controller_V2 extends Controller implements Initializable {
         titleTab = new Title_tab(ROOT, this);
         flightTab = new FlightTab(ROOT, this);
         menuTab = new MenuTab(ROOT, this);
+        reservation = new Reservation();
 
         menuTab.onclick_all_festivals();
 
