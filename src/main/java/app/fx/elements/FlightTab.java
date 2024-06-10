@@ -17,6 +17,7 @@ import javafx.util.Callback;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class FlightTab extends Pane {
 
@@ -412,26 +413,31 @@ public class FlightTab extends Pane {
         controller.catchEvent(e); // Broadcasting
 
         // 로그인 되어있는지 확인
-        if (_env.selected_user == null) {
-            // TODO: 13131 확인창 출력하고 확인 누르면 로긴창으로 이동하기
+        if (_env.selected_user != null) {
+            // 현재까지 선택한 정보들 출력하기
+            System.out.println("=============================");
+            System.out.println("현재 선택한 정보들");
+            System.out.println("여행 정보 : " + _env.selected_festival);
+            System.out.println("출발 공항 : " + _env.departure_information);
+            System.out.println("도착 공항 : " + _env.arrival_information);
+            System.out.println("출발일 : " + _env.departure_date);
+            System.out.println("도착일 : " + _env.arrival_date);
+            System.out.println("=============================");
 
+            if (isCanNavigate()) {
+                System.out.println("안내 조건을 만족했습니다. 다음 단계로 넘어갑니다.");
+            } else {
+                System.out.println("아직 선택하지 않은 조건이 있습니다.");
+                return;
+            }
         }
 
-        // 현재까지 선택한 정보들 출력하기
-        System.out.println("=============================");
-        System.out.println("현재 선택한 정보들");
-        System.out.println("여행 정보 : " + _env.selected_festival);
-        System.out.println("출발 공항 : " + _env.departure_information);
-        System.out.println("도착 공항 : " + _env.arrival_information);
-        System.out.println("출발일 : " + _env.departure_date);
-        System.out.println("도착일 : " + _env.arrival_date);
-        System.out.println("=============================");
-
-        if (isCanNavigate()) {
-            System.out.println("안내 조건을 만족했습니다. 다음 단계로 넘어갑니다.");
+        if (requestLogin()) {
+            // TODO: 13131 확인창 출력하고 확인 누르면 로긴창으로 이동하기
+            System.out.println("로그인 진행");
+            controller.titleTab.login_required();
         } else {
-            System.out.println("아직 선택하지 않은 조건이 있습니다.");
-            return;
+            System.out.println("로그인이 되어있지 않으므로 항공권 검색을 진행하지 않습니다.");
         }
     }
 
@@ -444,6 +450,25 @@ public class FlightTab extends Pane {
             return false;
         } else {
             return true;
+        }
+    }
+
+    private boolean requestLogin() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("로그인 필요");
+        alert.setHeaderText("로그인이 되어있지 않습니다.");
+        alert.setContentText("로그인을 하시겠습니까?");
+
+        // 대화상자 표시하고 사용자의 응답을 기다림
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // 사용자가 확인 버튼을 눌렀을 때의 작업
+            System.out.println("User chose OK");
+            return true;
+        } else {
+            // 사용자가 취소 버튼을 눌렀을 때의 작업
+            System.out.println("User chose Cancel or closed the dialog");
+            return false;
         }
     }
     // </editor-fold>

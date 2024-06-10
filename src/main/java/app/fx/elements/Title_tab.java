@@ -154,6 +154,12 @@ public class Title_tab extends Pane {
     // </editor-fold>
 
 
+    public void login_required() {
+        // 로그인 요청상태일때만,
+        if (userPane instanceof User_LoginRequired) {
+            login_required(new ControlEvent(null, EventCode.TITLE_LOGIN_REQUIRED));
+        }
+    }
 
     private void login_required(ControlEvent e) {
         controller.catchEvent(e);
