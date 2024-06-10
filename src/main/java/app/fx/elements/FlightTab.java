@@ -1,7 +1,9 @@
 package app.fx.elements;
 
+import app.fx.Control.ControlEvent;
 import app.fx.Controller_V2;
 import app.fx.Data.AIRPORT_INFORMATION;
+import app.fx.Data.EventCode;
 import app.fx.HA.Queries;
 import app.fx._env;
 import javafx.event.ActionEvent;
@@ -132,15 +134,16 @@ public class FlightTab extends Pane {
         initialize();
 
         // Bind event handlers
-        DEPARTURE.setOnAction(e -> onclick_departure(e));
-        ARRIVAL.setOnAction(e -> onclick_arrival(e));
-        DEPARTURE_DATE.setOnAction(e -> onclick_departure_datetime(e));
-        ARRIVAL_DATE.setOnAction(e -> onclick_arrival_datetime(e));
-        SEARCH.setOnAction(e -> onclick_search(e));
+        DEPARTURE.setOnAction(e -> onclick_departure(new ControlEvent(EventCode.FLIGHT_DEPARTURE)) );
+        ARRIVAL.setOnAction(e -> onclick_arrival(new ControlEvent(EventCode.FLIGHT_ARRIVAL)) );
+        DEPARTURE_DATE.setOnAction(e -> onclick_departure_datetime(new ControlEvent(EventCode.FLIGHT_DEPARTURE_DATE)) );
+        ARRIVAL_DATE.setOnAction(e -> onclick_arrival_datetime(new ControlEvent(EventCode.FLIGHT_ARRIVAL_DATE)) );
+        SEARCH.setOnAction(e -> onclick_search(new ControlEvent(EventCode.FLIGHT_SEARCH)) );
     }
 
-    private void onclick_departure(ActionEvent e) {
+    private void onclick_departure(ControlEvent e) {
         System.out.println("Departure button clicked");
+        controller.catchEvent(e); // Broadcasting
 
         // 한국 민간공항 리스트 출력 테스트
         // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기
@@ -219,8 +222,9 @@ public class FlightTab extends Pane {
         }
     }
 
-    private void onclick_arrival(ActionEvent e) {
+    private void onclick_arrival(ControlEvent e) {
         System.out.println("arrival button clicked");
+        controller.catchEvent(e); // Broadcasting
 
         // 한국 민간공항 리스트 출력 테스트
         // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기
@@ -306,8 +310,9 @@ public class FlightTab extends Pane {
      * onclick departure datetime datepicker
      * @param e departure datetime select
      */
-    private void onclick_departure_datetime(ActionEvent e) {
+    private void onclick_departure_datetime(ControlEvent e) {
         System.out.println("departure datetime datePicker selected");
+        controller.catchEvent(e); // Broadcasting
 
         // DatePicker에서 선택한 날짜를 가져옴
         LocalDate selectedDate = DEPARTURE_DATE.getValue();
@@ -324,10 +329,11 @@ public class FlightTab extends Pane {
      * WBS: View1 - P1 - END_B
      * WBS: View1 - P1 - END_1_B
      * onclick arrival datetime datePicker
-     * @param event arrival datetime select
+     * @param e arrival datetime select
      */
-    private void onclick_arrival_datetime(ActionEvent event) {
+    private void onclick_arrival_datetime(ControlEvent e) {
         System.out.println("arrival datetime datePicker selected");
+        controller.catchEvent(e); // Broadcasting
 
         // DatePicker에서 선택한 날짜를 가져옴
         LocalDate selectedDate = ARRIVAL_DATE.getValue(); // TODO: diff
@@ -340,8 +346,15 @@ public class FlightTab extends Pane {
         _env.arrival_date = selectedDate; // TODO: diff
     }
 
-    private void onclick_search(ActionEvent e) {
+    private void onclick_search(ControlEvent e) {
         System.out.println("Serach button clicked");
+        controller.catchEvent(e); // Broadcasting
+
+        // 로그인 되어있는지 확인
+        if (_env.selected_user == null) {
+            // TODO: 13131 확인창 출력하고 확인 누르면 로긴창으로 이동하기
+
+        }
 
         // 현재까지 선택한 정보들 출력하기
         System.out.println("=============================");

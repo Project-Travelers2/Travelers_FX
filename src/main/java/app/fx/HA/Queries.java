@@ -139,18 +139,37 @@ public class Queries {
         return isValid;
     }
 
+    public boolean checkID(String requestId) {
+        String checkID_Query = "SELECT USER_NAME FROM USERS WHERE USER_NAME = '?'";
+
+        try (Connection connection = DriverManager.getConnection(url, id, pw);
+             PreparedStatement preparedStatement = connection.prepareStatement(checkID_Query)) {
+
+            preparedStatement.setString(1, requestId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return false;
+            }
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
     public boolean requestSignup(String requestId, String requestPw) {
         // SQL 쿼리 작성
-        String insertQuery = "INSERT INTO USERS (USER_ID, USER_NAME, USER_PASSWORD, USER_TYPE) VALUES (?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO USERS (USER_NAME, USER_PASSWORD, USER_TYPE) VALUES (?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, id, pw);
              PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
             // 쿼리 파라미터 설정
-            preparedStatement.setInt(1, 7); // 명시적으로 USER_ID 값을 7로 설정
-            preparedStatement.setString(2, requestId); // USER_NAME 값 설정
-            preparedStatement.setString(3, requestPw); // USER_PASSWORD 값 설정
-            preparedStatement.setInt(4, 1); // USER_TYPE 값을 1로 설정
+            preparedStatement.setString(1, requestId); // USER_NAME 값 설정
+            preparedStatement.setString(2, requestPw); // USER_PASSWORD 값 설정
+            preparedStatement.setInt(3, 1); // USER_TYPE 값을 1로 설정
 
             // 쿼리 실행
             int rowsAffected = preparedStatement.executeUpdate();

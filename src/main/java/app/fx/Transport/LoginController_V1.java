@@ -71,8 +71,8 @@ public class LoginController_V1 implements Initializable {
             loginPage.password.clear();
             System.out.println("로그인 실패");
         }
-        System.out.println("id: " + loginPage.getUsername());
-        System.out.println("pw: " + loginPage.getPassword());
+//        System.out.println("id: " + loginPage.getUsername());
+//        System.out.println("pw: " + loginPage.getPassword());
     }
 
     private boolean validateLogin(String userId, String userpw) {

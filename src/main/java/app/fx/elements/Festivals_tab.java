@@ -1,7 +1,7 @@
 package app.fx.elements;
 
 import app.fx.Controller_V2;
-import app.fx.Controllers.Controller;
+import app.fx.Control.Controller;
 import app.fx.Data.FESTIVALS;
 import app.fx._env;
 import javafx.geometry.Insets;
