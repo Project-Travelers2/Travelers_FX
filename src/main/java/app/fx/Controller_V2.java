@@ -69,7 +69,7 @@ public class Controller_V2 extends Controller implements Initializable {
      */
     public void pageUp() {
         try {
-
+            festivalsTab.keyRequest("up");
         } catch (IndexOutOfBoundsException e) {
             // 추가작업 수행하지 않음
         } catch  (Exception e) {
@@ -82,7 +82,7 @@ public class Controller_V2 extends Controller implements Initializable {
      */
     public void pageDown() {
         try {
-
+            festivalsTab.keyRequest("down");
         } catch (IndexOutOfBoundsException e) {
             // 추가작업 수행하지 않음
         } catch (Exception e) {

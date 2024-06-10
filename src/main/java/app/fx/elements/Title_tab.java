@@ -95,6 +95,13 @@ public class Title_tab extends Pane {
         userPane.getElement(2).setOnAction(event -> logAction(event));
     }
 
+    public void keyRequest(String key) {
+        switch (key.toString()) {
+            case "login":
+                login(null);
+        }
+    }
+
 
 
     // TODO: 0610 완료 후 리팩토링
@@ -129,12 +136,7 @@ public class Title_tab extends Pane {
         else if (btnID.equals("logout_manager")) logout_manager(event);
     }
 
-    public void keyRequest(String key) {
-        switch (key.toString()) {
-            case "login":
-                login(null);
-        }
-    }
+
 
     private void login_required(ActionEvent event) {
         System.out.println("0: 로그인 요청");

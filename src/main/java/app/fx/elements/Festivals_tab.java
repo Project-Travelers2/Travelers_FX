@@ -175,17 +175,29 @@ public class Festivals_tab {
         this.rootFestivals.getChildren().clear();
     }
     
-    
-    public void pageUp() {
+
+    public void keyRequest(String key) {
+        switch (key) {
+            case "up":
+                pageUp();
+                break;
+
+            case "down":
+                pageDown();
+                break;
+        }
+    }
+
+    public void pageDown() {
         int currentIndex = festivalsPagination.getCurrentPageIndex();
         if (currentIndex > 0) {
             festivalsPagination.setCurrentPageIndex(currentIndex - 1);
         }
     }
 
-    public void pageDown() {
+    public void pageUp() {
         int currentIndex = festivalsPagination.getCurrentPageIndex();
-        if (currentIndex < festivalsPagination.getPageCount() - 1) {
+        if (currentIndex < festivalsPagination.getPageCount() + 1) {
             festivalsPagination.setCurrentPageIndex(currentIndex + 1);
         }
     }
