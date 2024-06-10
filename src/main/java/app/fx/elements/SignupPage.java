@@ -6,6 +6,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
@@ -43,7 +44,7 @@ public class SignupPage extends Pane {
         backgroundRect.setArcHeight(5.0);
         backgroundRect.setArcWidth(5.0);
         backgroundRect.setFill(Color.DODGERBLUE);
-        backgroundRect.setStroke(Color.BLACK);
+//        backgroundRect.setStroke(Color.BLACK);
 //        backgroundRect.setStrokeType(Rectangle.StrokeType.INSIDE);
         innerPane.getChildren().add(backgroundRect);
 
@@ -55,6 +56,8 @@ public class SignupPage extends Pane {
         titleLabel.setPrefHeight(64.0);
         titleLabel.setPrefWidth(353.0);
         titleLabel.setFont(new Font(41.0));
+        titleLabel.setFont(Font.font("배달의민족 도현",20));
+        titleLabel.setTextFill(Paint.valueOf("white"));
         innerPane.getChildren().add(titleLabel);
 
         // Initialize and add the ID TextField
@@ -66,6 +69,7 @@ public class SignupPage extends Pane {
         idField = new TextField("ID");
         idField.setPrefHeight(22.0);
         idField.setPrefWidth(227.0);
+        idField.setFont(Font.font("배달의민족 도현"));
         idBox.getChildren().add(idField);
         innerPane.getChildren().add(idBox);
 
@@ -101,6 +105,9 @@ public class SignupPage extends Pane {
         registerButton.setLayoutY(283.0);
         registerButton.setPrefHeight(58.0);
         registerButton.setPrefWidth(172.0);
+        registerButton.setFont(Font.font("배달의민족 도현"));
+        registerButton.setStyle("-fx-background-color: #89c3fb");
+        registerButton.setTextFill(Paint.valueOf("white"));
         innerPane.getChildren().add(registerButton);
 
         signupPane.getChildren().add(innerPane);

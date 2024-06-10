@@ -3,8 +3,10 @@ package app.fx.elements;
 import app.fx._env;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
@@ -12,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.geometry.Pos;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 //import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -36,7 +39,7 @@ public class DetailedImageView extends Pane {
         outside.setArcWidth(5.0);
         outside.setFill(Color.web("#1f93ff38"));
         outside.setId("OUTSIDE");
-        outside.setStroke(Color.BLACK);
+//        outside.setStroke(Color.BLACK);
 //        outside.setStrokeType(Rectangle.StrokeType.INSIDE);
 //        outside.setStrokeType(Rectangle.StrokeType.INSIDE);
 
@@ -55,8 +58,10 @@ public class DetailedImageView extends Pane {
         innerRectangle.setArcHeight(5.0);
         innerRectangle.setArcWidth(5.0);
         innerRectangle.setFill(Color.web("#ffffffff"));
-        innerRectangle.setStroke(Color.BLACK);
+//        innerRectangle.setStroke(Color.BLACK);
 //        innerRectangle.setStrokeType(Rectangle.StrokeType.INSIDE);
+
+
 
         // Initialize ImageView
         imgView = new ImageView();
@@ -103,21 +108,44 @@ public class DetailedImageView extends Pane {
         row4.setPrefHeight(70.0);
         row4.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
+
         gridPane.getRowConstraints().addAll(row1, row2, row3, row4);
+
+        //
+        Pane outlineRec = new Pane();
+        outlineRec.setLayoutX(980);
+        outlineRec.setLayoutY(0);
+        outlineRec.setPrefHeight(720);
+        outlineRec.setPrefWidth(300);
+        outlineRec.setStyle("-fx-background-color: rgba(248,248,248,0.95)");
 
         // Initialize TITLE Label
         title = new TextArea("축제 제목");
         title.setPrefHeight(500.0);
         title.setPrefWidth(300.0);
         title.setWrapText(true);
+        title.setFont(Font.font("나눔바른고딕",20));
         GridPane.setRowIndex(title, 1);
+        // Set the background to transparent and the text color to black
+        title.opacityProperty().set(0.8);
+        title.setStyle("-fx-background-color: transparent; " +
+                "-fx-background-insets: 0; " +
+                "-fx-background-radius: 0; " +
+                "-fx-border-color: transparent;"+
+                "-fx-border-width: 1 1 1 1");
+
+
+
 
         // Initialize DESC Label
         desc = new TextArea("축제 설명");
         desc.setPrefHeight(500.0);
         desc.setPrefWidth(300.0);
         desc.setWrapText(true);
+        desc.setFont(Font.font("나눔바른고딕",15));
+        desc.opacityProperty().set(0.7);
         GridPane.setRowIndex(desc, 2);
+
 
         // Initialize RESERVE Button
         reserve = new Button("예약하기");
@@ -125,19 +153,25 @@ public class DetailedImageView extends Pane {
         reserve.setMnemonicParsing(false);
         reserve.setPrefHeight(70.0);
         reserve.setPrefWidth(280.0);
+        reserve.setFont(Font.font("배달의민족 도현",20));
+        reserve.setStyle("-fx-background-color: rgba(112,183,250,0.86)");
+        reserve.setTextFill(Paint.valueOf("white"));
         GridPane.setRowIndex(reserve, 3);
+
+
 
         // Add mouse click event to RESERVE
         reserve.setOnMouseClicked(event -> handleReserveClick(event));
 
         // Add children to GridPane
-        gridPane.getChildren().addAll(title, desc, reserve);
+        gridPane.getChildren().addAll( title, desc, reserve);
 
         // Add padding to GridPane
         gridPane.setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
 
+
         // Add children to inner Pane
-        innerPane.getChildren().addAll(innerRectangle, imgView, gridPane);
+        innerPane.getChildren().addAll(innerRectangle,imgView,outlineRec, gridPane);
 
         // Add children to root Pane
         this.getChildren().addAll(outside, innerPane);
@@ -185,6 +219,8 @@ public class DetailedImageView extends Pane {
     public void setDesc(String descText) {
         desc.setText(descText);
     }
+
+
 
     public static void main(String[] args) {
 //        Application.launch(args);

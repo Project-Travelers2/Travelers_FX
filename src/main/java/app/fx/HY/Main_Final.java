@@ -11,16 +11,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public class Main_Final1 extends Application {
+public class Main_Final extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/app/fx/Merge/merge_travel_items.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/app/fx/HY/merge_travel_items_Final.fxml"));
         Scene scene = new Scene(fxmlloader.load(), 1600, 900);
         Controller_V2 controller = fxmlloader.getController();
-
         bindTestKey(scene, controller);
-
-        scene.getStylesheets().add(getClass().getResource("festival.css").toString());
 
         stage.setTitle("Travel items");
         stage.setScene(scene);
@@ -32,16 +29,7 @@ public class Main_Final1 extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                switch (keyEvent.getCode()) {
-                    case A:
-                        controller.pageDown();
-                        break;
-                    case D:
-                        controller.pageUp();
-                        break;
-                    default:
-                        break;
-                }
+                controller.handleKey(keyEvent);
             }
         });
     }

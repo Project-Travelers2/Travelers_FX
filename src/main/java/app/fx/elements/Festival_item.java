@@ -46,7 +46,9 @@ public class Festival_item extends Pane {
         reserve.setPrefHeight(20.0);
         reserve.setPrefWidth(517.0);
         reserve.setText("reserve");
-        reserve.setFont(new Font(22.0));
+        reserve.setFont(Font.font("나눔바른고딕",20));
+        reserve.setStyle("-fx-background-color: rgba(255,255,255,0.5);");
+//        reserve.setFont(new Font(22.0));
 
         // Add children to Pane
         this.getChildren().addAll(imageView, description, reserve);

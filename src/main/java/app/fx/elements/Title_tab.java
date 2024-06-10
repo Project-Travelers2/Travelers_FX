@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -44,7 +45,7 @@ public class Title_tab extends Pane {
         backgroundRect.setArcHeight(5.0);
         backgroundRect.setArcWidth(5.0);
         backgroundRect.setFill(Color.web("#8bc7ff"));
-        backgroundRect.setStroke(Color.BLACK);
+//        backgroundRect.setStroke(Color.BLACK);
 //        backgroundRect.setStrokeType(Rectangle.StrokeType.INSIDE);
         titleTab.getChildren().add(backgroundRect);
 
@@ -62,6 +63,9 @@ public class Title_tab extends Pane {
         HOME.setPrefWidth(100.0);
         HOME.setMnemonicParsing(false);
         innerPane.getChildren().add(HOME);
+        HOME.setFont(Font.font("배달의민족 도현",15));
+        HOME.setTextFill(Paint.valueOf("white"));
+        HOME.setStyle("-fx-background-color: #8ac5fd");
 
         // Initialize and add the Separator
         Separator separator = new Separator();
@@ -74,11 +78,13 @@ public class Title_tab extends Pane {
         titleLabel = new Label("여행상품");
         titleLabel.setAlignment(javafx.geometry.Pos.CENTER);
         titleLabel.setLayoutX(95.0);
-        titleLabel.setLayoutY(2.0);
+        titleLabel.setLayoutY(0.0);
         titleLabel.setPrefHeight(51.0);
         titleLabel.setPrefWidth(165.0);
-        titleLabel.setFont(new Font("D2Coding", 30.0));
+//        titleLabel.setFont(new Font("D2Coding", 30.0));
         innerPane.getChildren().add(titleLabel);
+        titleLabel.setFont(Font.font("배달의민족 도현",15));
+        titleLabel.setTextFill(Paint.valueOf("white"));
 
         titleTab.getChildren().add(innerPane);
     }
