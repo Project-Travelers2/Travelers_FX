@@ -36,10 +36,4 @@ public class Sample_PaginationController extends Controller implements Initializ
 
         festivals_area.setGridFestivals(festival_informations, this);
     }
-
-
-    @Override
-    public void onclick_festival_item(Festival_item item) {
-        System.out.println("Festival item button clicked");
-    }
 }

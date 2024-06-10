@@ -1,6 +1,6 @@
 package app.fx.HA;
 
-import app.fx.V1_Controller;
+import app.fx.Controller_V2;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -16,32 +16,23 @@ public class Main_HA extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/app/fx/Merge/merge_travel_items_HA.fxml"));
         Scene scene = new Scene(fxmlloader.load(), 1600, 900);
-        V1_Controller controller = fxmlloader.getController();
-//        bindTestKey(scene, controller);
+        Controller_V2 controller = fxmlloader.getController();
+        bindTestKey(scene, controller);
 
         stage.setTitle("Travel items");
         stage.setScene(scene);
         stage.show();
     }
 
-//    // 테스트용 키 바인딩
-//    private static void bindTestKey(@NotNull Scene scene, V1_Controller controller) {
-//        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent keyEvent) {
-//                switch (keyEvent.getCode()) {
-//                    case A:
-//                        controller.pageDown();
-//                        break;
-//                    case D:
-//                        controller.pageUp();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
-//    }
+    // 테스트용 키 바인딩
+    private static void bindTestKey(@NotNull Scene scene, Controller_V2 controller) {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                controller.handleKey(keyEvent);
+            }
+        });
+    }
 
     public static void main(String[] args) {
         launch();

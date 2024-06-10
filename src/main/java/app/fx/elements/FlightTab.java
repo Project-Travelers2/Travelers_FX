@@ -1,5 +1,6 @@
 package app.fx.elements;
 
+import app.fx.Controller_V2;
 import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.HA.Queries;
 import app.fx._env;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class FlightTab extends Pane {
 
+    private Controller_V2 controller;
     private AnchorPane ROOT;
 
     @FXML
@@ -123,9 +125,10 @@ public class FlightTab extends Pane {
         FLIGHT_TAB.getChildren().add(ARRIVAL_DATE);
     }
 
-    public FlightTab(AnchorPane root, Pane flightTab) {
+    public FlightTab(AnchorPane root, Controller_V2 controller) {
         this.ROOT = root;
-        this.FLIGHT_TAB = flightTab;
+        this.controller = controller;
+        this.FLIGHT_TAB = controller.FLIGHT_TAB;
         initialize();
 
         // Bind event handlers

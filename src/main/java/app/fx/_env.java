@@ -17,9 +17,6 @@ public class _env {
         return dotenv.get(key);
     }
 
-//    public static Scene scene;
-
-    public static int pageNumber = 1;
     public static List<FESTIVALS> festival_informations;
     public static List<USERS> users;
     public static USERS selected_user;
@@ -37,34 +34,7 @@ public class _env {
      */
     public static void ResetItemProperties()
     {
-        pageNumber = 1;
         festival_informations = null;
-    }
-
-    public static void pageUp() throws Exception{
-        if (festival_informations == null || festival_informations.size() == 0) {
-            throw new Exception("festival_informations is null or Empty");
-        }
-
-        int upNum = pageNumber + 1;
-        if (upNum > festival_informations.size() / 6) {
-            throw new IndexOutOfBoundsException("festival_informations size overflow");
-        }
-
-        pageNumber = upNum;
-    }
-
-    public static void pageDown() throws Exception{
-        if (festival_informations == null || festival_informations.size() == 0) {
-            throw new Exception("festival_informations is null or Empty");
-        }
-
-        int downNum = pageNumber - 1;
-        if (downNum == 0) {
-            throw new IndexOutOfBoundsException("festival_informations index underflow");
-        }
-
-        pageNumber = downNum;
     }
 
     public static void main(String[] args) {

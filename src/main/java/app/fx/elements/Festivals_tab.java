@@ -1,8 +1,9 @@
 package app.fx.elements;
 
+import app.fx.Controller_V2;
 import app.fx.Controllers.Controller;
 import app.fx.Data.FESTIVALS;
-import app.fx.V1_Controller;
+import app.fx._env;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
@@ -18,7 +19,7 @@ public class Festivals_tab {
     private Pane rootFestivals;
     private Pagination festivalsPagination;
     List<FESTIVALS> festivals;
-    Controller controller;
+    Controller_V2 controller;
 
     private final int DISPLAY_COUNT_PER_PAGE = 6;
     private final int ROWS_PER_PAGE = 3;
@@ -34,6 +35,11 @@ public class Festivals_tab {
         this();
         this.rootFestivals = rootFestivals;
         this.rootFestivals.getChildren().add(festivalsPagination);
+    }
+
+    public Festivals_tab(Pane rootFestivals, Controller_V2 controller) {
+        this(rootFestivals);
+        this.controller = controller;
     }
 
     /**
@@ -112,7 +118,7 @@ public class Festivals_tab {
      */
     public void setGridFestivals(List<FESTIVALS> festivals, Controller controller) {
         this.festivals = festivals;
-        this.controller = controller;
+        this.controller = (Controller_V2)controller;
 
         //다른 버튼 눌러서 재시작할때
         elementSize = festivals.size();
@@ -138,14 +144,30 @@ public class Festivals_tab {
 
             FESTIVALS info = this.festivals.get(festivalsPagination.getCurrentPageIndex() * DISPLAY_COUNT_PER_PAGE + i );
             Festival_item item = new Festival_item(info);
-            item.description.setOnMouseClicked(mouseEvent -> this.controller.onclick_festival_item(item));
-            item.reserve.setOnAction(event -> this.controller.onclick_festival_item(item));
+            item.description.setOnMouseClicked(mouseEvent -> onclick_festival_item(item));
+            item.reserve.setOnAction(event -> onclick_festival_item(item));
 
 
             gridPane.add(item, i%ROWS_PER_PAGE, i/ROWS_PER_PAGE);
         }
 
         return gridPane;
+    }
+
+    /**
+     * WBS: View1 - P2 - ITM_B2
+     * onclick festival item button
+     * 이 이벤트는 버튼 생성시 람다식으로 할당되었습니다.
+     * @param item festival item click
+     */
+    public void onclick_festival_item(Festival_item item) {
+        System.out.println("Festival item button clicked");
+
+        // 선택한 아이템을 할당합니다.
+        _env.selected_festival = item;
+
+        DetailedImageView detail = new DetailedImageView(item);
+        this.controller.ROOT.getChildren().add(detail);
     }
 
 

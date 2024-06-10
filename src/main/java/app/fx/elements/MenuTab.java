@@ -1,16 +1,14 @@
 package app.fx.elements;
 
 import app.fx.HA.Queries;
-import app.fx.V1_Controller;
+import app.fx.Controller_V2;
 import app.fx._env;
-import javafx.event.ActionEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
@@ -18,7 +16,7 @@ import javafx.geometry.Insets;
 public class MenuTab {
 
     private AnchorPane ROOT;
-    private V1_Controller controller;
+    private Controller_V2 controller;
 
     @FXML
     public Pane MenuBar;
@@ -112,9 +110,9 @@ public class MenuTab {
         MenuBar.setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
     }
 
-    public MenuTab(AnchorPane ROOT, Pane menuBar, V1_Controller controller) {
+    public MenuTab(AnchorPane ROOT, Controller_V2 controller) {
         this.ROOT = ROOT;
-        this.MenuBar = menuBar;
+        this.MenuBar = controller.MENU_TAB;
         this.controller = controller;
         initialize();
 
@@ -146,7 +144,7 @@ public class MenuTab {
             controller.festivalsTab.clear();
             controller.festivalsTab = null;
         }
-        controller.festivalsTab = new Festivals_tab(controller.CONTENTS);
+        controller.festivalsTab = new Festivals_tab(controller.CONTENTS, controller);
         controller.festivalsTab.setGridFestivals(_env.festival_informations, controller);
     }
 
@@ -166,7 +164,7 @@ public class MenuTab {
             controller.festivalsTab.clear();
             controller.festivalsTab = null;
         }
-        controller.festivalsTab = new Festivals_tab(controller.CONTENTS);
+        controller.festivalsTab = new Festivals_tab(controller.CONTENTS, controller);
         controller.festivalsTab.setGridFestivals(_env.festival_informations, controller);
     }
 

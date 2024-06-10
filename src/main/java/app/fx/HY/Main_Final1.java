@@ -1,7 +1,6 @@
 package app.fx.HY;
 
-import app.fx.V1_Controller;
-import app.fx._env;
+import app.fx.Controller_V2;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +16,7 @@ public class Main_Final1 extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/app/fx/Merge/merge_travel_items.fxml"));
         Scene scene = new Scene(fxmlloader.load(), 1600, 900);
-        V1_Controller controller = fxmlloader.getController();
+        Controller_V2 controller = fxmlloader.getController();
 
         bindTestKey(scene, controller);
 
@@ -29,7 +28,7 @@ public class Main_Final1 extends Application {
     }
 
     // 테스트용 키 바인딩
-    private static void bindTestKey(@NotNull Scene scene, V1_Controller controller) {
+    private static void bindTestKey(@NotNull Scene scene, Controller_V2 controller) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {

@@ -2,7 +2,7 @@ package app.fx.elements;
 
 import app.fx.Data.USERS;
 import app.fx.HA.Queries;
-import app.fx.V1_Controller;
+import app.fx.Controller_V2;
 import app.fx._env;
 import app.fx.elements._User_Pane.User_Customer;
 import app.fx.elements._User_Pane.User_LoginRequired;
@@ -22,7 +22,7 @@ import javafx.scene.text.Font;
 
 public class Title_tab extends Pane {
 
-    private final V1_Controller controller;
+    private final Controller_V2 controller;
 
     @FXML
     private Pane titleTab;
@@ -35,8 +35,8 @@ public class Title_tab extends Pane {
 
     private User_Pane userPane;
 
-    LoginPage loginPage;
-    SignupPage signupPage;
+    public LoginPage loginPage;
+    public SignupPage signupPage;
 
     private void initialize() {
         // Initialize and add the background Rectangle
@@ -83,7 +83,7 @@ public class Title_tab extends Pane {
         titleTab.getChildren().add(innerPane);
     }
 
-    public Title_tab(Pane titleTab, V1_Controller controller, USERS currentUser) {
+    public Title_tab(Pane titleTab, Controller_V2 controller) {
         this.titleTab = titleTab;
         this.controller = controller;
         initialize();
@@ -127,6 +127,13 @@ public class Title_tab extends Pane {
         else if (btnID.equals("logout_customer")) logout_customer(event);
         else if (btnID.equals("logout_staff")) logout_staff(event);
         else if (btnID.equals("logout_manager")) logout_manager(event);
+    }
+
+    public void keyRequest(String key) {
+        switch (key.toString()) {
+            case "login":
+                login(null);
+        }
     }
 
     private void login_required(ActionEvent event) {
