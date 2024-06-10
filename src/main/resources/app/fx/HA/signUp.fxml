@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.fx.HY.SignUp">
+   <children>
+      <Pane fx:id="SIGNUP" prefHeight="900.0" prefWidth="1600.0">
+         <children>
+            <Pane fx:id="EXIT" prefHeight="900.0" prefWidth="1600.0" />
+            <Pane layoutX="500.0" layoutY="250.0" prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="400.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+                  <Label alignment="CENTER" layoutX="122.0" layoutY="20.0" prefHeight="64.0" prefWidth="353.0" text="회원가입">
+                     <font>
+                        <Font size="41.0" />
+                     </font>
+                  </Label>
+                  <HBox layoutX="190.0" layoutY="90.0" prefHeight="22.0" prefWidth="227.0">
+                     <children>
+                        <TextField fx:id="ID" prefHeight="22.0" prefWidth="227.0" text="ID" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="190.0" layoutY="140.0" prefHeight="22.0" prefWidth="227.0">
+                     <children>
+                        <PasswordField fx:id="PW" prefHeight="22.0" prefWidth="587.0" text="PASSWORD" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="190.0" layoutY="190.0" prefHeight="22.0" prefWidth="227.0">
+                     <children>
+                        <PasswordField fx:id="PW_CONF" prefHeight="22.0" prefWidth="587.0" text="PASSWORD" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="REGISTER" layoutX="217.0" layoutY="283.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="172.0" text="가입하기" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

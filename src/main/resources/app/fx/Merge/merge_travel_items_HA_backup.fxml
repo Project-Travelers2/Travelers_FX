@@ -6,20 +6,16 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="ROOT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.fx.Controller_V2">
    <children>
-      <Pane prefHeight="300.0" prefWidth="1600.0" AnchorPane.bottomAnchor="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane layoutY="-0.19999999999999996" AnchorPane.bottomAnchor="600.2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.19999999999999996">
          <children>
-            <Pane fx:id="MenuBar" layoutX="-2.0" layoutY="200.0" prefHeight="100.0" prefWidth="1600.0">
+            <Pane fx:id="MenuBar" layoutY="200.0" prefHeight="100.0" prefWidth="1600.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" width="1600.0" />
                   <ButtonBar buttonMinWidth="180.0" buttonOrder="R_HE+U" prefHeight="100.0" prefWidth="1598.0">
@@ -31,7 +27,7 @@
                         <Button fx:id="FIND_FOOD" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="음식" />
                         <Button fx:id="FIND_SUMMER" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="여름" />
                         <Button fx:id="FIND_WINTER" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="겨울" />
-                        <Button mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="검색" />
+                        <Button fx:id="FIND_ETC" mnemonicParsing="false" onAction="#onclick_cat_festivals" prefHeight="70.0" text="기타" />
                     </buttons>
                      <padding>
                         <Insets left="20.0" right="50.0" />
@@ -42,7 +38,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </Pane>
-            <Pane fx:id="FlightBar" layoutY="50.0" prefHeight="150.0" prefWidth="1600.0">
+            <Pane fx:id="FLIGHT_TAB" layoutY="50.0" prefHeight="150.0" prefWidth="1600.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f6faff" height="150.0" stroke="BLACK" strokeType="INSIDE" width="1600.0" />
                   <Pane layoutX="40.0" prefHeight="150.0" prefWidth="200.0">
@@ -85,41 +81,6 @@
             </Pane>
          </children>
       </Pane>
-      <GridPane fx:id="GRID_FESTIVALS" hgap="15.0" layoutX="2.0" layoutY="310.0" prefHeight="600.0" prefWidth="1600.0" vgap="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="300.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <Pane prefHeight="300.0" prefWidth="534.0">
-               <children>
-                  <ImageView fx:id="BACKGROUND" fitHeight="280.0" fitWidth="514.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="DESCRIPTION" alignment="CENTER" prefHeight="210.0" prefWidth="514.0" text="Label">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="RESERVE" layoutY="208.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="514.0" text="reserve">
-                     <font>
-                        <Font size="32.0" />
-                     </font>
-                  </Button>
-               </children>
-            </Pane>
-            <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.columnIndex="2" />
-            <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="300.0" prefWidth="534.0" text="view1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-         </children>
-         <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-         </padding>
-      </GridPane>
+      <Pane fx:id="CONTENTS" layoutY="300.0" prefHeight="600.0" prefWidth="1600.0" />
    </children>
 </AnchorPane>
