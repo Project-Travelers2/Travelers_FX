@@ -6,6 +6,7 @@ import app.fx.Data.USERS;
 import app.fx._env;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,8 +85,13 @@ public class Queries {
         String country_code = "";
         try (Connection conn = DriverManager.getConnection(url, id, pw)) {
             Statement st = conn.createStatement();
-            // TODO: 13131 쿼리 찾기
-//            ResultSet rs = st.executeQuery("select * from COUNTRIES where COUNTRY_CODE = " + localCode);
+
+            ResultSet rs = st.executeQuery("SELECT L.ISO_COUNTRY FROM LOCALS L JOIN FESTIVALS F ON L.LOCAL_ID = F.LOCAL_ID WHERE F.LOCAL_ID = " + localCode);
+
+            if (rs.next()) {
+                country_code = rs.getString("ISO_COUNTRY");
+                System.out.println(country_code);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -201,5 +207,44 @@ public class Queries {
             return false;
         }
 
+    }
+
+
+    public boolean addSchedule(int scheduleId, int userId, String scheduleName, LocalDate departureDate, LocalDate arrivalDate, String departureAirportId, String arrivalAirportId, String festivalId) {
+        // SQL 쿼리 작성
+        String insertQuery = "INSERT INTO SCHEDULES (SCHEDULE_ID, USER_ID, SCHEDULE_NAME, DEPARTURE_DATE, ARRIVAL_DATE, DEPARTURE_AIRPORT_ID, ARRIVAL_AIRPORT_ID, FESTIVAL_ID) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = DriverManager.getConnection(url, id, pw);
+             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+
+//            // 쿼리 파라미터 설정
+            preparedStatement.setInt(1, scheduleId);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.setString(3, scheduleName);
+            preparedStatement.setString(4, departureDate.toString());
+            preparedStatement.setString(5, arrivalDate.toString());
+            preparedStatement.setString(6, departureAirportId);
+            preparedStatement.setString(7, arrivalAirportId);
+            preparedStatement.setString(8, festivalId);
+//            preparedStatement.executeUpdate();
+//            preparedStatement.setString(1, requestId); // USER_NAME 값 설정
+//            preparedStatement.setString(2, requestPw); // USER_PASSWORD 값 설정
+//            preparedStatement.setInt(3, 1); // USER_TYPE 값을 1로 설정
+
+            // 쿼리 실행
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("성공적으로 완료되었습니다.");
+                return true;
+            } else {
+                System.out.println("실패했습니다.");
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

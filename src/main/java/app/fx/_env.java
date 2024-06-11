@@ -3,9 +3,9 @@ package app.fx;
 import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.FESTIVALS;
 import app.fx.Data.USERS;
+import app.fx.HA.Queries;
 import app.fx.elements.Festival_item;
 import io.github.cdimascio.dotenv.Dotenv;
-import javafx.scene.Scene;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,7 +21,8 @@ public class _env {
     public static List<USERS> users;
     public static USERS selected_user;
 
-    public static Festival_item selected_festival;
+    private static Festival_item selected_festival;
+    private static String arrivalCountryCode;
 
     public static AIRPORT_INFORMATION departure_information;
     public static AIRPORT_INFORMATION arrival_information;
@@ -42,5 +43,19 @@ public class _env {
         System.out.println("DATABASE_ID : " + getEnv("DATABASE_ID"));
         System.out.println("DATABASE_PW : " + getEnv("DATABASE_PW"));
         System.out.println("API_KEY : " + getEnv("API_KEY"));
+    }
+
+    public static Festival_item getSelected_festival() {
+        return selected_festival;
+    }
+
+    public static void setSelected_festival(Festival_item selected_festival) {
+        _env.selected_festival = selected_festival;
+        arrivalCountryCode = Queries.instance.get_country_code(selected_festival.getFest_info().local_id);
+        System.out.println(arrivalCountryCode);
+    }
+
+    public static String getArrivalCountryCode() {
+        return arrivalCountryCode;
     }
 }
