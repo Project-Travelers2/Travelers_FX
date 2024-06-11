@@ -68,7 +68,7 @@ public class FlightTab extends Pane {
         departurePane.setPadding(new javafx.geometry.Insets(50.0, 0, 20.0, 0));
 
         // Initialize and add the departure Button
-        DEPARTURE = new Button("서울");
+        DEPARTURE = new Button("인천");
         DEPARTURE.setLayoutX(40.0);
         DEPARTURE.setLayoutY(25.0);
         DEPARTURE.setMaxHeight(Double.MAX_VALUE);

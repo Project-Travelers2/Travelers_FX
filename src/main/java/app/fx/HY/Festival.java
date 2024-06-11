@@ -8,6 +8,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Festival {
+    /**
+     * HY : db연결
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
