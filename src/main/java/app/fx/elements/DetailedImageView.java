@@ -127,12 +127,10 @@ public class DetailedImageView extends Pane {
         title.setFont(Font.font("나눔바른고딕",20));
         GridPane.setRowIndex(title, 1);
         // Set the background to transparent and the text color to black
-        title.opacityProperty().set(0.8);
-        title.setStyle("-fx-background-color: transparent; " +
-                "-fx-background-insets: 0; " +
-                "-fx-background-radius: 0; " +
-                "-fx-border-color: transparent;"+
-                "-fx-border-width: 1 1 1 1");
+        title.opacityProperty().set(0.6);
+        title.getStyleClass().add("transparent-text-area");
+
+        GridPane.setRowIndex(title, 1);
 
 
 
@@ -143,8 +141,11 @@ public class DetailedImageView extends Pane {
         desc.setPrefWidth(300.0);
         desc.setWrapText(true);
         desc.setFont(Font.font("나눔바른고딕",15));
-        desc.opacityProperty().set(0.7);
+        desc.opacityProperty().set(0.6);
+        desc.getStyleClass().add("transparent-text-area");
         GridPane.setRowIndex(desc, 2);
+
+        this.getStylesheets().add(getClass().getResource("/app/fx/styles.css").toExternalForm());
 
 
         // Initialize RESERVE Button
