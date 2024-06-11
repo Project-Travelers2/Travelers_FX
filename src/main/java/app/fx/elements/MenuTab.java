@@ -11,9 +11,11 @@ import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
+import javafx.scene.text.Font;
 
 public class MenuTab {
 
@@ -53,7 +55,7 @@ public class MenuTab {
         backgroundRect.setArcHeight(5.0);
         backgroundRect.setArcWidth(5.0);
         backgroundRect.setFill(Color.DODGERBLUE);
-        backgroundRect.setStroke(Color.BLACK);
+//        backgroundRect.setStroke(Color.BLACK);
 //        backgroundRect.setStrokeType(Rectangle.StrokeType.INSIDE);
         MenuBar.getChildren().add(backgroundRect);
 
@@ -63,47 +65,72 @@ public class MenuTab {
         buttonBar.setButtonOrder("R_HE+U");
         buttonBar.setPrefHeight(100.0);
         buttonBar.setPrefWidth(1600.0);
+        buttonBar.setStyle("-fx-background-color: #89c3fb");
         buttonBar.setPadding(new Insets(0, 50.0, 0, 20.0));
 
         // Initialize and add buttons to ButtonBar
         FIND_ALL = new Button("전체");
         FIND_ALL.setPrefHeight(70.0);
         FIND_ALL.setMnemonicParsing(false);
+        FIND_ALL.setFont(Font.font("배달의민족 도현",18));
+        FIND_ALL.setTextFill(Paint.valueOf("white"));
+        FIND_ALL.setStyle("-fx-background-color: #89c3fb");
         buttonBar.getButtons().add(FIND_ALL);
 
         FIND_MOVIE = new Button("영화");
         FIND_MOVIE.setPrefHeight(70.0);
         FIND_MOVIE.setMnemonicParsing(false);
+        FIND_MOVIE.setFont(Font.font("배달의민족 도현",18));
+        FIND_MOVIE.setTextFill(Paint.valueOf("white"));
+        FIND_MOVIE.setStyle("-fx-background-color: #89c3fb");
         buttonBar.getButtons().add(FIND_MOVIE);
 
         FIND_MUSIC = new Button("음악");
         FIND_MUSIC.setPrefHeight(70.0);
         FIND_MUSIC.setMnemonicParsing(false);
+        FIND_MUSIC.setFont(Font.font("배달의민족 도현",18));
+        FIND_MUSIC.setTextFill(Paint.valueOf("white"));
+        FIND_MUSIC.setStyle("-fx-background-color: #89c3fb");
         buttonBar.getButtons().add(FIND_MUSIC);
 
         FIND_FASSION = new Button("패션");
         FIND_FASSION.setPrefHeight(70.0);
         FIND_FASSION.setMnemonicParsing(false);
+        FIND_FASSION.setFont(Font.font("배달의민족 도현", 18));
+        FIND_FASSION.setTextFill(Paint.valueOf("white"));
+        FIND_FASSION.setStyle("-fx-background-color: #89c3fb");
         buttonBar.getButtons().add(FIND_FASSION);
 
         FIND_FOOD = new Button("음식");
         FIND_FOOD.setPrefHeight(70.0);
         FIND_FOOD.setMnemonicParsing(false);
+        FIND_FOOD.setFont(Font.font("배달의민족 도현",18));
+        FIND_FOOD.setTextFill(Paint.valueOf("white"));
+        FIND_FOOD.setStyle("-fx-background-color: #89c3fb");
         buttonBar.getButtons().add(FIND_FOOD);
 
         FIND_SUMMER = new Button("여름");
         FIND_SUMMER.setPrefHeight(70.0);
         FIND_SUMMER.setMnemonicParsing(false);
+        FIND_SUMMER.setFont(Font.font("배달의민족 도현",18));
+        FIND_SUMMER.setTextFill(Paint.valueOf("white"));
+        FIND_SUMMER.setStyle("-fx-background-color: #89c3fb");
         buttonBar.getButtons().add(FIND_SUMMER);
 
         FIND_WINTER = new Button("겨울");
         FIND_WINTER.setPrefHeight(70.0);
         FIND_WINTER.setMnemonicParsing(false);
+        FIND_WINTER.setFont(Font.font("배달의민족 도현",18));
+        FIND_WINTER.setTextFill(Paint.valueOf("white"));
+        FIND_WINTER.setStyle("-fx-background-color: #89c3fb");
         buttonBar.getButtons().add(FIND_WINTER);
 
         FIND_ETC = new Button("기타");
         FIND_ETC.setPrefHeight(70.0);
         FIND_ETC.setMnemonicParsing(false);
+        FIND_ETC.setFont(Font.font("배달의민족 도현",18));
+        FIND_ETC.setTextFill(Paint.valueOf("white"));
+        FIND_ETC.setStyle("-fx-background-color: #89c3fb");
         buttonBar.getButtons().add(FIND_ETC);
 
         MenuBar.getChildren().add(buttonBar);

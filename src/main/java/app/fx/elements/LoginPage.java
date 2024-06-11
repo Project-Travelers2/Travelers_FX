@@ -35,7 +35,7 @@ public class LoginPage extends Pane {
         // TODO: 0609 배경추가
         Rectangle background = new Rectangle(600.0, 400.0);
         background.setFill(Color.DODGERBLUE);
-        background.setStroke(Color.BLACK);
+//        background.setStroke(Color.BLACK);
         this.getChildren().add(background);
 
         Label tLbl = new Label("FESTI + VEL");
@@ -43,8 +43,8 @@ public class LoginPage extends Pane {
         tLbl.setLayoutX(120.0);
         tLbl.setLayoutY(80.0);
         tLbl.setAlignment(Pos.CENTER);
-        tLbl.setFont(Font.font("배달의민족 도현"));
-        tLbl.setTextFill(Paint.valueOf("#89C3FBFF"));
+        tLbl.setFont(Font.font("배달의민족 도현",20));
+        tLbl.setTextFill(Paint.valueOf("white"));
 
 
         Label txtID = new Label("ID");

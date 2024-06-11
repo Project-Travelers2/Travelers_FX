@@ -10,12 +10,15 @@ import app.fx._env;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.Callback;
 
 import java.time.LocalDate;
@@ -53,7 +56,7 @@ public class FlightTab extends Pane {
         backgroundRect.setArcHeight(5.0);
         backgroundRect.setArcWidth(5.0);
         backgroundRect.setFill(Color.web("#f6faff"));
-        backgroundRect.setStroke(Color.BLACK);
+//        backgroundRect.setStroke(Color.BLACK);
 //        backgroundRect.setStrokeType(Rectangle.StrokeType.INSIDE);
         FLIGHT_TAB.getChildren().add(backgroundRect);
 
@@ -74,16 +77,20 @@ public class FlightTab extends Pane {
         DEPARTURE.setPrefWidth(120.0);
         departurePane.getChildren().add(DEPARTURE);
         FLIGHT_TAB.getChildren().add(departurePane);
+        DEPARTURE.setFont(Font.font("배달의민족 도현",25));
+        DEPARTURE.setTextFill(Paint.valueOf("black"));
+        DEPARTURE.setStyle("-fx-background-color: #f6faff;");
 
         // Initialize and add the second Rectangle
         Rectangle midRect = new Rectangle(60.0, 60.0);
         midRect.setArcHeight(5.0);
         midRect.setArcWidth(5.0);
-        midRect.setFill(Color.web("#a3d3ff"));
-        midRect.setStroke(Color.BLACK);
+        midRect.setFill(Color.web("#f6faff"));
+//        midRect.setStroke(Color.BLACK);
 //        midRect.setStrokeType(Rectangle.StrokeType.INSIDE);
         midRect.setLayoutX(264.0);
         midRect.setLayoutY(46.0);
+//        midRect.setStyle("-fx-background-color: #f6faff");
         FLIGHT_TAB.getChildren().add(midRect);
 
         // Initialize the second Pane
@@ -104,6 +111,9 @@ public class FlightTab extends Pane {
         ARRIVAL.setPrefWidth(120.0);
         arrivalPane.getChildren().add(ARRIVAL);
         FLIGHT_TAB.getChildren().add(arrivalPane);
+        ARRIVAL.setFont(Font.font("배달의민족 도현", 25));
+        ARRIVAL.setTextFill(Paint.valueOf("black"));
+        ARRIVAL.setStyle("-fx-background-color: #f6faff");
 
         // Initialize and add the search Button
         SEARCH = new Button("항공권 검색");
@@ -111,6 +121,9 @@ public class FlightTab extends Pane {
         SEARCH.setLayoutY(51.0);
         SEARCH.setPrefHeight(60.0);
         SEARCH.setPrefWidth(180.0);
+        SEARCH.setFont(Font.font("배달의민족 도현",20));
+        SEARCH.setTextFill(Paint.valueOf("white"));
+        SEARCH.setStyle("-fx-background-color: #89c3fb");
         FLIGHT_TAB.getChildren().add(SEARCH);
 
         // Initialize and add the departure DatePicker
@@ -130,6 +143,8 @@ public class FlightTab extends Pane {
         ARRIVAL_DATE.setPrefWidth(390.0);
         ARRIVAL_DATE.setPromptText("도착일");
         FLIGHT_TAB.getChildren().add(ARRIVAL_DATE);
+
+
     }
 
     private String cssColor = "";
@@ -524,6 +539,7 @@ public class FlightTab extends Pane {
             return true;
         }
     }
+
 
     private boolean requestLogin() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

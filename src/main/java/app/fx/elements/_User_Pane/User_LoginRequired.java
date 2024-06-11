@@ -5,6 +5,7 @@ import app.fx._env;
 import app.fx.elements.User_Pane;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 public class User_LoginRequired extends User_Pane {
 
@@ -21,6 +22,7 @@ public class User_LoginRequired extends User_Pane {
         this.add(langBtn, 0, 0);
         grids.add(langBtn);
         langBtn.setTextFill(Paint.valueOf("white"));
+        langBtn.setFont(Font.font("배달의민족 도현",15));
         langBtn.setStyle("-fx-background-color: #8ac5fd");
 
         Button favBtn = new Button("즐겨찾기");
@@ -29,6 +31,7 @@ public class User_LoginRequired extends User_Pane {
         this.add(favBtn, 1, 0);
         grids.add(favBtn);
         favBtn.setTextFill(Paint.valueOf("white"));
+        favBtn.setFont(Font.font("배달의민족 도현",15));
         favBtn.setStyle("-fx-background-color: #8ac5fd");
 
         Button loginBtn = new Button("로그인");
@@ -37,6 +40,7 @@ public class User_LoginRequired extends User_Pane {
         this.add(loginBtn, 2, 0);
         grids.add(loginBtn);
         loginBtn.setTextFill(Paint.valueOf("white"));
+        loginBtn.setFont(Font.font("배달의민족 도현",15));
         loginBtn.setStyle("-fx-background-color: #8ac5fd");
 
 //        loginBtn.setOnAction(event -> logAction(event));

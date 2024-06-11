@@ -65,7 +65,11 @@
     -fx-background-color: #f3f5f6;
 }
 
+.custom-date-picker {
+    -fx-font-family: "배달의민족 도현";
+    -fx-font-size: 16px; /* 원하는 폰트 크기 */
 
+}
 #GRID_FESTIVALS {
     -fx-font-family : '배달의민족 도현';
     -fx-background-color: #f0f3f6;
