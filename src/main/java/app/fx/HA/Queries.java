@@ -210,27 +210,22 @@ public class Queries {
     }
 
 
-    public boolean addSchedule(int scheduleId, int userId, String scheduleName, LocalDate departureDate, LocalDate arrivalDate, String departureAirportId, String arrivalAirportId, String festivalId) {
+    public boolean addSchedule(int userId, String scheduleName, LocalDate departureDate, LocalDate arrivalDate, String departureAirportId, String arrivalAirportId, String festivalId) {
         // SQL 쿼리 작성
-        String insertQuery = "INSERT INTO SCHEDULES (SCHEDULE_ID, USER_ID, SCHEDULE_NAME, DEPARTURE_DATE, ARRIVAL_DATE, DEPARTURE_AIRPORT_ID, ARRIVAL_AIRPORT_ID, FESTIVAL_ID) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO SCHEDULES (USER_ID, SCHEDULE_NAME, DEPARTURE_DATE, ARRIVAL_DATE, DEPARTURE_AIRPORT_ID, ARRIVAL_AIRPORT_ID, FESTIVAL_ID) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, id, pw);
              PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-//            // 쿼리 파라미터 설정
-            preparedStatement.setInt(1, scheduleId);
-            preparedStatement.setInt(2, userId);
-            preparedStatement.setString(3, scheduleName);
-            preparedStatement.setString(4, departureDate.toString());
-            preparedStatement.setString(5, arrivalDate.toString());
-            preparedStatement.setString(6, departureAirportId);
-            preparedStatement.setString(7, arrivalAirportId);
-            preparedStatement.setString(8, festivalId);
-//            preparedStatement.executeUpdate();
-//            preparedStatement.setString(1, requestId); // USER_NAME 값 설정
-//            preparedStatement.setString(2, requestPw); // USER_PASSWORD 값 설정
-//            preparedStatement.setInt(3, 1); // USER_TYPE 값을 1로 설정
+            // 쿼리 파라미터 설정
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, scheduleName);
+            preparedStatement.setString(3, departureDate.toString());
+            preparedStatement.setString(4, arrivalDate.toString());
+            preparedStatement.setString(5, departureAirportId);
+            preparedStatement.setString(6, arrivalAirportId);
+            preparedStatement.setString(7, festivalId);
 
             // 쿼리 실행
             int rowsAffected = preparedStatement.executeUpdate();

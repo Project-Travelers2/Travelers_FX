@@ -9,6 +9,7 @@ module app.fx {
     requires annotations;
     requires commons.csv;
     requires ojdbc8;
+    requires java.desktop;
 
     opens app.fx to javafx.fxml;
     opens app.fx.HY to javafx.fxml;
