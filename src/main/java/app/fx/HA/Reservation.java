@@ -26,6 +26,9 @@ public class Reservation {
         String arrival_airport_id = _env.arrival_information.airport_id;      // 도착 공항
         String festival_id = _env.getSelected_festival().getFest_info().festival_id;         // 축제 id
 
+        String departure_airport_iata = _env.departure_information.iata_code;
+        String arrival_airport_iata = _env.arrival_information.iata_code;
+
         boolean isFinished = Queries.instance.addSchedule(user_id, schedule_name, departure_date, arrival_date, departure_airport_id, arrival_airport_id, festival_id);
 
         // 현재까지 선택한 정보들 출력하기
@@ -45,14 +48,29 @@ public class Reservation {
             // TODO: 13133 0611 URL 코드 넣고 skyscanner로 리다이렉션
             try {
 //                URI uri = new URI("https://www.skyscanner.co.kr/transport/flights/sela/nrt/240613/240719/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false");
-                // #출발공항
-                // #도착공항
-                // #출발일
-                // #복귀일
-                // #성인수 없으면 아무것도 적지않음
-                // #아이수 없으면 아무것도 적지않음
+                // #출발공항 : departure_airport_iata
+                // #도착공항 : arrival_airport_iata
+                // #출발일 : _env.departure_date
+                // #복귀일 : _env.arrival_date
+                // #성인수 없으면 아무것도 적지않음 : 1명 기본
+                // #아이수 없으면 아무것도 적지않음 : 0
                 // TODO: 0612 공항코드 필요 (airport 연동해야함)
-                URI uri = new URI("https://www.skyscanner.co.kr/transport/flights/[#출발공항]/[#도착공항]/[#출발일]/[#복귀일]/?adultsv2=[#성인수]&cabinclass=economy&childrenv2=[#아이수]&ref=home&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false");
+
+                String adultCount = "1";
+                String childCount = "";
+                String uriPath = "https://www.skyscanner.co.kr/transport/flights/" +
+                                departure_airport_iata + "/" +
+                                arrival_airport_iata + "/" +
+                                _env.departure_date + "/" +
+                                _env.arrival_date + "/" +
+                                "?adultsv2=" + adultCount +
+                                "&cabinclass=economy" +
+                                "&childrenv2=" + childCount +
+                                "&ref=home&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false";
+
+                System.out.println(uriPath);
+                URI uri = new URI(uriPath);
+//                URI uri = new URI("https://www.skyscanner.co.kr/transport/flights/[#출발공항]/[#도착공항]/[#출발일]/[#복귀일]/?adultsv2=[#성인수]&cabinclass=economy&childrenv2=[#아이수]&ref=home&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false");
 
                 // Desktop 객체를 사용하여 브라우저 열기
                 if (Desktop.isDesktopSupported()) {

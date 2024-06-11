@@ -109,7 +109,7 @@ public class Queries {
             // 컬럼명은 대소문자 구분합니다. ㅂㄷㅂㄷ
 //            ResultSet rs = st.executeQuery("select * from AIRPORTS WHERE COUNTRY_CODE = " + CountryCode);
             ResultSet rs = st.executeQuery("SELECT * FROM AIRPORTS WHERE ISO_COUNTRY = " + "\'"+CountryCode+"\'"+
-                    "AND SCHEDULED_SERVICE = " + "\'yes\'");
+                    "AND GPS_CODE IS NOT NULL AND IATA_CODE IS NOT NULL AND SCHEDULED_SERVICE = 'yes'");
 
             while(rs.next()) {
                 AIRPORT_INFORMATION air = new AIRPORT_INFORMATION();
@@ -120,6 +120,8 @@ public class Queries {
                 air.longitude_deg = rs.getInt("LONGITUDE_DEG");
                 air.municipality = rs.getString("MUNICIPALITY");
                 air.scheduled_service = rs.getString("SCHEDULED_SERVICE");
+                air.gps_code = rs.getString("GPS_CODE");
+                air.iata_code = rs.getString("IATA_CODE");
                 air.iso_country = rs.getString("ISO_COUNTRY");
 
                 System.out.println(air.toString());

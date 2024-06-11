@@ -8,6 +8,8 @@ public class AIRPORT_INFORMATION {
     public int longitude_deg;
     public String municipality;
     public String scheduled_service;
+    public String gps_code;
+    public String iata_code;
     public String iso_country;
 
     public String getName() {
@@ -16,7 +18,7 @@ public class AIRPORT_INFORMATION {
 
     @Override
     public String toString() {
-        return iso_country + ": " + name;
+        return iso_country + ": " + name + ", " + gps_code + ", " + iata_code;
     }
 
 //    @Override
