@@ -168,6 +168,7 @@ public class Festivals_tab {
 
         DetailedImageView detail = new DetailedImageView(item);
         this.controller.ROOT.getChildren().add(detail);
+        this.controller.flightTab.setReservation(_env.selected_festival);
     }
 
 

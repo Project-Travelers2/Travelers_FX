@@ -377,7 +377,6 @@ public class Title_tab extends Pane {
             return;
         }
 
-        // TODO: 13131
         userPane.getElement(2).setOnAction(_e -> logAction(new ControlEvent(_e, EventCode.TITLE_LOGACTION)));
     }
 

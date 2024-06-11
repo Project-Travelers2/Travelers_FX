@@ -4,6 +4,7 @@ import app.fx.Control.ControlEvent;
 import app.fx.Controller_V2;
 import app.fx.Data.AIRPORT_INFORMATION;
 import app.fx.Data.EventCode;
+import app.fx.Data.FESTIVALS;
 import app.fx.HA.Queries;
 import app.fx._env;
 import javafx.beans.value.ChangeListener;
@@ -131,6 +132,38 @@ public class FlightTab extends Pane {
         FLIGHT_TAB.getChildren().add(ARRIVAL_DATE);
     }
 
+    private String cssColor = "";
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    // TODO: 13131 예약정보 초기화
+    public void resetReservation() {
+        setDateRange(LocalDate.now(), LocalDate.now(), 0);
+    }
+
+    // TODO: 예약정보 업데이트
+    public void setReservation(Festival_item selectedFestival) {
+        FESTIVALS info = selectedFestival.getFest_info();
+        setDateRange(info.start_date, info.end_date, 1);
+        DEPARTURE_DATE.setValue(info.start_date);
+        ARRIVAL_DATE.setValue(info.end_date);
+    }
+
+
+    private void setDateRange(LocalDate start, LocalDate end, int cssCode) {
+        this.startDate = start;
+        this.endDate = end;
+
+        switch (cssCode) {
+            case 0:
+                cssColor = "-fx-background-color: #ffcccc;";
+                break;
+            case 1:
+                cssColor = "-fx-background-color: #ccccff;";
+                break;
+        }
+    }
+
     public FlightTab(AnchorPane root, Controller_V2 controller) {
         this.ROOT = root;
         this.controller = controller;
@@ -141,11 +174,18 @@ public class FlightTab extends Pane {
         DEPARTURE.setOnAction(e -> onclick_departure(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE)) );
         ARRIVAL.setOnAction(e -> onclick_arrival(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL)) );
 
-        // TODO: 0611 특정 날짜 색 입히기
-        LocalDate specialDate = LocalDate.of(2024, 6, 20);
 
         DEPARTURE_DATE.setOnMouseClicked(e -> onclick_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_CLICK)) );
         DEPARTURE_DATE.setOnAction(e -> onselect_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_SELECT)) );
+
+
+        LocalDate now = LocalDate.now();
+//        LocalDate plus7 = now.plusDays(7);
+
+        setDateRange(now, now, 0);
+
+
+        // dayCellFactory 설정
         DEPARTURE_DATE.setDayCellFactory(new Callback<DatePicker, DateCell>() {
             @Override
             public DateCell call(DatePicker datePicker) {
@@ -154,36 +194,35 @@ public class FlightTab extends Pane {
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
 
-                        // 특정 날짜에 색깔 입히기
-                        if (item.equals(specialDate)) {
-                            setStyle("-fx-background-color: #ff4444;");  // 빨간색 배경
-                            setTooltip(new Tooltip("This is a special date!"));
+                        // 특정 날짜 범위에 색깔 입히기
+                        if (item != null && !empty && (item.isEqual(startDate) || item.isEqual(endDate) || (item.isAfter(startDate) && item.isBefore(endDate)))) {
+//                            setStyle("-fx-background-color: #ffcccc;");  // 연한 빨간색 배경
+                            setStyle(cssColor);  // 연한 빨간색 배경
                         }
                     }
                 };
             }
         });
 
-
         ARRIVAL_DATE.setOnMouseClicked(e -> onclick_arrival_datetime(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL_DATE_CLICK)) );
         ARRIVAL_DATE.setOnAction(e -> onselect_arrival_datetime(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL_DATE_SELECT)) );
 
-        // TODO: 0611 값 수동할당
-//        LocalDate initialDate = LocalDate.of(2024, 7, 10);
-//        ARRIVAL_DATE.setValue(initialDate);
-
-        // TODO: 0611 특정 날짜로 하이라이트 (제대로 동작안함)
-        LocalDate initialDate = LocalDate.of(2024, 7, 10);
-        ARRIVAL_DATE.showingProperty().addListener(new ChangeListener<Boolean>() {
+        // dayCellFactory 설정
+        ARRIVAL_DATE.setDayCellFactory(new Callback<DatePicker, DateCell>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    // DatePicker가 열릴 때 원하는 날짜로 이동
-                    ARRIVAL_DATE.setValue(initialDate);
-                    ARRIVAL_DATE.getEditor().getScene().getWindow().requestFocus();
-                    // 날짜를 선택하지 않도록 기본 값을 초기화
-                    ARRIVAL_DATE.setValue(null);
-                }
+            public DateCell call(DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        // 특정 날짜 범위에 색깔 입히기
+                        if (item != null && !empty && (item.isEqual(startDate) || item.isEqual(endDate) || (item.isAfter(startDate) && item.isBefore(endDate)))) {
+//                            setStyle("-fx-background-color: #ffcccc;");  // 연한 빨간색 배경
+                            setStyle(cssColor);  // 연한 빨간색 배경
+                        }
+                    }
+                };
             }
         });
 
@@ -504,6 +543,8 @@ public class FlightTab extends Pane {
             return false;
         }
     }
+
+
     // </editor-fold>
 
 }

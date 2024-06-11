@@ -36,8 +36,8 @@ public class Queries {
                 f.festival_id = rs.getString("FESTIVAL_ID");
                 f.festival_name = rs.getString("FESTIVAL_NAME");
                 f.description = rs.getString("DESCRIPTION");
-                f.start_date = rs.getDate("START_DATE");
-                f.end_date = rs.getDate("END_DATE");
+                f.start_date = rs.getDate("START_DATE").toLocalDate();
+                f.end_date = rs.getDate("END_DATE").toLocalDate();
                 f.website_link = rs.getString("WEBSITE_LINK");
                 f.image_path = rs.getString("IMAGE_PATH");
                 f.festival_code_id = rs.getString("FESTIVAL_CODE_ID");
@@ -64,8 +64,8 @@ public class Queries {
                 f.festival_id = rs.getString("FESTIVAL_ID");
                 f.festival_name = rs.getString("FESTIVAL_NAME");
                 f.description = rs.getString("DESCRIPTION");
-                f.start_date = rs.getDate("START_DATE");
-                f.end_date = rs.getDate("END_DATE");
+                f.start_date = rs.getDate("START_DATE").toLocalDate();
+                f.end_date = rs.getDate("END_DATE").toLocalDate();
                 f.website_link = rs.getString("WEBSITE_LINK");
                 f.image_path = rs.getString("IMAGE_PATH");
                 f.festival_code_id = rs.getString("FESTIVAL_CODE_ID");
@@ -78,6 +78,20 @@ public class Queries {
         } finally {
             return festival_list;
         }
+    }
+
+    public String get_country_code(String localCode) {
+        String country_code = "";
+        try (Connection conn = DriverManager.getConnection(url, id, pw)) {
+            Statement st = conn.createStatement();
+            // TODO: 13131 쿼리 찾기
+//            ResultSet rs = st.executeQuery("select * from COUNTRIES where COUNTRY_CODE = " + localCode);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return country_code;
     }
 
     public List<AIRPORT_INFORMATION> airport_list(String CountryCode) {
