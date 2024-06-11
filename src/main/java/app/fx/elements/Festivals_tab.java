@@ -164,11 +164,11 @@ public class Festivals_tab {
         System.out.println("Festival item button clicked");
 
         // 선택한 아이템을 할당합니다.
-        _env.selected_festival = item;
+        _env.setSelected_festival(item);
 
         DetailedImageView detail = new DetailedImageView(item);
         this.controller.ROOT.getChildren().add(detail);
-        this.controller.flightTab.setReservation(_env.selected_festival);
+        this.controller.flightTab.setReservation(_env.getSelected_festival());
     }
 
 

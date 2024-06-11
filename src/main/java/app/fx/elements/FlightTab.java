@@ -352,10 +352,13 @@ public class FlightTab extends Pane {
 
         // 한국 민간공항 리스트 출력 테스트
         // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기
-        String CountryCode = "KR"; // TODO: diff
+        // TODO: 13132 도착 공항 리스트 관련 국가코드
+        // TODO: 13132 0612 도착 공항정보 유저 피드백 필요
+        String countryCode = _env.getArrivalCountryCode();
+
 
         // 2 공항 리스트에서 민간공항 리스트 가져오기
-        List<AIRPORT_INFORMATION> airport_informations = Queries.instance.airport_list(CountryCode);
+        List<AIRPORT_INFORMATION> airport_informations = Queries.instance.airport_list(countryCode);
 
         // 3 민간공항 리스트를 ListView에 할당하기
         // ListView 생성
@@ -522,7 +525,7 @@ public class FlightTab extends Pane {
     }
 
     private boolean isCanNavigate() {
-        if (_env.selected_festival == null ||
+        if (_env.getSelected_festival() == null ||
                 _env.departure_information == null ||
                 _env.arrival_information == null ||
                 _env.departure_date == null ||

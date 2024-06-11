@@ -201,7 +201,7 @@ public class DetailedImageView extends Pane {
     // Event handler for RESERVE click
     private void handleReserveClick(MouseEvent event) {
         // Close the current window
-        _env.selected_festival = item;
+        _env.setSelected_festival(item);
         if (this.getParent() instanceof Pane) {
             AnchorPane parent = (AnchorPane)this.getParent();
             parent.getChildren().remove(this);
