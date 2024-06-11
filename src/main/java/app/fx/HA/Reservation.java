@@ -16,5 +16,9 @@ public class Reservation {
         System.out.println("출발일 : " + _env.departure_date);
         System.out.println("도착일 : " + _env.arrival_date);
         System.out.println("=============================");
+
+        // DB 이력넣기
+
+        // URL 조합
     }
 }

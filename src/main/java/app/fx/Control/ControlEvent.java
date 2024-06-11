@@ -12,8 +12,6 @@ import javafx.scene.input.MouseEvent;
  */
 public class ControlEvent extends ActionEvent {
     public Event event;
-//    public ActionEvent event;
-//    public MouseEvent mouseEvent;
     private EventCode eventCode;
 
     public ControlEvent(Event event, EventCode eventCode) {

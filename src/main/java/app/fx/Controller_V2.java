@@ -33,7 +33,6 @@ public class Controller_V2 extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         // Initialize Tab
         titleTab = new Title_tab(ROOT, this);
         flightTab = new FlightTab(ROOT, this);
@@ -41,8 +40,6 @@ public class Controller_V2 extends Controller implements Initializable {
         reservation = new Reservation();
 
         menuTab.onclick_all_festivals();
-
-//        scene.getRoot().applyCss();
     }
 
     //============================================================================

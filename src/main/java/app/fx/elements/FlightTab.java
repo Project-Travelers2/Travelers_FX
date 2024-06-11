@@ -189,17 +189,12 @@ public class FlightTab extends Pane {
         DEPARTURE.setOnAction(e -> onclick_departure(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE)) );
         ARRIVAL.setOnAction(e -> onclick_arrival(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL)) );
 
+        LocalDate now = LocalDate.now();
+//        LocalDate plus7 = now.plusDays(7);
+        setDateRange(now, now, 0);
 
         DEPARTURE_DATE.setOnMouseClicked(e -> onclick_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_CLICK)) );
         DEPARTURE_DATE.setOnAction(e -> onselect_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_SELECT)) );
-
-
-        LocalDate now = LocalDate.now();
-//        LocalDate plus7 = now.plusDays(7);
-
-        setDateRange(now, now, 0);
-
-
         // dayCellFactory 설정
         DEPARTURE_DATE.setDayCellFactory(new Callback<DatePicker, DateCell>() {
             @Override
@@ -211,7 +206,6 @@ public class FlightTab extends Pane {
 
                         // 특정 날짜 범위에 색깔 입히기
                         if (item != null && !empty && (item.isEqual(startDate) || item.isEqual(endDate) || (item.isAfter(startDate) && item.isBefore(endDate)))) {
-//                            setStyle("-fx-background-color: #ffcccc;");  // 연한 빨간색 배경
                             setStyle(cssColor);  // 연한 빨간색 배경
                         }
                     }
@@ -221,7 +215,6 @@ public class FlightTab extends Pane {
 
         ARRIVAL_DATE.setOnMouseClicked(e -> onclick_arrival_datetime(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL_DATE_CLICK)) );
         ARRIVAL_DATE.setOnAction(e -> onselect_arrival_datetime(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL_DATE_SELECT)) );
-
         // dayCellFactory 설정
         ARRIVAL_DATE.setDayCellFactory(new Callback<DatePicker, DateCell>() {
             @Override
