@@ -7,6 +7,9 @@ import app.fx.Data.EventCode;
 import app.fx.Data.FESTIVALS;
 import app.fx.HA.Queries;
 import app.fx._env;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -15,11 +18,14 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Popup;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -350,12 +356,13 @@ public class FlightTab extends Pane {
         System.out.println("arrival button clicked");
         controller.catchEvent(e); // Broadcasting
 
-        // 한국 민간공항 리스트 출력 테스트
-        // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기
-        // TODO: 13132 도착 공항 리스트 관련 국가코드
-        // TODO: 13132 0612 도착 공항정보 유저 피드백 필요
+        // 선택된 축제의 국가코드
         String countryCode = _env.getArrivalCountryCode();
 
+        if (countryCode == null || countryCode.equals("")) {
+            controller.customPopup.festivalNotSelected();
+            return;
+        }
 
         // 2 공항 리스트에서 민간공항 리스트 가져오기
         List<AIRPORT_INFORMATION> airport_informations = Queries.instance.airport_list(countryCode);
