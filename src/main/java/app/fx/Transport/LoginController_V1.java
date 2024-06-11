@@ -40,6 +40,10 @@ public class LoginController_V1 implements Initializable {
 
     }
 
+    /**
+     * LOGIN CONTROLLER 구현/ DB에 있는 정보랑 연결해서 있는 데이터면 로그인, 아니면 경고창
+     * @param event
+     */
     private void login(ActionEvent event) {
         String userId = loginPage.getUsername();
         String password = loginPage.getPassword();
@@ -71,8 +75,6 @@ public class LoginController_V1 implements Initializable {
             loginPage.password.clear();
             System.out.println("로그인 실패");
         }
-//        System.out.println("id: " + loginPage.getUsername());
-//        System.out.println("pw: " + loginPage.getPassword());
     }
 
     private boolean validateLogin(String userId, String userpw) {
