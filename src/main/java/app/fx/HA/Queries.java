@@ -36,8 +36,8 @@ public class Queries {
                 f.festival_id = rs.getString("FESTIVAL_ID");
                 f.festival_name = rs.getString("FESTIVAL_NAME");
                 f.description = rs.getString("DESCRIPTION");
-                f.start_date = rs.getDate("START_DATE");
-                f.end_date = rs.getDate("END_DATE");
+                f.start_date = rs.getDate("START_DATE").toLocalDate();
+                f.end_date = rs.getDate("END_DATE").toLocalDate();
                 f.website_link = rs.getString("WEBSITE_LINK");
                 f.image_path = rs.getString("IMAGE_PATH");
                 f.festival_code_id = rs.getString("FESTIVAL_CODE_ID");
@@ -64,8 +64,8 @@ public class Queries {
                 f.festival_id = rs.getString("FESTIVAL_ID");
                 f.festival_name = rs.getString("FESTIVAL_NAME");
                 f.description = rs.getString("DESCRIPTION");
-                f.start_date = rs.getDate("START_DATE");
-                f.end_date = rs.getDate("END_DATE");
+                f.start_date = rs.getDate("START_DATE").toLocalDate();
+                f.end_date = rs.getDate("END_DATE").toLocalDate();
                 f.website_link = rs.getString("WEBSITE_LINK");
                 f.image_path = rs.getString("IMAGE_PATH");
                 f.festival_code_id = rs.getString("FESTIVAL_CODE_ID");
@@ -78,6 +78,20 @@ public class Queries {
         } finally {
             return festival_list;
         }
+    }
+
+    public String get_country_code(String localCode) {
+        String country_code = "";
+        try (Connection conn = DriverManager.getConnection(url, id, pw)) {
+            Statement st = conn.createStatement();
+            // TODO: 13131 쿼리 찾기
+//            ResultSet rs = st.executeQuery("select * from COUNTRIES where COUNTRY_CODE = " + localCode);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return country_code;
     }
 
     public List<AIRPORT_INFORMATION> airport_list(String CountryCode) {
@@ -137,5 +151,55 @@ public class Queries {
         }
 
         return isValid;
+    }
+
+    public boolean checkID(String requestId) {
+        String checkID_Query = "SELECT USER_NAME FROM USERS WHERE USER_NAME = '?'";
+
+        try (Connection connection = DriverManager.getConnection(url, id, pw);
+             PreparedStatement preparedStatement = connection.prepareStatement(checkID_Query)) {
+
+            preparedStatement.setString(1, requestId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return false;
+            }
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    public boolean requestSignup(String requestId, String requestPw) {
+        // SQL 쿼리 작성
+        String insertQuery = "INSERT INTO USERS (USER_NAME, USER_PASSWORD, USER_TYPE) VALUES (?, ?, ?)";
+
+        try (Connection connection = DriverManager.getConnection(url, id, pw);
+             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+
+            // 쿼리 파라미터 설정
+            preparedStatement.setString(1, requestId); // USER_NAME 값 설정
+            preparedStatement.setString(2, requestPw); // USER_PASSWORD 값 설정
+            preparedStatement.setInt(3, 1); // USER_TYPE 값을 1로 설정
+
+            // 쿼리 실행
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("회원가입이 성공적으로 완료되었습니다.");
+                return true;
+            } else {
+                System.out.println("회원가입에 실패했습니다.");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

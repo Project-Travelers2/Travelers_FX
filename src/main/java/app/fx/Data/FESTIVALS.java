@@ -1,13 +1,14 @@
 package app.fx.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class FESTIVALS<T extends Data> extends Data {
     public String festival_id;
     public String festival_name;
     public String description;
-    public Date start_date;
-    public Date end_date;
+    public LocalDate start_date;
+    public LocalDate end_date;
     public String website_link;
     public String image_path;
     public String festival_code_id;

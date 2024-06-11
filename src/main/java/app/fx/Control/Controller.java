@@ -1,6 +1,4 @@
-package app.fx.Controllers;
-
-import app.fx.elements.Festival_item;
+package app.fx.Control;
 
 public abstract class Controller {
 

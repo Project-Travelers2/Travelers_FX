@@ -1,5 +1,7 @@
 package app.fx.elements;
 
+import app.fx.Control.ControlEvent;
+import app.fx.Data.EventCode;
 import app.fx.HA.Queries;
 import app.fx.Controller_V2;
 import app.fx._env;
@@ -143,16 +145,21 @@ public class MenuTab {
         this.controller = controller;
         initialize();
 
-        FIND_ALL.setOnAction(e -> onclick_all_festivals());
-        FIND_MOVIE.setOnAction(e -> onclick_cat_festivals(1));
-        FIND_MUSIC.setOnAction(e -> onclick_cat_festivals(2));
-        FIND_FASSION.setOnAction(e -> onclick_cat_festivals(3));
-        FIND_FOOD.setOnAction(e -> onclick_cat_festivals(4));
-        FIND_SUMMER.setOnAction(e -> onclick_cat_festivals(5));
-        FIND_WINTER.setOnAction(e -> onclick_cat_festivals(6));
-        FIND_ETC.setOnAction(e -> onclick_cat_festivals(7));
+        FIND_ALL.setOnAction(e -> onclick_all_festivals(new ControlEvent(e, EventCode.MENU_ALL)));
+        FIND_MOVIE.setOnAction(e -> onclick_cat_festivals(1, new ControlEvent(e, EventCode.MENU_CATEGORY)));
+        FIND_MUSIC.setOnAction(e -> onclick_cat_festivals(2, new ControlEvent(e, EventCode.MENU_CATEGORY)));
+        FIND_FASSION.setOnAction(e -> onclick_cat_festivals(3, new ControlEvent(e, EventCode.MENU_CATEGORY)));
+        FIND_FOOD.setOnAction(e -> onclick_cat_festivals(4, new ControlEvent(e, EventCode.MENU_CATEGORY)));
+        FIND_SUMMER.setOnAction(e -> onclick_cat_festivals(5, new ControlEvent(e, EventCode.MENU_CATEGORY)));
+        FIND_WINTER.setOnAction(e -> onclick_cat_festivals(6, new ControlEvent(e, EventCode.MENU_CATEGORY)));
+        FIND_ETC.setOnAction(e -> onclick_cat_festivals(7, new ControlEvent(e, EventCode.MENU_CATEGORY)));
     }
 
+    public void receive(ControlEvent e) {
+        // 여긴 딱히 건드릴게 없음.
+    }
+
+    // <editor-fold desc="#all festivals">
     /**
      * WBS: View1 - P1 - ALL_B
      * onclick find all festivals button
@@ -164,6 +171,8 @@ public class MenuTab {
 
         // 데이터 리스트 받아오기
         System.out.println("All festivals button clicked");
+
+
         _env.festival_informations = Queries.instance.all_festival_list();
 
         // CONTENTS 영역에 패널 생성
@@ -175,6 +184,13 @@ public class MenuTab {
         controller.festivalsTab.setGridFestivals(_env.festival_informations, controller);
     }
 
+    public void onclick_all_festivals(ControlEvent e) {
+        controller.catchEvent(e);
+        onclick_all_festivals();
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="#category festivals">
     private void onclick_cat_festivals(int index) {
 
         // 페이지 속성 초기화
@@ -195,5 +211,10 @@ public class MenuTab {
         controller.festivalsTab.setGridFestivals(_env.festival_informations, controller);
     }
 
+    private void onclick_cat_festivals(int index, ControlEvent e) {
+        controller.catchEvent(e);
+        onclick_all_festivals();
+    }
+    // </editor-fold>
 
 }

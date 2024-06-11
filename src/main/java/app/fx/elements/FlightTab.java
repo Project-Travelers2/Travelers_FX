@@ -1,10 +1,14 @@
 package app.fx.elements;
 
+import app.fx.Control.ControlEvent;
 import app.fx.Controller_V2;
 import app.fx.Data.AIRPORT_INFORMATION;
+import app.fx.Data.EventCode;
+import app.fx.Data.FESTIVALS;
 import app.fx.HA.Queries;
 import app.fx._env;
-import javafx.event.ActionEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,6 +23,7 @@ import javafx.util.Callback;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class FlightTab extends Pane {
 
@@ -30,9 +35,11 @@ public class FlightTab extends Pane {
 
     @FXML
     public Button DEPARTURE;
+    private ScrollPane departure_scroll;
 
     @FXML
     public Button ARRIVAL;
+    private ScrollPane arrival_scroll;
 
     @FXML
     public Button SEARCH;
@@ -140,6 +147,38 @@ public class FlightTab extends Pane {
 
     }
 
+    private String cssColor = "";
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    // TODO: 13131 예약정보 초기화
+    public void resetReservation() {
+        setDateRange(LocalDate.now(), LocalDate.now(), 0);
+    }
+
+    // TODO: 예약정보 업데이트
+    public void setReservation(Festival_item selectedFestival) {
+        FESTIVALS info = selectedFestival.getFest_info();
+        setDateRange(info.start_date, info.end_date, 1);
+        DEPARTURE_DATE.setValue(info.start_date);
+        ARRIVAL_DATE.setValue(info.end_date);
+    }
+
+
+    private void setDateRange(LocalDate start, LocalDate end, int cssCode) {
+        this.startDate = start;
+        this.endDate = end;
+
+        switch (cssCode) {
+            case 0:
+                cssColor = "-fx-background-color: #ffcccc;";
+                break;
+            case 1:
+                cssColor = "-fx-background-color: #ccccff;";
+                break;
+        }
+    }
+
     public FlightTab(AnchorPane root, Controller_V2 controller) {
         this.ROOT = root;
         this.controller = controller;
@@ -147,15 +186,88 @@ public class FlightTab extends Pane {
         initialize();
 
         // Bind event handlers
-        DEPARTURE.setOnAction(e -> onclick_departure(e));
-        ARRIVAL.setOnAction(e -> onclick_arrival(e));
-        DEPARTURE_DATE.setOnAction(e -> onclick_departure_datetime(e));
-        ARRIVAL_DATE.setOnAction(e -> onclick_arrival_datetime(e));
-        SEARCH.setOnAction(e -> onclick_search(e));
+        DEPARTURE.setOnAction(e -> onclick_departure(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE)) );
+        ARRIVAL.setOnAction(e -> onclick_arrival(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL)) );
+
+
+        DEPARTURE_DATE.setOnMouseClicked(e -> onclick_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_CLICK)) );
+        DEPARTURE_DATE.setOnAction(e -> onselect_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_SELECT)) );
+
+
+        LocalDate now = LocalDate.now();
+//        LocalDate plus7 = now.plusDays(7);
+
+        setDateRange(now, now, 0);
+
+
+        // dayCellFactory 설정
+        DEPARTURE_DATE.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        // 특정 날짜 범위에 색깔 입히기
+                        if (item != null && !empty && (item.isEqual(startDate) || item.isEqual(endDate) || (item.isAfter(startDate) && item.isBefore(endDate)))) {
+//                            setStyle("-fx-background-color: #ffcccc;");  // 연한 빨간색 배경
+                            setStyle(cssColor);  // 연한 빨간색 배경
+                        }
+                    }
+                };
+            }
+        });
+
+        ARRIVAL_DATE.setOnMouseClicked(e -> onclick_arrival_datetime(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL_DATE_CLICK)) );
+        ARRIVAL_DATE.setOnAction(e -> onselect_arrival_datetime(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL_DATE_SELECT)) );
+
+        // dayCellFactory 설정
+        ARRIVAL_DATE.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        // 특정 날짜 범위에 색깔 입히기
+                        if (item != null && !empty && (item.isEqual(startDate) || item.isEqual(endDate) || (item.isAfter(startDate) && item.isBefore(endDate)))) {
+//                            setStyle("-fx-background-color: #ffcccc;");  // 연한 빨간색 배경
+                            setStyle(cssColor);  // 연한 빨간색 배경
+                        }
+                    }
+                };
+            }
+        });
+
+        SEARCH.setOnAction(e -> onclick_search(new ControlEvent(e, EventCode.FLIGHT_SEARCH)) );
     }
 
-    private void onclick_departure(ActionEvent e) {
+    public void receive(ControlEvent e) {
+        if (e.getEventCode() != EventCode.FLIGHT_DEPARTURE) {
+            abort_departure();
+        }
+
+        if (e.getEventCode() != EventCode.FLIGHT_ARRIVAL) {
+            abort_arrival();
+        }
+
+        if (e.getEventCode() != EventCode.FLIGHT_DEPARTURE_DATE_CLICK ||
+            e.getEventCode() != EventCode.FLIGHT_DEPARTURE_DATE_SELECT) {
+            abort_departure_datetime();
+        }
+
+        if (e.getEventCode() != EventCode.FLIGHT_ARRIVAL_DATE_CLICK ||
+            e.getEventCode() != EventCode.FLIGHT_ARRIVAL_DATE_SELECT) {
+            abort_arrival_datetime();
+        }
+    }
+
+    // <editor-fold desc="#on departure">
+    private void onclick_departure(ControlEvent e) {
         System.out.println("Departure button clicked");
+        controller.catchEvent(e); // Broadcasting
 
         // 한국 민간공항 리스트 출력 테스트
         // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기
@@ -195,15 +307,15 @@ public class FlightTab extends Pane {
         listView.setOnMouseClicked(this::onclick_select_departure);
 
         // ScrollPane 생성 및 ListView 추가
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(listView);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setPrefSize(300, 200); // 고정된 크기 설정
+        departure_scroll = new ScrollPane();
+        departure_scroll.setContent(listView);
+        departure_scroll.setFitToWidth(true);
+        departure_scroll.setPrefSize(300, 200); // 고정된 크기 설정
 
         // ScrollPane을 AnchorPane에 추가
-        ROOT.getChildren().add(scrollPane);
-        AnchorPane.setTopAnchor(scrollPane, 50.0);
-        AnchorPane.setLeftAnchor(scrollPane, 50.0);
+        ROOT.getChildren().add(departure_scroll);
+        AnchorPane.setTopAnchor(departure_scroll, 50.0);
+        AnchorPane.setLeftAnchor(departure_scroll, 50.0);
     }
 
     /**
@@ -229,13 +341,21 @@ public class FlightTab extends Pane {
             DEPARTURE.setText(_env.departure_information.toString());
 
             // scrollPane 제거
-            ScrollPane scrollPane = (ScrollPane) listView.getParent().getParent().getParent();
-            ROOT.getChildren().remove(scrollPane);
+            abort_departure();
         }
     }
 
-    private void onclick_arrival(ActionEvent e) {
+    private void abort_departure() {
+        if (departure_scroll != null) {
+            ROOT.getChildren().remove(departure_scroll);
+        }
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="#on arrival">
+    private void onclick_arrival(ControlEvent e) {
         System.out.println("arrival button clicked");
+        controller.catchEvent(e); // Broadcasting
 
         // 한국 민간공항 리스트 출력 테스트
         // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기
@@ -275,15 +395,15 @@ public class FlightTab extends Pane {
         listView.setOnMouseClicked(this::onclick_select_arrival); // TODO: diff
 
         // ScrollPane 생성 및 ListView 추가
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(listView);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setPrefSize(300, 200); // 고정된 크기 설정
+        arrival_scroll = new ScrollPane();
+        arrival_scroll.setContent(listView);
+        arrival_scroll.setFitToWidth(true);
+        arrival_scroll.setPrefSize(300, 200); // 고정된 크기 설정
 
         // ScrollPane을 AnchorPane에 추가
-        ROOT.getChildren().add(scrollPane);
-        AnchorPane.setTopAnchor(scrollPane, 50.0);
-        AnchorPane.setLeftAnchor(scrollPane, 300.0); // TODO: diff
+        ROOT.getChildren().add(arrival_scroll);
+        AnchorPane.setTopAnchor(arrival_scroll, 50.0);
+        AnchorPane.setLeftAnchor(arrival_scroll, 300.0); // TODO: diff
     }
 
     /**
@@ -308,12 +428,22 @@ public class FlightTab extends Pane {
             // DEPARTURE 버튼 텍스트 설정
             ARRIVAL.setText(_env.arrival_information.toString()); // TODO: diff
 
-            // scrollPane 제거
-            ScrollPane scrollPane = (ScrollPane) listView.getParent().getParent().getParent();
-            ROOT.getChildren().remove(scrollPane);
+            abort_arrival();
         }
     }
 
+    private void abort_arrival() {
+        if (arrival_scroll != null) {
+            ROOT.getChildren().remove(arrival_scroll);
+        }
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="#on departure date">
+    private void onclick_departure_datetime(ControlEvent e) {
+        System.out.println("departure datetime datePicker clicked");
+        controller.catchEvent(e); // Broadcasting
+    }
 
     /**
      * WBS: View1 - P1 - SDT_B
@@ -321,8 +451,9 @@ public class FlightTab extends Pane {
      * onclick departure datetime datepicker
      * @param e departure datetime select
      */
-    private void onclick_departure_datetime(ActionEvent e) {
+    private void onselect_departure_datetime(ControlEvent e) {
         System.out.println("departure datetime datePicker selected");
+        controller.catchEvent(e); // Broadcasting
 
         // DatePicker에서 선택한 날짜를 가져옴
         LocalDate selectedDate = DEPARTURE_DATE.getValue();
@@ -335,14 +466,26 @@ public class FlightTab extends Pane {
         _env.departure_date = selectedDate;
     }
 
+    private void abort_departure_datetime() {
+        DEPARTURE_DATE.getValue();
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="#on arrival date">
+    private void onclick_arrival_datetime(ControlEvent e) {
+        System.out.println("arrival datetime datePicker clicked");
+        controller.catchEvent(e);
+    }
+
     /**
      * WBS: View1 - P1 - END_B
      * WBS: View1 - P1 - END_1_B
      * onclick arrival datetime datePicker
-     * @param event arrival datetime select
+     * @param e arrival datetime select
      */
-    private void onclick_arrival_datetime(ActionEvent event) {
+    private void onselect_arrival_datetime(ControlEvent e) {
         System.out.println("arrival datetime datePicker selected");
+        controller.catchEvent(e); // Broadcasting
 
         // DatePicker에서 선택한 날짜를 가져옴
         LocalDate selectedDate = ARRIVAL_DATE.getValue(); // TODO: diff
@@ -355,24 +498,33 @@ public class FlightTab extends Pane {
         _env.arrival_date = selectedDate; // TODO: diff
     }
 
-    private void onclick_search(ActionEvent e) {
+    private void abort_arrival_datetime() {
+        ARRIVAL_DATE.getValue();
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="#on search">
+    private void onclick_search(ControlEvent e) {
         System.out.println("Serach button clicked");
+        controller.catchEvent(e); // Broadcasting
 
-        // 현재까지 선택한 정보들 출력하기
-        System.out.println("=============================");
-        System.out.println("현재 선택한 정보들");
-        System.out.println("여행 정보 : " + _env.selected_festival);
-        System.out.println("출발 공항 : " + _env.departure_information);
-        System.out.println("도착 공항 : " + _env.arrival_information);
-        System.out.println("출발일 : " + _env.departure_date);
-        System.out.println("도착일 : " + _env.arrival_date);
-        System.out.println("=============================");
+        // 로그인 되어있는지 확인
+        if (_env.selected_user != null) {
+            if (isCanNavigate()) {
+                System.out.println("안내 조건을 만족했습니다. 다음 단계로 넘어갑니다.");
+                controller.reservation.doReservation();
+            } else {
+                System.out.println("아직 선택하지 않은 조건이 있습니다.");
+            }
 
-        if (isCanNavigate()) {
-            System.out.println("안내 조건을 만족했습니다. 다음 단계로 넘어갑니다.");
-        } else {
-            System.out.println("아직 선택하지 않은 조건이 있습니다.");
             return;
+        }
+
+        if (requestLogin()) {
+            System.out.println("로그인 진행");
+            controller.titleTab.login_required();
+        } else {
+            System.out.println("로그인이 되어있지 않으므로 항공권 검색을 진행하지 않습니다.");
         }
     }
 
@@ -388,5 +540,27 @@ public class FlightTab extends Pane {
         }
     }
 
+
+    private boolean requestLogin() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("로그인 필요");
+        alert.setHeaderText("로그인이 되어있지 않습니다.");
+        alert.setContentText("로그인을 하시겠습니까?");
+
+        // 대화상자 표시하고 사용자의 응답을 기다림
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // 사용자가 확인 버튼을 눌렀을 때의 작업
+            System.out.println("User chose OK");
+            return true;
+        } else {
+            // 사용자가 취소 버튼을 눌렀을 때의 작업
+            System.out.println("User chose Cancel or closed the dialog");
+            return false;
+        }
+    }
+
+
+    // </editor-fold>
 
 }

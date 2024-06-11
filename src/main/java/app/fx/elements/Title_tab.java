@@ -1,6 +1,7 @@
 package app.fx.elements;
 
-import app.fx.Data.USERS;
+import app.fx.Control.ControlEvent;
+import app.fx.Data.EventCode;
 import app.fx.HA.Queries;
 import app.fx.Controller_V2;
 import app.fx._env;
@@ -14,7 +15,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -95,36 +95,50 @@ public class Title_tab extends Pane {
         initialize();
         addUserPane();
 
-        HOME.setOnAction(e -> onclick_home());
+        HOME.setOnAction(e -> onclick_home(new ControlEvent(e, EventCode.TITLE_HOME)));
 
         // TODO: login action in titleTab
-        userPane.getElement(2).setOnAction(event -> logAction(event));
+        userPane.getElement(2).setOnAction(e -> logAction(new ControlEvent(e, EventCode.TITLE_LOGACTION)) );
+    }
+
+    public void receive(ControlEvent e) {
+        if (e.getEventCode() != EventCode.TITLE_LOGIN_REQUIRED &&
+            e.getEventCode() != EventCode.TITLE_LOGIN &&
+            e.getEventCode() != EventCode.TITLE_REGISTER &&
+            e.getEventCode() != EventCode.TITLE_REGISTER_REQUEST &&
+            e.getEventCode() != EventCode.TITLE_REGISTER_EXIT) {
+            abort_login();
+        }
     }
 
     public void keyRequest(String key) {
         switch (key.toString()) {
             case "login":
-                login(null);
+                login(new ControlEvent((ActionEvent) null, EventCode.TITLE_LOGIN));
         }
     }
 
+    // <editor-fold desc="#home">
+    /**
+     * WBS: View1 - P1 - HOME_B
+     * onclick home event
+     */
+    private void onclick_home(ControlEvent e) {
+        System.out.println("Home button clicked");
+        controller.menuTab.onclick_all_festivals();
+    }
+    // </editor-fold>
 
-
-    // TODO: 0610 완료 후 리팩토링
     private void addUserPane() {
         // 유저 레벨 0 (로그인 안됨)
         if (_env.selected_user == null || _env.selected_user.user_type.equals("0")) {
             // 기본 뷰 할당
-            System.out.println(0);
             userPane = new User_LoginRequired(_env.selected_user);
         } else if (_env.selected_user.user_type.equals("1")) {
-            System.out.println(1);
             userPane = new User_Customer(_env.selected_user);
         } else if (_env.selected_user.user_type.equals("2")) {
-            System.out.println(2);
             userPane = new User_Staff(_env.selected_user);
         } else if (_env.selected_user.user_type.equals("3")) {
-            System.out.println(3);
             userPane = new User_Manager(_env.selected_user);
         }
 
@@ -133,18 +147,28 @@ public class Title_tab extends Pane {
         titleTab.getChildren().add(userPane);
     }
 
-    private void logAction(ActionEvent event) {
-        String btnID = ((Button)event.getSource()).getId();
+    // <editor-fold desc="#log action">
+    private void logAction(ControlEvent e) {
+        controller.catchEvent(e);
+        String btnID = ((Button)e.event.getSource()).getId();
 
-        if (btnID.equals("login_required")) login_required(event);
-        else if (btnID.equals("logout_customer")) logout_customer(event);
-        else if (btnID.equals("logout_staff")) logout_staff(event);
-        else if (btnID.equals("logout_manager")) logout_manager(event);
+        if (btnID.equals("login_required")) login_required(new ControlEvent(e.event, EventCode.TITLE_LOGIN_REQUIRED));
+        else if (btnID.equals("logout_customer")) logout_customer(new ControlEvent(e.event, EventCode.TITLE_LOGOUT_CUSTOMER));
+        else if (btnID.equals("logout_staff")) logout_staff(new ControlEvent(e.event, EventCode.TITLE_LOGOUT_STAFF));
+        else if (btnID.equals("logout_manager")) logout_manager(new ControlEvent(e.event, EventCode.TITLE_LOGOUT_MANAGER));
+    }
+    // </editor-fold>
+
+
+    public void login_required() {
+        // 로그인 요청상태일때만,
+        if (userPane instanceof User_LoginRequired) {
+            login_required(new ControlEvent(null, EventCode.TITLE_LOGIN_REQUIRED));
+        }
     }
 
-
-
-    private void login_required(ActionEvent event) {
+    private void login_required(ControlEvent e) {
+        controller.catchEvent(e);
         System.out.println("0: 로그인 요청");
 
         // 혹시 login버튼 두번 눌렀으면 로그인 버튼 제거
@@ -154,13 +178,14 @@ public class Title_tab extends Pane {
 
         loginPage = new LoginPage();
         loginPage.setId("LoginPage");
-        loginPage.loginButton.setOnAction(this::login);
-        loginPage.registerButton.setOnAction(this::register);
-        loginPage.exitPane.setOnMouseClicked(mouseEvent -> exitPane(mouseEvent));
+        loginPage.loginButton.setOnAction(ev -> login(new ControlEvent(ev, EventCode.TITLE_LOGIN)) );
+        loginPage.registerButton.setOnAction(ev -> register(new ControlEvent(ev, EventCode.TITLE_REGISTER)) );
+        loginPage.exitPane.setOnMouseClicked(ev -> exitPane(new ControlEvent(ev, EventCode.TITLE_LOGIN_EXIT)) );
         titleTab.getChildren().add(loginPage);
     }
 
-    private void login(ActionEvent event) {
+    private void login(ControlEvent e) {
+        controller.catchEvent(e);
         String userId = loginPage.getUsername();
         String password = loginPage.getPassword();
         if (Queries.instance.validateLogin(userId, password)) {
@@ -183,9 +208,9 @@ public class Title_tab extends Pane {
                     return;
                 }
 
-                userPane.getElement(2).setOnAction(_event -> logAction(_event));
-            } catch (Exception e) {
-                e.printStackTrace();
+                userPane.getElement(2).setOnAction(ev -> logAction(new ControlEvent(ev, EventCode.TITLE_LOGIN)));
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -200,40 +225,38 @@ public class Title_tab extends Pane {
         System.out.println("pw: " + loginPage.getPassword());
     }
 
-    private void register(ActionEvent event) {
+
+
+    private void register(ControlEvent e) {
+        controller.catchEvent(e);
         System.out.println("회원가입을 진행합니다.");
         try {
-            // TODO: 0610 회원가입 페이지 코드화
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/fx/Transport/signUp.fxml"));
-//            Scene scene = new Scene(loader.load(), 600, 400);
-//            // Assuming you are getting the Stage from the RootPane
-//            Stage stage = (Stage) LoginPage.registerButton.getScene().getWindow();
-//            stage.setScene(scene);
             signupPage = new SignupPage();
             signupPage.setId("SignupPage");
-            // 이벤트 연결
-//            loginPage.loginButton.setOnAction(this::login);
-//            loginPage.registerButton.setOnAction(this::register);
-            signupPage.exitPane.setOnMouseClicked(e -> exitPane(e));
-            signupPage.registerButton.setOnAction(e -> register_request(e));
+
+            signupPage.exitPane.setOnMouseClicked(_e -> exitPane(new ControlEvent(_e, EventCode.TITLE_REGISTER_EXIT)));
+            signupPage.registerButton.setOnAction(_e -> register_request(new ControlEvent(_e, EventCode.TITLE_REGISTER_REQUEST)));
             titleTab.getChildren().add(signupPage);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-    private void logout_customer(ActionEvent event) {
+    private void logout_customer(ControlEvent e) {
+        controller.catchEvent(e);
         System.out.println("logout_customer");
         logout();
     }
 
-    private void logout_staff(ActionEvent event) {
+    private void logout_staff(ControlEvent e) {
+        controller.catchEvent(e);
         System.out.println("logout_staff");
         logout();
     }
 
-    private void logout_manager(ActionEvent event) {
+    private void logout_manager(ControlEvent e) {
+        controller.catchEvent(e);
         System.out.println("logout_manager");
         logout();
     }
@@ -260,13 +283,24 @@ public class Title_tab extends Pane {
             return;
         }
 
-        userPane.getElement(2).setOnAction(_event -> logAction(_event));
+        userPane.getElement(2).setOnAction(e -> logAction(new ControlEvent(e, EventCode.TITLE_LOGIN)) );
 
     }
 
     //===
 
-    private void exitPane(MouseEvent event) {
+    private void abort_login() {
+        if (loginPage != null) {
+            titleTab.getChildren().remove(loginPage);
+        }
+
+        if (signupPage != null) {
+            titleTab.getChildren().remove(signupPage);
+        }
+    }
+
+    private void exitPane(ControlEvent e) {
+        controller.catchEvent(e);
         System.out.println("signup_exit");
 
         titleTab.getChildren().remove(loginPage);
@@ -281,13 +315,12 @@ public class Title_tab extends Pane {
             return;
         }
 
-        userPane.getElement(2).setOnAction(_event -> logAction(_event));
+        userPane.getElement(2).setOnAction(ev -> logAction(new ControlEvent(ev, EventCode.TITLE_LOGACTION)));
     }
 
-    private void register_request(ActionEvent event) {
+    private void register_request(ControlEvent e) {
         System.out.println("register_request");
 
-        // TODO: 0610 회원등록 요청
         String _id = signupPage.getSignupId();
         String _pw = signupPage.getSignupPw();
         String _pwConf = signupPage.getSignupPwConf();
@@ -301,7 +334,19 @@ public class Title_tab extends Pane {
             return;
         }
 
-        if ( !_pw.toString().equals(_pwConf.toString()) ) {
+        if (Queries.instance.checkID(_id)) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("회원가입 오류");
+            alert.setContentText("중복되는 id가 있습니다.");
+            alert.show();
+            return;
+        }
+
+        if (false) {
+            // TODO: 0611 비밀번호 조건코드 추가
+        }
+
+        if ( !(_pw.toString() != _pwConf.toString()) ) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("회원가입 오류");
             alert.setContentText("비밀번호가 서로 맞지 않습니다. 다시 입력해주세요.");
@@ -309,8 +354,22 @@ public class Title_tab extends Pane {
             return;
         }
 
-        
-        
+
+        boolean queryResult = Queries.instance.requestSignup(_id, _pw);
+
+        if (!queryResult) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("회원가입 오류");
+            alert.setContentText("알 수 없는 오류.");
+            alert.show();
+            return;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("회원가입 완료");
+            alert.setContentText("회원가입이 완료되었습니다! 로그인을 진행해주세요.");
+            alert.show();
+        }
+
         // TODO: 되었다 가정하고 창 지우기
         titleTab.getChildren().remove(loginPage);
         titleTab.getChildren().remove(signupPage);
@@ -324,17 +383,11 @@ public class Title_tab extends Pane {
             return;
         }
 
-        userPane.getElement(2).setOnAction(_event -> logAction(_event));
+        userPane.getElement(2).setOnAction(_e -> logAction(new ControlEvent(_e, EventCode.TITLE_LOGACTION)));
     }
 
-    /**
-     * WBS: View1 - P1 - HOME_B
-     * onclick home event
-     */
-    private void onclick_home() {
-        System.out.println("Home button clicked");
-        controller.menuTab.onclick_all_festivals();
-    }
+
+
 
 
 }
