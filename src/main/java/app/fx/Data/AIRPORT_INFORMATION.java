@@ -1,6 +1,6 @@
 package app.fx.Data;
 
-public class AIRPORT_INFORMATION {
+public class AIRPORT_INFORMATION <T extends Data> extends Data {
     public String airport_id;
     public String type;
     public String name;

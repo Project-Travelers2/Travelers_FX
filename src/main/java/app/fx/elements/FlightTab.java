@@ -53,8 +53,6 @@ public class FlightTab extends Pane {
         backgroundRect.setArcHeight(5.0);
         backgroundRect.setArcWidth(5.0);
         backgroundRect.setFill(Color.web("#f6faff"));
-//        backgroundRect.setStroke(Color.BLACK);
-//        backgroundRect.setStrokeType(Rectangle.StrokeType.INSIDE);
         FLIGHT_TAB.getChildren().add(backgroundRect);
 
         // Initialize the first Pane
@@ -188,7 +186,6 @@ public class FlightTab extends Pane {
         ARRIVAL.setOnAction(e -> onclick_arrival(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL)) );
 
         LocalDate now = LocalDate.now();
-//        LocalDate plus7 = now.plusDays(7);
         setDateRange(now, now, 0);
 
         DEPARTURE_DATE.setOnMouseClicked(e -> onclick_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_CLICK)) );
@@ -264,7 +261,7 @@ public class FlightTab extends Pane {
 
     private void onclick_departure(ControlEvent e) {
         System.out.println("Departure button clicked");
-        controller.catchEvent(e); // Broadcasting
+        controller.catchEvent(e); // Invoke
 
         // 한국 민간공항 리스트 출력 테스트
         // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기

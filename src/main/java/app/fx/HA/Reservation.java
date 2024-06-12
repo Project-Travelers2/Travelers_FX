@@ -29,7 +29,8 @@ public class Reservation {
         String departure_airport_iata = _env.departure_information.iata_code;
         String arrival_airport_iata = _env.arrival_information.iata_code;
 
-        boolean isFinished = Queries.instance.addSchedule(user_id, schedule_name, departure_date, arrival_date, departure_airport_id, arrival_airport_id, festival_id);
+        boolean isFinished = Queries.instance.addSchedule(user_id, schedule_name, departure_date, arrival_date,
+                departure_airport_id, arrival_airport_id, festival_id);
 
         // 현재까지 선택한 정보들 출력하기
         System.out.println("=============================");
