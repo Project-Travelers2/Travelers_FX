@@ -169,6 +169,8 @@ public class Festivals_tab {
         DetailedImageView detail = new DetailedImageView(item);
         this.controller.ROOT.getChildren().add(detail);
         this.controller.flightTab.setReservation(_env.getSelected_festival());
+//        this.controller.flightTab.setArrivalBtnText(item); // TODO: 12121
+//        System.out.println("12121 : " + item.getFest_info().country_name);
     }
 
 

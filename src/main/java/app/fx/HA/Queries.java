@@ -30,7 +30,11 @@ public class Queries {
 
         try (Connection conn = DriverManager.getConnection(url, id, pw)){
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from FESTIVALS");
+//            ResultSet rs = st.executeQuery("select * from FESTIVALS");
+
+            ResultSet rs = st.executeQuery("SELECT F.*, C.COUNTRY_NAME FROM FESTIVALS F " +
+                                                "JOIN LOCALS L ON L.LOCAL_ID = F.LOCAL_ID " +
+                                                "JOIN COUNTRIES C ON C.ISO_COUNTRY = L.ISO_COUNTRY");
 
             while(rs.next()) {
                 FESTIVALS f = new FESTIVALS();
@@ -43,6 +47,7 @@ public class Queries {
                 f.image_path = rs.getString("IMAGE_PATH");
                 f.festival_code_id = rs.getString("FESTIVAL_CODE_ID");
                 f.local_id = rs.getString("LOCAL_ID");
+                f.country_name = rs.getString("COUNTRY_NAME");
 
                 festival_list.add(f);
             }
@@ -58,7 +63,13 @@ public class Queries {
 
         try (Connection conn = DriverManager.getConnection(url, id, pw)){
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from FESTIVALS where FESTIVAL_CODE_ID = " + festival_id);
+//            ResultSet rs = st.executeQuery("select * from FESTIVALS where FESTIVAL_CODE_ID = " + festival_id);
+            ResultSet rs = st.executeQuery("SELECT Fes.*, C.COUNTRY_NAME FROM ( " +
+                    "    SELECT F.* FROM FESTIVALS F " +
+                    "    WHERE FESTIVAL_CODE_ID = \'" + festival_id + "\' " +
+                    "    ) Fes " +
+                    "JOIN LOCALS L ON L.LOCAL_ID = Fes.LOCAL_ID " +
+                    "JOIN COUNTRIES C ON C.ISO_COUNTRY = L.ISO_COUNTRY");
 
             while(rs.next()) {
                 FESTIVALS f = new FESTIVALS();
@@ -71,6 +82,7 @@ public class Queries {
                 f.image_path = rs.getString("IMAGE_PATH");
                 f.festival_code_id = rs.getString("FESTIVAL_CODE_ID");
                 f.local_id = rs.getString("LOCAL_ID");
+                f.country_name = rs.getString("COUNTRY_NAME");
 
                 festival_list.add(f);
             }

@@ -14,6 +14,8 @@ public class FESTIVALS<T extends Data> extends Data {
     public String festival_code_id;
     public String local_id;
 
+    public String country_name;
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
