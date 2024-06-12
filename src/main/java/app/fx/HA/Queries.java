@@ -108,8 +108,20 @@ public class Queries {
             Statement st = conn.createStatement();
             // 컬럼명은 대소문자 구분합니다. ㅂㄷㅂㄷ
 //            ResultSet rs = st.executeQuery("select * from AIRPORTS WHERE COUNTRY_CODE = " + CountryCode);
-            ResultSet rs = st.executeQuery("SELECT * FROM AIRPORTS WHERE ISO_COUNTRY = " + "\'"+CountryCode+"\'"+
-                    "AND GPS_CODE IS NOT NULL AND IATA_CODE IS NOT NULL AND SCHEDULED_SERVICE = 'yes'");
+//            ResultSet rs = st.executeQuery("SELECT * FROM AIRPORTS WHERE ISO_COUNTRY = " + "\'"+CountryCode+"\'"+
+//                    "AND GPS_CODE IS NOT NULL AND IATA_CODE IS NOT NULL AND SCHEDULED_SERVICE = 'yes'");
+
+            String sql = "SELECT A.*, C.COUNTRY_NAME FROM (" +
+                    "    SELECT A.* FROM AIRPORTS A " +
+                    "    WHERE " +
+                    "        A.GPS_CODE IS NOT NULL AND " +
+                    "        A.IATA_CODE IS NOT NULL AND " +
+                    "        A.SCHEDULED_SERVICE = 'yes' AND " +
+                    "        A.ISO_COUNTRY = \'" + CountryCode + "\' " +
+                    ") A " +
+                    "JOIN COUNTRIES C ON A.ISO_COUNTRY = C.ISO_COUNTRY";
+
+            ResultSet rs = st.executeQuery(sql);
 
             while(rs.next()) {
                 AIRPORT_INFORMATION air = new AIRPORT_INFORMATION();
@@ -123,6 +135,7 @@ public class Queries {
                 air.gps_code = rs.getString("GPS_CODE");
                 air.iata_code = rs.getString("IATA_CODE");
                 air.iso_country = rs.getString("ISO_COUNTRY");
+                air.country_name = rs.getString("COUNTRY_NAME");
 
                 System.out.println(air.toString());
 

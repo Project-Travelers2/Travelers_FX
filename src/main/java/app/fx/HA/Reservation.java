@@ -44,8 +44,6 @@ public class Reservation {
         System.out.println("=============================");
 
         if (isFinished) {
-            System.out.println("완료");
-            // TODO: 13133 0611 URL 코드 넣고 skyscanner로 리다이렉션
             try {
 //                URI uri = new URI("https://www.skyscanner.co.kr/transport/flights/sela/nrt/240613/240719/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false");
                 // #출발공항 : departure_airport_iata

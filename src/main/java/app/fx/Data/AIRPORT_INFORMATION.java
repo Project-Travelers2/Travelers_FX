@@ -11,9 +11,14 @@ public class AIRPORT_INFORMATION {
     public String gps_code;
     public String iata_code;
     public String iso_country;
+    public String country_name;
 
     public String getName() {
         return name;
+    }
+
+    public String getCountry_name() {
+        return country_name;
     }
 
     @Override

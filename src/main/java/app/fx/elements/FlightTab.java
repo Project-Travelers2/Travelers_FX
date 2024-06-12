@@ -337,7 +337,7 @@ public class FlightTab extends Pane {
             //_env.departure_information = selectedItem
 
             // DEPARTURE 버튼 텍스트 설정
-            DEPARTURE.setText(_env.departure_information.toString());
+            DEPARTURE.setText(_env.departure_information.getCountry_name());
 
             // scrollPane 제거
             abort_departure();
@@ -429,7 +429,7 @@ public class FlightTab extends Pane {
             //_env.departure_information = selectedItem
 
             // DEPARTURE 버튼 텍스트 설정
-            ARRIVAL.setText(_env.arrival_information.toString()); // TODO: diff
+            ARRIVAL.setText(_env.arrival_information.getCountry_name()); // TODO: diff
 
             abort_arrival();
         }
