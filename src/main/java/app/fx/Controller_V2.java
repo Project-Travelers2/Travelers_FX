@@ -9,12 +9,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller_V2 extends Controller implements Initializable {
 
+    public Stage currentStage;
     @FXML public AnchorPane ROOT;
 
     @FXML private Pane TITLE_TAB;
@@ -30,6 +32,7 @@ public class Controller_V2 extends Controller implements Initializable {
     public Festivals_tab festivalsTab;
 
     public Reservation reservation;
+    public CustomPopup customPopup;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -38,6 +41,7 @@ public class Controller_V2 extends Controller implements Initializable {
         flightTab = new FlightTab(ROOT, this);
         menuTab = new MenuTab(ROOT, this);
         reservation = new Reservation();
+        customPopup = new CustomPopup(this);
 
         menuTab.onclick_all_festivals();
     }

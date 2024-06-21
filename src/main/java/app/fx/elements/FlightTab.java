@@ -7,10 +7,7 @@ import app.fx.Data.EventCode;
 import app.fx.Data.FESTIVALS;
 import app.fx.HA.Queries;
 import app.fx._env;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -56,8 +53,6 @@ public class FlightTab extends Pane {
         backgroundRect.setArcHeight(5.0);
         backgroundRect.setArcWidth(5.0);
         backgroundRect.setFill(Color.web("#f6faff"));
-//        backgroundRect.setStroke(Color.BLACK);
-//        backgroundRect.setStrokeType(Rectangle.StrokeType.INSIDE);
         FLIGHT_TAB.getChildren().add(backgroundRect);
 
         // Initialize the first Pane
@@ -162,6 +157,7 @@ public class FlightTab extends Pane {
         setDateRange(info.start_date, info.end_date, 1);
         DEPARTURE_DATE.setValue(info.start_date);
         ARRIVAL_DATE.setValue(info.end_date);
+        setArrivalBtnText(info.country_name);
     }
 
 
@@ -190,7 +186,6 @@ public class FlightTab extends Pane {
         ARRIVAL.setOnAction(e -> onclick_arrival(new ControlEvent(e, EventCode.FLIGHT_ARRIVAL)) );
 
         LocalDate now = LocalDate.now();
-//        LocalDate plus7 = now.plusDays(7);
         setDateRange(now, now, 0);
 
         DEPARTURE_DATE.setOnMouseClicked(e -> onclick_departure_datetime(new ControlEvent(e, EventCode.FLIGHT_DEPARTURE_DATE_CLICK)) );
@@ -258,9 +253,15 @@ public class FlightTab extends Pane {
     }
 
     // <editor-fold desc="#on departure">
+    public void setDepartureBtnText() {
+        if (_env.departure_information != null) {
+            DEPARTURE.setText(_env.departure_information.getCountry_name());
+        }
+    }
+
     private void onclick_departure(ControlEvent e) {
         System.out.println("Departure button clicked");
-        controller.catchEvent(e); // Broadcasting
+        controller.catchEvent(e); // Invoke
 
         // 한국 민간공항 리스트 출력 테스트
         // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기
@@ -331,7 +332,7 @@ public class FlightTab extends Pane {
             //_env.departure_information = selectedItem
 
             // DEPARTURE 버튼 텍스트 설정
-            DEPARTURE.setText(_env.departure_information.toString());
+            setDepartureBtnText();
 
             // scrollPane 제거
             abort_departure();
@@ -346,16 +347,22 @@ public class FlightTab extends Pane {
     // </editor-fold>
 
     // <editor-fold desc="#on arrival">
+
+    public void setArrivalBtnText(String text) {
+        ARRIVAL.setText(text); // TODO: diff
+    }
+
     private void onclick_arrival(ControlEvent e) {
         System.out.println("arrival button clicked");
         controller.catchEvent(e); // Broadcasting
 
-        // 한국 민간공항 리스트 출력 테스트
-        // 1 국가정보를 한국(KR)으로 하고 공항 리스트 가져오기
-        // TODO: 13132 도착 공항 리스트 관련 국가코드
-        // TODO: 13132 0612 도착 공항정보 유저 피드백 필요
+        // 선택된 축제의 국가코드
         String countryCode = _env.getArrivalCountryCode();
 
+        if (countryCode == null || countryCode.equals("")) {
+            controller.customPopup.festivalNotSelected();
+            return;
+        }
 
         // 2 공항 리스트에서 민간공항 리스트 가져오기
         List<AIRPORT_INFORMATION> airport_informations = Queries.instance.airport_list(countryCode);
@@ -422,7 +429,7 @@ public class FlightTab extends Pane {
             //_env.departure_information = selectedItem
 
             // DEPARTURE 버튼 텍스트 설정
-            ARRIVAL.setText(_env.arrival_information.toString()); // TODO: diff
+            setArrivalBtnText(selectedItem.country_name); // 공항 정보로 텍스트 설정
 
             abort_arrival();
         }
@@ -503,6 +510,18 @@ public class FlightTab extends Pane {
     private void onclick_search(ControlEvent e) {
         System.out.println("Serach button clicked");
         controller.catchEvent(e); // Broadcasting
+
+        // 현재까지 선택한 정보들 출력하기
+        System.out.println("=============================");
+        System.out.println("현재 선택한 정보들");
+        // 유저 id (메뉴얼 테스트에서 확인)
+        // 스케줄명 (기본이름 할당됨)
+        System.out.println("출발일 : " + _env.departure_date);
+        System.out.println("도착일 : " + _env.arrival_date);
+        System.out.println("출발 공항 : " + _env.departure_information);
+        System.out.println("도착 공항 : " + _env.arrival_information);
+        // 축제 id 필요 (그냥 메뉴얼 테스트에서 확인하자)
+        System.out.println("=============================");
 
         // 로그인 되어있는지 확인
         if (_env.selected_user != null) {

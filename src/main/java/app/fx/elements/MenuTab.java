@@ -213,7 +213,7 @@ public class MenuTab {
 
     private void onclick_cat_festivals(int index, ControlEvent e) {
         controller.catchEvent(e);
-        onclick_all_festivals();
+        onclick_cat_festivals(index);
     }
     // </editor-fold>
 

@@ -30,7 +30,11 @@ public class Queries {
 
         try (Connection conn = DriverManager.getConnection(url, id, pw)){
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from FESTIVALS");
+//            ResultSet rs = st.executeQuery("select * from FESTIVALS");
+
+            ResultSet rs = st.executeQuery("SELECT F.*, C.COUNTRY_NAME FROM FESTIVALS F " +
+                                                "JOIN LOCALS L ON L.LOCAL_ID = F.LOCAL_ID " +
+                                                "JOIN COUNTRIES C ON C.ISO_COUNTRY = L.ISO_COUNTRY");
 
             while(rs.next()) {
                 FESTIVALS f = new FESTIVALS();
@@ -43,6 +47,7 @@ public class Queries {
                 f.image_path = rs.getString("IMAGE_PATH");
                 f.festival_code_id = rs.getString("FESTIVAL_CODE_ID");
                 f.local_id = rs.getString("LOCAL_ID");
+                f.country_name = rs.getString("COUNTRY_NAME");
 
                 festival_list.add(f);
             }
@@ -58,7 +63,13 @@ public class Queries {
 
         try (Connection conn = DriverManager.getConnection(url, id, pw)){
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from FESTIVALS where FESTIVAL_CODE_ID = " + festival_id);
+//            ResultSet rs = st.executeQuery("select * from FESTIVALS where FESTIVAL_CODE_ID = " + festival_id);
+            ResultSet rs = st.executeQuery("SELECT Fes.*, C.COUNTRY_NAME FROM ( " +
+                    "    SELECT F.* FROM FESTIVALS F " +
+                    "    WHERE FESTIVAL_CODE_ID = \'" + festival_id + "\' " +
+                    "    ) Fes " +
+                    "JOIN LOCALS L ON L.LOCAL_ID = Fes.LOCAL_ID " +
+                    "JOIN COUNTRIES C ON C.ISO_COUNTRY = L.ISO_COUNTRY");
 
             while(rs.next()) {
                 FESTIVALS f = new FESTIVALS();
@@ -71,6 +82,7 @@ public class Queries {
                 f.image_path = rs.getString("IMAGE_PATH");
                 f.festival_code_id = rs.getString("FESTIVAL_CODE_ID");
                 f.local_id = rs.getString("LOCAL_ID");
+                f.country_name = rs.getString("COUNTRY_NAME");
 
                 festival_list.add(f);
             }
@@ -108,8 +120,20 @@ public class Queries {
             Statement st = conn.createStatement();
             // 컬럼명은 대소문자 구분합니다. ㅂㄷㅂㄷ
 //            ResultSet rs = st.executeQuery("select * from AIRPORTS WHERE COUNTRY_CODE = " + CountryCode);
-            ResultSet rs = st.executeQuery("SELECT * FROM AIRPORTS WHERE ISO_COUNTRY = " + "\'"+CountryCode+"\'"+
-                    "AND SCHEDULED_SERVICE = " + "\'yes\'");
+//            ResultSet rs = st.executeQuery("SELECT * FROM AIRPORTS WHERE ISO_COUNTRY = " + "\'"+CountryCode+"\'"+
+//                    "AND GPS_CODE IS NOT NULL AND IATA_CODE IS NOT NULL AND SCHEDULED_SERVICE = 'yes'");
+
+            String sql = "SELECT A.*, C.COUNTRY_NAME FROM (" +
+                    "    SELECT A.* FROM AIRPORTS A " +
+                    "    WHERE " +
+                    "        A.GPS_CODE IS NOT NULL AND " +
+                    "        A.IATA_CODE IS NOT NULL AND " +
+                    "        A.SCHEDULED_SERVICE = 'yes' AND " +
+                    "        A.ISO_COUNTRY = \'" + CountryCode + "\' " +
+                    ") A " +
+                    "JOIN COUNTRIES C ON A.ISO_COUNTRY = C.ISO_COUNTRY";
+
+            ResultSet rs = st.executeQuery(sql);
 
             while(rs.next()) {
                 AIRPORT_INFORMATION air = new AIRPORT_INFORMATION();
@@ -120,7 +144,10 @@ public class Queries {
                 air.longitude_deg = rs.getInt("LONGITUDE_DEG");
                 air.municipality = rs.getString("MUNICIPALITY");
                 air.scheduled_service = rs.getString("SCHEDULED_SERVICE");
+                air.gps_code = rs.getString("GPS_CODE");
+                air.iata_code = rs.getString("IATA_CODE");
                 air.iso_country = rs.getString("ISO_COUNTRY");
+                air.country_name = rs.getString("COUNTRY_NAME");
 
                 System.out.println(air.toString());
 
@@ -210,27 +237,22 @@ public class Queries {
     }
 
 
-    public boolean addSchedule(int scheduleId, int userId, String scheduleName, LocalDate departureDate, LocalDate arrivalDate, String departureAirportId, String arrivalAirportId, String festivalId) {
+    public boolean addSchedule(int userId, String scheduleName, LocalDate departureDate, LocalDate arrivalDate, String departureAirportId, String arrivalAirportId, String festivalId) {
         // SQL 쿼리 작성
-        String insertQuery = "INSERT INTO SCHEDULES (SCHEDULE_ID, USER_ID, SCHEDULE_NAME, DEPARTURE_DATE, ARRIVAL_DATE, DEPARTURE_AIRPORT_ID, ARRIVAL_AIRPORT_ID, FESTIVAL_ID) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO SCHEDULES (USER_ID, SCHEDULE_NAME, DEPARTURE_DATE, ARRIVAL_DATE, DEPARTURE_AIRPORT_ID, ARRIVAL_AIRPORT_ID, FESTIVAL_ID) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, id, pw);
              PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-//            // 쿼리 파라미터 설정
-            preparedStatement.setInt(1, scheduleId);
-            preparedStatement.setInt(2, userId);
-            preparedStatement.setString(3, scheduleName);
-            preparedStatement.setString(4, departureDate.toString());
-            preparedStatement.setString(5, arrivalDate.toString());
-            preparedStatement.setString(6, departureAirportId);
-            preparedStatement.setString(7, arrivalAirportId);
-            preparedStatement.setString(8, festivalId);
-//            preparedStatement.executeUpdate();
-//            preparedStatement.setString(1, requestId); // USER_NAME 값 설정
-//            preparedStatement.setString(2, requestPw); // USER_PASSWORD 값 설정
-//            preparedStatement.setInt(3, 1); // USER_TYPE 값을 1로 설정
+            // 쿼리 파라미터 설정
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, scheduleName);
+            preparedStatement.setString(3, departureDate.toString());
+            preparedStatement.setString(4, arrivalDate.toString());
+            preparedStatement.setString(5, departureAirportId);
+            preparedStatement.setString(6, arrivalAirportId);
+            preparedStatement.setString(7, festivalId);
 
             // 쿼리 실행
             int rowsAffected = preparedStatement.executeUpdate();

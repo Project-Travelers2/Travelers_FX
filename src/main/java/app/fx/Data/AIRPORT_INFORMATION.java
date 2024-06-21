@@ -1,6 +1,6 @@
 package app.fx.Data;
 
-public class AIRPORT_INFORMATION {
+public class AIRPORT_INFORMATION <T extends Data> extends Data {
     public String airport_id;
     public String type;
     public String name;
@@ -8,15 +8,22 @@ public class AIRPORT_INFORMATION {
     public int longitude_deg;
     public String municipality;
     public String scheduled_service;
+    public String gps_code;
+    public String iata_code;
     public String iso_country;
+    public String country_name;
 
     public String getName() {
         return name;
     }
 
+    public String getCountry_name() {
+        return country_name;
+    }
+
     @Override
     public String toString() {
-        return iso_country + ": " + name;
+        return iso_country + ": " + name + ", " + gps_code + ", " + iata_code;
     }
 
 //    @Override
